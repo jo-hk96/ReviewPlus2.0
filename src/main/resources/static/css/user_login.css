@@ -1,0 +1,139 @@
+  body {
+           
+            padding : 0;
+            margin: 0;
+            background-color: #F3F4F6; /* 연한 회색 배경 */
+            font-family: Arial, sans-serif;  
+       }
+
+       /* 2. 로그인 폼의 최대 너비를 설정하여 보기 좋게 만듭니다. */
+       #loginForm {
+           width: 100%;
+           max-width: 400px; 
+           padding: 20px;
+           border: 1px solid #ccc;
+           border-radius: 8px;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+           background-color: #fff; /* 배경색 설정 */
+           
+       }
+       #allLoginform{
+          	width: 350px; 
+		    margin: 0 auto;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center; 
+		    margin-top:320px;
+       }
+       
+       /* 3. 폼 내부 요소의 레이아웃 조정 (선택 사항) */
+       #loginForm br {
+           display: none; /* <br> 태그 대신 flex나 grid로 레이아웃 관리 권장 */
+       }
+       
+        #loginForm input[type="email"],
+        #loginForm input[type="password"] {
+            width: calc(100% - 10px); /* 너비를 꽉 채우도록 설정 */
+            padding: 8px;
+            margin-bottom: 5px;
+            margin-top:10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+            
+        }
+        #loginForm button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            margin-top:20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition : background-color 0.2s;
+            
+        }
+        
+        
+        #loginForm button[type="submit"]:hover{
+        	background-color : #0062ce;
+        
+        }
+
+        /* 4. 회원가입 버튼 스타일 추가 */
+        .btn-join {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            justify-content:center;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            width: 100px;
+        }
+
+        .btn-join:hover {
+            background-color: #5a6268;
+        }
+        
+		#footer{
+		margin-top:280px;
+		
+		}
+	
+	/*loginMain */	
+		
+	  #loginForm2 button[type="submit"] {
+	          width: 390px;
+	          height: 60px;
+	          background-color: white;
+	          color: black;
+	          border: none;
+	          margin-top:20px;
+	          border-radius: 4px;
+	          border: 1px solid #8a8a8a; 
+	          cursor: pointer;
+	          font-size:16px;
+	          font-weight:bold;
+	          transition: background-color 0.2s;
+	      }
+	      
+	  #loginForm2 button[type="submit"]:hover{	
+	  		 background-color: #e0e0e0;
+	  }
+		
+	/* 구글 로그인  */		
+	#google-login {
+    display: inline-flex; 
+    align-items: center; 
+    text-align:center;
+    justify-content: center; 
+    padding: 5px 20px; 
+    border: 1px solid #8a8a8a; 
+    text-decoration: none;
+    margin-top:20px;
+    color:black;
+    font-weight:bold;
+    width:350px;
+    border-radius: 4px;
+    transition : background-color 0.2s;
+	}
+	
+	
+	#google-login:hover{
+		background-color: #e0e0e0;
+	
+	}
+	
+	#google-login img {
+	    width: 50px;
+	    height: 50px;
+	}
+		
+		
+		

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+    <title>유저 회원 가입</title>
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/user_newjoin.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>">
+</head>
+
+<style>
+	#joinForm > span{
+	color: red; 
+	font-size: 0.9em; 
+	display: block; 
+	margin-top: -10px; 
+	margin-bottom: 15px;
+	}
+
+</style>
+<body>
+
+	<h1>회원가입</h1>
+		<div th:if="${errorMessage}" style="color: red; font-weight: bold; margin-bottom: 15px;">
+			    <span th:text="${errorMessage}"></span>
+			</div>
+<form action="/UserJoin" method="post" id="joinForm">
+	    <input type="text" name="pname" id="pname" th:value="${inputData?.pname}" placeholder ="이름"><br>
+	    <span id="pnameCheckResult" ></span>
+    
+    <input type="text" name="nickname" id="nickname" th:value="${inputData?.nickname}" placeholder = "닉네임" ><br>
+   	 <span id="nicknameCheckResult"></span>
+    <input type="hidden" id="nicknameChecked" value="false">
+    
+    <input type ="email" id="email" name="email" th:value="${inputData?.email}" placeholder = "이메일"><br>
+    <span id="emailCheckResult"></span>
+    <input type="hidden" id="emailChecked" value="false">
+    
+    <input type = "password" name ="password" id="password" placeholder = "비밀번호"><br>
+    <span id="passwordCheckResult" ></span>
+    
+    <input type = "password" name ="passwordConfirm" id="passwordConfirm" placeholder = "비밀번호 확인"><br>
+    <span id="passwordConfirmCheckResult" ></span>
+    <input type = "date" name ="birthdate" 
+            id="birthdate" min="1900-01-01" max="2025-09-27" th:value="${inputData?.birthdate}" placeholder = "생일"><br>
+    <span id="birthdateCheckResult" ></span>
+     
+    <button type = "submit" >회원가입</button>
+</form>
+		
+	<div th:insert="index/index :: footer"></div>
+
+
+<script src = "js/user_newjoin.js"></script>
+
+</body>
+</html>

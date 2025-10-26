@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰플러스</title>
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/user_login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body>
+	<div id = "allLoginform">
+			<a href="/" class="logo">
+	           <img th:src="@{/images/logo.png}" style ="width:150px;" alt ="로고" >
+	        </a> 
+	        	<h2>로그인</h2>
+				<a href = "/UserLoginForm" id="loginForm2">
+				    <button type="submit"><i class="fas fa-film fa-lg" style = "color: #e84545;"></i> 리뷰플러스 로그인</button>
+				</a>   
+			    <a href="/oauth2/authorization/google" id = "google-login" >
+				    <img src="/images/google.png" alt="구글 로그인">
+				    <span>구글 로그인</span>
+				</a>
+				
+				<div th:if="${socialEditMsg}">
+					<p th:text= "${socialEditMsg}" style="color: #e84545; font-weight: bold; font-size:17px;"></p>
+				</div>
+				
+	</div>
+
+<!-- 푸터 -->
+<div th:insert="index/index :: footer"></div>
+</body>
+</html>

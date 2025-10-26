@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰플러스</title>
+    <link rel="stylesheet" href="/css/movies_detail.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/scroll-to-top.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<style>
+.reply-form-hidden {
+    display: none;
+}
+</style>
+
+<body>
+	<!-- 헤더 -->
+	<div th:insert = "index/index :: header"></div>
+		<!-- 영화 상세 정보 -->
+	<main>
+		<section id="movie-detail-container">
+			<h2>영화 상세 정보</h2>
+			<p>상세정보 불러오는중</p>
+		</section>
+		<section class="movie-actions">
+			<div class="like-action">
+				<button
+					id="likeButton"
+					th:data-api-id="${apiId}"
+					th:data-liked="${isLiked}"
+					th:classappend="${isLiked} ? 'liked' : ''"
+					th:text="${isLiked} ? '♥ 좋아요' : '♡ 좋아요'"
+					onclick="toggleLike(this)"
+					class="like-btn"
+					aria-pressed="${isLiked}">
+					좋아요 버튼
+				</button>
+			</div>
+		</section>
+</main>
+
+	<!-- 리뷰 작성 섹션 -->
+	<section class="movie-reviews">
+		<hr>
+			<div sec:authorize="isAuthenticated()" class="review-form-container">
+				<h2>내 리뷰 작성</h2>
+				<form id="review-form">
+					<p>
+						<strong>닉네임:</strong> <span sec:authentication="principal.nickname" id="nickname"></span>
+					</p>
+					
+					<div class="form-group">
+						<label for="review-comment">평가:</label>
+						<textarea id="review-comment" rows="5" cols="30" name="comment" placeholder="리뷰를 작성해 주세요."></textarea>
+					</div>
+
+					<div class="form-group">
+						<strong>평점:</strong>
+						<div class="rating-area" role="radiogroup" aria-label="평점 선택">
+							<span class="star" data-rating="1" tabindex="0" role="radio" aria-checked="false">★</span>
+							<span class="star" data-rating="2" tabindex="0" role="radio" aria-checked="false">★</span>
+							<span class="star" data-rating="3" tabindex="0" role="radio" aria-checked="false">★</span>
+							<span class="star" data-rating="4" tabindex="0" role="radio" aria-checked="false">★</span>
+							<span class="star" data-rating="5" tabindex="0" role="radio" aria-checked="false">★</span>
+						</div>
+					</div>
+
+					<button type="button" id="submit-review-btn">리뷰 등록</button>
+				</form>
+			</div>
+			
+			
+					<div sec:authorize="isAuthenticated()">
+					    <input type="hidden" id="loggedInUserId" th:value="${#authentication.principal.userId}"> 
+					</div>
+					<div class="review-list-container">
+							<h2>등록된 리뷰</h2>
+							<div id="review-list">
+								<p th:if="${reviews == null or reviews.isEmpty()}" class="no-reviews-message">
+									아직 등록된 리뷰가 없습니다.
+								</p>
+							</div>
+					</div>
+		</section>
+		
+		
+					<input type="hidden" id="selected-rating" name="rating" value="0">
+					<input type="hidden" id="apiId" name="apiId" th:value="${apiId}">
+
+<!-- 수정 모달 -->		
+<div id="editReviewModal">
+    <div style="background-color: white; width: 80%; max-width: 500px; margin: 100px auto; padding: 20px; border-radius: 8px;">
+        <h3>리뷰 수정하기</h3>
+        
+        <div class="form-group">
+            <label for="editComment">댓글 수정:</label>
+            <textarea id="editComment" rows="4" cols="50"></textarea>
+        </div>
+
+        <div class="form-group">
+            <strong>평점 수정:</strong>
+            <div id="editRatingArea" class="rating-area" role="radiogroup" aria-label="수정 평점 선택">
+                <span class="star" data-rating="1" tabindex="0" role="radio" aria-checked="false">★</span>
+                <span class="star" data-rating="2" tabindex="0" role="radio" aria-checked="false">★</span>
+                <span class="star" data-rating="3" tabindex="0" role="radio" aria-checked="false">★</span>
+                <span class="star" data-rating="4" tabindex="0" role="radio" aria-checked="false">★</span>
+                <span class="star" data-rating="5" tabindex="0" role="radio" aria-checked="false">★</span>
+            </div>
+        </div>
+
+        <input type="hidden" id="editingReviewId" value="">
+        <input type="hidden" id="editSelectedRating" value="0"> 
+        <button type="button" id="saveEditBtn">수정 완료</button>
+        <button type="button" onclick="document.getElementById('editReviewModal').style.display='none'">취소</button>
+    </div>
+</div>
+	<!-- 푸터 -->
+	<footer th:insert="index/index :: footer"></footer>
+	<!-- 맨위로 가기 -->
+	<div th:insert ="index/index :: scroll-to-top"></div>
+	<!-- 영화 리뷰 목록 -->
+	<script src="/js/movies_review.js"></script>
+	<!-- 영화 상세 정보 -->
+	<script src="/js/movies_detail.js"></script>
+	<!-- 영화 좋아요 버튼 -->
+	<script src="/js/movie_LikeBtn.js"></script>
+	<script src="/js/scroll-to-top.js"></script>
+</body>
+</html>
+
+

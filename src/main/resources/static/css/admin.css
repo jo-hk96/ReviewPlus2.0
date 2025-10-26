@@ -1,0 +1,354 @@
+/* ==== 모든 메뉴 글꼴 적용 ==== */
+li {
+	font-family: 'GMarketSans', sans-serif;
+}
+
+/* ======= 로고 포함 첫 번째 메뉴 바 ======= */
+.nav1 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
+  max-width: 100%;
+  min-width: 1024px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.nav1 li {
+  height: 50px;
+}
+.nav1 li a {
+  color: white;
+  text-align: center;
+  height: 100%;
+  padding: 14px 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: 0.5s;
+}
+.nav1 li:not(:first-child):hover {
+  background-color: #111111;
+}
+.nav1 li:first-child {
+	margin-right: auto;
+}
+
+
+/* ======= 두 번째 메뉴 바 ======= */
+.nav2 {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  min-width: 1024px;
+  max-width: 100%;
+  background-color: #3d3d3d;
+}
+.nav2 li {
+  float: left;
+}
+.nav2 li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 12px 14px;
+  text-decoration: none;
+  border-right: 1px solid #333333;
+  
+  position: relative;
+  transition: 0.5s;
+}
+.nav2 li a:hover {
+  background-color: #333333;
+}
+
+/* ======= 목록 테이블 부분 ======== */
+.list {
+	padding: 30px;
+}
+.list-title {
+	font-weight: 500;
+	font-size: 17px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.table {
+	border: 1px solid #cccccc;
+	border-collapse: collapse;
+	margin-top: 20px;
+	margin-bottom: 50px;
+	min-width: 900px;
+	max-width: 1024px;
+}
+.table th {
+	background-color: #e0e0e0;
+	font-size: 15px;
+	
+}
+.table td, th {
+	font-family: 'AstaSans', sans-serif;
+	border: 1px solid #cccccc;
+	padding: 14px 40px;
+	text-align: center;
+}
+.table td {
+	max-width: 300px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+
+.table a {
+	color: black;
+}
+.table a:hover {
+	color: #e84545;
+}
+
+
+/* ==== 검색 바 ====*/
+.searchbar-container {
+	display: flex;
+	align-items: center;
+  	border: 1px solid #ccc;
+  	border-radius: 5px;
+  	overflow: hidden;
+  	width: 281px;
+}
+.searchbar-container input {
+	flex-grow: 1;
+  	padding: 8px 15px;
+  	border: none;
+  	outline: none;
+ 	font-size: 16px;
+}
+.search-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.search-btn:hover,
+.search-btn:focus {
+  opacity: .75;
+}
+
+/* ====== 상세 테이블 ====== */
+.detail-table {
+	margin-top: 20px;
+	margin-bottom: 50px;
+	min-width: 400px;
+	max-width: 1000px;
+	border: 1px solid #e0e0e0;
+	border-collapse: collapse;
+}
+.detail-table td {
+	padding: 10px;
+	border: 1px solid #e0e0e0;
+}
+.detail-table .label-td {
+	background-color: #ebebeb;
+}
+.detail-table .inputbar {
+	padding: 8px;
+	border: none;
+	background-color: #e0e0e0;
+}
+.detail-table .textarea {
+	height: 250px;
+	width: 300px;
+	background-color: #e0e0e0;
+	border: none;
+	padding: 8px;
+	font-size: 16px;
+}
+.detail-table .labelname, .inputbar, .textarea {
+	font-family: 'AstaSans', sans-serif;
+}
+
+/* === 상세 테이블 밑 버튼 === */
+.btn-detail-container {
+	width: 20%;
+	display: flex;
+	align-items: flex-start;
+}
+.btn-detail {
+  background-color: #222;
+  border-radius: 4px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: "AstaSans", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 15px;
+  max-width: 300px;
+  min-height: 44px;
+  min-width: 100px;
+  outline: none;
+  overflow: hidden;
+  padding: 6px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 30%;
+}
+
+.btn-detail:hover,
+.btn-detail:focus {
+  opacity: .75;
+}
+
+.btn-edit {
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background-color: #222222;
+	color: white;
+	border: 1px solid black;
+	border-radius: 4px;
+	font-size: 1em;
+	cursor: pointer;
+	font-family: 'AstaSans', sans-serif;
+}
+
+/* ===== 모달 창 ===== */
+#UserReviewsList{
+	position: relative;
+	cursor:pointer;
+		
+}
+#UserReviewsList:hover{
+	background-color: #f0f0f0;
+	transition: background-color 0.2s ease;
+}
+#UserList{
+	position: relative;
+	cursor:pointer;
+}
+#UserList:hover{
+	background-color: #f0f0f0;
+	transition: background-color 0.2s ease;
+}
+
+/* 모달창  */
+.modal {
+   display: none; 
+   position: fixed; 
+   z-index: 1000; 
+   left: 0;
+   top: 0;
+   width: 100%; 
+   height: 100%; 
+   overflow: auto; 
+   background-color: rgba(0,0,0,0.4);
+}
+
+/* 모달 내부 스타일 */
+.modal-content {
+	display: flex;            
+    flex-direction: column; 
+    gap:15px;
+    background-color: #fefefe;
+    margin: 10% auto; 
+    padding: 33px;
+    border: 1px solid #888;
+    width: 100%; 
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.modal-content .btn-modal-edit {
+	width: 75px;
+	padding: 5px;
+	background-color: black;
+	color: white;
+	cursor: pointer;
+	border: none;
+	border-radius: 4px;
+	margin-top: 5px;
+}
+.modal-content input, label, textarea {
+	margin: 8px;
+	width: 250px;
+}
+.modal-content input, textarea {
+	border: none;
+	background-color: #e0e0e0;
+	padding: 8px;
+}
+.modal-content textarea {
+	height: 100px;
+}
+/* 닫기 버튼 스타일 */
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 23px;
+    font-weight: bold;
+}
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+/* 성공 메시지 스타일 */
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    width:200px;
+}
+
+/* 에러 메시지 스타일 */
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    width:120px;
+}
+.alert-status{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    width:350px;
+}
+
+/* 기본적으로 숨김 처리 */
+.UserStatus {
+    display: none; 
+    margin-top: 10px; /* 위에 있는 버튼과 간격 두기 */
+}
+
+/*버튼들을 보기 좋게 정렬 */
+.UserStatus button {
+    margin-right: 5px; 
+    width:100px;
+}
+
+/* JavaScript가 이 클래스를 추가/제거해서 보여줌 */
+.UserStatus.show {
+    display: block;
+}

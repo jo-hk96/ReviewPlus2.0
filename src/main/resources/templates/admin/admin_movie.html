@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/table-scroll.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>"></link>
+    <title>리뷰플러스 관리자</title>
+</head>
+<body>
+	<div id="header" th:fragment = "header">
+		<div class="nav">
+			<ul class="nav1">
+				<li><a href="/"><img src="/images/logo.png" alt="logo" class="logoimg"></a></li>
+				<li><a href="/Admin/AdminHome">관리자 홈</a></li>
+				<li><a href="/logout">로그아웃</a></li>
+			</ul>
+			<ul class="nav2">
+				<li><a href="/Admin/AdminUser">회원관리</a></li>
+				<li><a href="/Admin/AdminMovie">영화관리</a></li>
+				<li><a href="/Admin/AdminReview">리뷰관리</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="list">
+		<div class="list-title">전체 회원 영화 좋아요 목록</div>
+		<div class="searchbar-container">
+			<form action="/Admin/AdminMovie" method = "get">			
+				<input type="search" name ="title" placeholder="영화 제목 입력">
+				<button class="search-btn" type="submit">검색</button>
+			</form>
+		</div>
+			<table class="table" >
+			<thead>
+				<tr>
+					<th>영화 ID</th>
+					<th>영화 제목</th>
+					<th>영화 설명</th>
+					<th>평점</th>
+					<th>개봉일</th>
+				</tr>
+			</thead>
+			<tbody>	
+				<tr th:each = "mlist : ${moviesList}"
+					th:data-url ="@{/Admin/AdminMovieDetail/{apiId}(apiId=${mlist.apiId})}"
+					onclick="UserDetailLink(this);" id = "UserList">
+					<td th:text = "${mlist.apiId}"></td>
+					<td th:text = "${mlist.title}"></td>
+					<td th:text = "${#strings.isEmpty(mlist.overview) ? '줄거리없음' : mlist.overview}"></td>
+					<td th:text = "${mlist.ourAverageRating}"></td>
+					<td th:text = "${mlist.releaseDate}"></td>
+				</tr>
+			</tbody>	
+			</table>
+	</div>
+	
+	<script>
+			function UserDetailLink(rowElement){
+				const url = rowElement.getAttribute('data-url');
+				if(url){
+					window.location.href = url;
+				}
+			}
+	</script>	
+	
+</body>
+</html>

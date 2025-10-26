@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 페이지</title>
+   
+</head>
+
+<style>
+	body{
+	display:flex; 
+	justify-content:center; 
+	align-items:center;		
+	min-height:100vh;		
+	margin:0px;		
+	}
+	
+	#error{
+	font-size:35px;
+	}
+	
+	.logo{
+	display:flex; 
+	justify-content:center; 
+	align-items:center;		
+	margin:0px;	
+	
+	}
+	
+	#MailForwarding{
+	display:flex; 
+	justify-content:center; 
+	align-items:center;		
+	margin:0px;
+	}
+	input , button{
+	width:400px;
+	height:30px;
+	margin-bottom:20px;
+	border-radius: 5px;
+	}
+	textarea{
+	border-radius: 5px;
+	
+	}
+	button{
+	background-color: #e84545;
+	border:none;
+	color:white;
+	height:50px;
+	cursor:pointer;
+	}
+	
+</style>
+
+<body>
+
+<div id ="error">
+
+			<a href="/" class="logo">
+	           <img th:src="@{/images/logo.png}" style ="width:150px;" alt ="로고" >
+	        </a> 
+		<hr style ="height:2px; background-color: red;">
+		<table>
+			<tr>
+				<th>⚠️휴면계정입니다.</th>
+			</tr>
+			<tr>
+				<th>관리자에게 문의해주세요.</th>
+			</tr>
+		</table>
+			<div th:if="${sucMail}">
+					<p th:text= "${sucMail}" style="color: #e84545; font-weight: bold; font-size:17px;"></p>
+			</div>
+		
+			<div th:if="${failMail}">
+					<p th:text= "${failMail}" style="color: red; font-weight: bold; font-size:17px;"></p>
+			</div>
+		
+	<div id = "MailForwarding">	
+		<form action="/inquiry" method="post">
+		    <input type="email" name="email" placeholder="답변 받을 이메일 주소"><br>
+		    <input type="text" name="subject" placeholder="문의 제목"><br>
+		    <textarea name="content" placeholder = "문의할 계정 이메일,닉네임,성함, 사유를 적어주세요" rows ="5" cols="57"></textarea><br>
+		    <button type="submit"  class="btn-join">문의하기</button>
+		</form>
+	</div>	
+		<hr style ="height:2px; background-color: red;">
+</div>
+</body>
+</html>

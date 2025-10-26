@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 정보 수정</title>
+    <link rel="stylesheet" href="/css/user_mypage.css">
+    <link rel="stylesheet" href="/css/footer.css">
+   	<link rel="stylesheet" href="/css/user_edit.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<button class="menu-btn" onclick="toggleMenu()">메뉴</button>
+
+<div id="menu-list">
+	<!-- 홈 바로가기 버튼 -->
+		<form action="/" method="get" style="margin-bottom:10px;">
+		  	<button type="submit" class="home-btn">홈 바로가기</button>
+		</form>
+		 
+	  <!-- 마이페이지 -->
+	  <form action="/UserMypage" method="Get" style="margin-bottom:10px;">
+	  	<button type="submit">마이페이지</button>
+	  </form>
+	  
+	   <!-- 탈퇴 버튼 -->
+	  <form th:action="@{/UserDelete}" method="post">
+	    <button type="submit" onclick="return confirm('정말 탈퇴 하시겠습니까?')"
+	    	style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer;"
+    	    onmouseover="this.style.backgroundColor='red'"
+    	    onmouseout="this.style.backgroundColor='#d34c4c'"
+	    >회원 탈퇴</button>
+	  </form>
+</div>
+</body>
+<body>
+    <div class="user-edit-container">
+        <h1>내 정보 수정</h1>
+        
+        
+        <!-- 예외 메시지 출력 영역 -->
+        <form action="/UserEdit" method="post" class="user-edit-form">
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" th:value="${#authentication.principal.username}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <label for="nickname">변경할 닉네임</label>
+                <input type="text" id="nickname" name="nickname" th:value="${#authentication.principal.nickname}">
+            </div>
+            <div class="form-group">
+  	 		  <label for="birthdate">생년월일</label>
+  			  <input type="date" id="birthdate" name="birthdate" th:value="${#authentication.principal.birthdate}">
+			</div>
+            <div class="form-group">
+                <label for="currentPassword">현재 비밀번호</label>
+                <input type="password" id="currentPassword" name="currentPassword">
+                <div th:if="${errorMessage}" class="alert" th:text="${errorMessage}"></div>
+            </div>
+            <div class="form-group">
+                <label for="newPassword">수정 비밀번호</label>
+                <input type="password" id="newPassword" name="newPassword">
+            </div>
+            <div class="form-group">
+                <label for="confirmNewPassword">비밀번호 확인</label>
+                <input type="password" id="confirmNewPassword" name="confirmNewPassword">
+                <p id="passwordMismatchError" class="error-message"></p>
+            </div>
+            <button type="submit" class="submit-button">수정</button>
+        </form>
+    </div>
+    <div th:insert="index/index :: footer"></div>
+    
+    <script>
+		function toggleMenu() {
+		    const menu = document.getElementById('menu-list');
+		    if (menu.style.display === 'none' || menu.style.display === '') {
+		        menu.style.display = 'block';
+		    } else {
+		        menu.style.display = 'none';
+		    }
+		}
+	</script>
+    
+    <script>
+    document.querySelector('.user-edit-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+        const errorMessageDiv = document.getElementById('passwordMismatchError');
+
+        errorMessageDiv.textContent = '';
+        errorMessageDiv.style.color = 'red';
+
+        const isPasswordChangeAttempt = newPassword !== '' || confirmNewPassword !== '';
+
+        if (isPasswordChangeAttempt) {
+            if (currentPassword === '') {
+                errorMessageDiv.textContent = '비밀번호를 변경하려면 현재 비밀번호를 입력해야 합니다.';
+                return; 
+            }
+            
+            if (newPassword !== confirmNewPassword) {
+                errorMessageDiv.textContent = '비밀번호와 비밀번호 확인이 일치하지 않습니다.';
+                return; 
+            }
+        }
+        this.submit();
+    });
+</script>
+</body>
+</html>

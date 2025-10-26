@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>유저정보</title>
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/user_mypage.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>">
+</head>
+<body>
+<button class="menu-btn" onclick="toggleMenu()">메뉴</button>
+
+<div id="menu-list">
+	
+	<!-- 홈 바로가기 버튼 -->
+	<form action="/" method="get" style="margin-bottom:10px;">
+	  <button type="submit" class="home-btn">홈 바로가기</button>
+	</form>
+	
+	  <!-- 내 정보 수정 -->
+	  <form action="/UserEditForm" method="Get" style="margin-bottom:10px;">
+	  	<button type="submit">내 정보 수정</button>
+	  </form>
+	   <!-- 탈퇴 버튼 -->
+	  <form th:action="@{/UserDelete}" method="post">
+	    <button type="submit" onclick="return confirm('정말 탈퇴 하시겠습니까?')"
+	    	style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer;"
+	    	    onmouseover="this.style.backgroundColor='red'"
+	    	    onmouseout="this.style.backgroundColor='#d34c4c'"
+	    >회원 탈퇴</button>
+	    	
+	  </form>
+	  
+</div>
+
+<script>
+	function toggleMenu() {
+	  const menu = document.getElementById("menu-list");
+	  if(menu.style.display === "none" || menu.style.display === "") {
+	    menu.style.display = "block";
+	  } else {
+	    menu.style.display = "none";
+	  }
+	}
+</script>
+
+<div class="profile-main-box">
+
+	<h1>마이페이지</h1>
+	<div class="user-info-outer">
+		<div class="user-info-box">
+			<table>
+				<tr>
+					<td>이메일: <span sec:authentication="principal.username"></span></td>
+				</tr>
+				<tr>
+					<td>이름: <span sec:authentication="principal.pname"></span></td>
+				</tr>
+				<tr>
+					<td>닉네임: <span sec:authentication="principal.nickname"></span></td>
+				</tr>
+				<tr>
+					<td>생년월일:<span sec:authentication="principal.birthdate"></span></td>
+				</tr>
+				<tr>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<!-- 사용자 좋아요 목록 MODAL -->
+		<button id="showLikedMoviesBtn" onclick="openLikeModal()">
+		    좋아요 목록 보기
+		</button>
+		
+		<div id="likeModal" class="modal" style="display:none;">
+		
+			<div class ="modal-content">
+					<span class = "close-btn">닫기</span>
+					<h3>
+						<span sec:authentication="principal.nickname"></span>님의 좋아요 목록 
+					</h3>
+					
+					<!-- 사용자 좋아요 목록보여주는 컨테이너 -->
+					<div id="likedMoviesContainer">
+					</div>		
+					
+					<div id="emptyMessage" style="display:none;">
+						<p>아직 좋아요가 없습니다.</p>
+					</div>
+					
+			</div>
+		</div>
+	<!-- 사용자 리뷰 목록 MODAL -->
+	<button id="showReviewMoviesBtn" onclick="openReviewModal()">
+	    리뷰 목록 보기
+	</button>
+	<div id="ReviewModal" class="modal" style="display:none;">
+	
+		<div class ="modal-content-Review">
+			<span class = "close-btn2">닫기</span>
+			<h3><span sec:authentication="principal.nickname"></span>님의 리뷰 목록</h3>
+			
+			<!-- 사용자 좋아요 목록 컨테이너 -->
+			<div id="ReviewMoviesContainer"></div>		
+		
+				<div id="emptyReviewMessage" style="display:none;">
+					<p>아직 등록된 리뷰가 없습니다.</p>
+				</div>
+		</div>
+	</div>
+	
+	
+</div>
+
+<!------------------------------------------------------------------>
+
+
+
+<!-- index/index 파일에 있는 "footer" 태그를 가져옴  -->
+<div th:insert="index/index :: footer"></div>
+
+<!-- 사용자 좋아요 목록.js-->
+<script src = "js/user_LikeListBtn.js" ></script>
+
+<!-- 리뷰 작성 목록.js -->
+<script src = "js/user_ReviewListBtn.js"></script>
+
+</body>
+</html>

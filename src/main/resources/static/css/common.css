@@ -1,0 +1,74 @@
+/* 로고 폰트 */
+@font-face {
+    font-family: 'Wave';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/WavvePADO-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+/* 메뉴 폰트 */
+@font-face {
+    font-family: 'GMarketSans';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+    font-weight: 300;
+    font-display: swap;
+}
+
+/* 본문 폰트 */
+@font-face {
+    font-family: 'AstaSans';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2505-1@1.0/AstaSans-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+    text-decoration: none;
+}
+
+li a {
+	text-decoration: none;
+}
+
+
+
+/* ================== 반응형 =================*/
+/* 1281px 이상의 큰 모니터 */
+@media (min-width: 1281px) {
+  
+}
+/* 일반적인 노트북, PC 화면 */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  /* CSS */
+  
+}
+/* 아이패드, 태블릿 PC */
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  /* CSS */
+  
+}
+/* 아이패드, 태블릿 PC - 가로 모드 */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+  /* CSS */
+  
+}
+/* 일반적인 스마트폰 화면 */
+@media (min-width: 481px) and (max-width: 767px) {
+	
+}
+/* 작은 스마트폰 화면 */
+@media (min-width: 320px) and (max-width: 480px) {
+  
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>"></link>
+    <title>리뷰플러스 관리자</title>
+   
+</head>
+
+<body>
+	<div id="header" th:fragment = "header">
+		<div class="nav">
+			<ul class="nav1">
+				<li><a href="/"><img src="/images/logo.png" alt="logo" class="logoimg"></a></li>
+				<li><a href="/Admin/AdminHome">관리자 홈</a></li>
+				<li><a href="/logout">로그아웃</a></li>
+			</ul>
+			<ul class="nav2">
+				<li><a href="/Admin/AdminUser">회원관리</a></li>
+				<li><a href="/Admin/AdminMovie">영화관리</a></li>
+				<li><a href="/Admin/AdminReview">리뷰관리</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="list">
+		<!-- 유저 리뷰 삭제 오류 -->
+		<div th:if="${sucReviewUpdate}">
+		    <p th:text="${sucReviewUpdate}"></p>
+		</div>
+				
+				
+		<!-- 리뷰 정보 -->	
+		<div class="list-title">리뷰 정보</div>
+			<form action="">
+				<table class="detail-table">
+					<tr>
+						<td class="label-td"><label class="labelname">리뷰 번호</label></td>
+						<td><input type="text" class="inputbar" th:value="${urd.reviewId}" readonly></td>
+					</tr>
+					<tr>
+						<td class="label-td"><label class="labelname">닉네임</label></td>
+						<td><input type="text" class="inputbar" th:value="${urd.nickname}" readonly></td>
+					</tr>
+					<tr>
+						<td class="label-td"><label class="labelname">영화 제목</label></td>
+						<td><input type="text" class="inputbar" th:value="${urd.title}" readonly></td>
+					</tr>
+					<tr>
+						<td class="label-td"><label class="labelname">리뷰 내용</label></td>
+						<td><textarea class="textarea" th:text="${urd.comment}" readonly></textarea>
+					</tr>
+					<tr>
+						<td class="label-td"><label class="labelname">평점</label></td>
+						<td><input type="text" class="inputbar" th:value="${urd.rating}" readonly></td>
+					</tr>
+					<tr>
+						<td class="label-td"><label class="labelname">등록일</label></td>
+						<td><input type="text" class="inputbar" th:value="${urd.regDate}" readonly></td>
+					</tr>
+				</table>
+				<div class="btn-detail-container">
+					<button th:href="@{/Admin/deleteReview(reviewId=${urd.reviewId})}" 
+					   onclick="return confirm('리뷰를 삭제합니다.');"
+					   class="btn-detail">
+					    삭제
+					</button>
+					<button type="button" class="btn-detail" onclick="openModal('editUserReviewModal')">수정</button>
+				</div>
+			</form>
+			
+			
+	</div>
+	
+		<!-- 회원 리뷰 수정 모달  -->
+		<div id="editUserReviewModal" class="modal">
+		    <div class="modal-content">
+		        <span class="close-button" onclick="closeModal('editUserReviewModal')">닫기</span>
+		        <h2>회원 리뷰 수정</h2>
+		        <form action = "/Admin/userReviewEdit" method = "POST">
+		        	<input type = "hidden" name = "reviewId" th:value ="${urd.reviewId}">
+		        	
+		            <label for="editTitle">영화제목:</label><br>
+		            <input type="text" id="editTitle" name = "title" th:value="${urd.title}"><br>
+		            
+		            <label for="editComment">리뷰내용:</label><br>
+		            <textarea id="editComment" name = "comment" th:text ="${urd.comment}"></textarea><br>
+		            
+		            <label for="editRating">평점:</label><br>
+		            <input type="text" id="editRating" name = "rating" th:value="${urd.rating}"><br>
+		            
+		            <button type="submit" class="btn-modal-edit">수정</button>
+		        </form>
+		    </div>
+		</div>
+	
+	
+<script>
+    // 모달 열기
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'block';
+        }
+    }
+
+    // 모달 닫기
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    // 모달 밖을 클릭해도 닫힘
+    window.onclick = function(event) {
+        const modal = document.getElementById('editUserReviewModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>	
+	
+	
+</body>
+</html>

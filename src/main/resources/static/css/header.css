@@ -1,0 +1,171 @@
+/* 헤더  */
+#header{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    /* 높이 및 기본 스타일 */
+    height: 75px;
+    background-color: black;
+    align-items: center; /* 세로 중앙 정렬 */
+    padding: 0 20px;
+    position: fixed;
+    top: 0;       /* 화면의 맨 아래쪽(0px)에 붙임 */
+    left: 0;         /* 화면의 왼쪽 끝에 붙임 */
+    width: 100%;       
+    z-index: 1000;     
+    background-color:white;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size:20px;
+    border-bottom: 1px solid gray;
+     white-space: nowrap;
+}
+
+a{
+	text-decoration: none;	
+}
+
+/* 왼쪽 영역 스타일 (로고와 메뉴 정렬) */
+.headerleft {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    color: white;  
+     
+}
+
+/* 오른쪽 영역 스타일 (검색창과 버튼 정렬) */
+.headerRight {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+    gap: 15px;
+}
+
+
+/*로고 */
+.logo {
+    color: #e50914; 
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none; 
+    white-space: nowrap; 
+    gap: 20px;
+}
+
+.headerRight a,
+.headerRight span,
+.headerRight input {
+  /* 오른쪽에 10px 간격을 줍니다. */
+  margin-right: 5px; 
+  margin-left: 6px;
+}
+
+.headerRight > *:last-child {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.headerLeft a,
+.headerLeft span,
+.headerLeft input { /* headerLeft 내부의 주요 요소들 */
+  margin-right: 5px; 
+  margin-left: 5px;
+}
+
+
+.headerLeft > *:first-child {
+  margin-left: 0;
+}
+
+
+.headerLeft > *:last-child {
+  margin-right: 0;
+}
+
+.logo {
+ margin-right: 30px;
+}
+
+#movieSearch{
+	width:475px;
+	height:45px;
+	
+}
+
+.userIndex > a{
+	font-weight:bold;
+	color:gray;
+}
+
+.userIndex > a:hover{
+	color:black;
+}
+
+.headerLeft > span > a{
+		font-weight:bold;
+		color:gray;
+	}
+	
+.headerLeft > span > a:hover{
+		color:black;
+	}
+
+
+.search-form-container {
+    position: relative; 
+    display: flex;
+}
+/* 2. 입력창 스타일 */
+.search-form-container input[type="text"] {
+    width: 300px; 
+    height: 40px;
+    padding-right: 40px; 
+    box-sizing: border-box; 
+}
+
+/* 3. 아이콘 버튼 스타일링 (핵심) */
+.search-icon-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%; 
+    width: 40px; 
+
+    /* 버튼 기본 스타일 제거 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    
+    /* 아이콘 중앙 정렬 (flex를 활용하면 쉽게 중앙 정렬 가능) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+	/* 4. 아이콘 색상 설정 */
+	.search-icon-btn i {
+	    color: #555;
+	    font-size: 16px; 
+	}
+	
+	
+	
+	@media (max-width: 900px) {
+    #movieSearch {
+        display:none;
+    }
+    
+    .search-icon-btn{
+    	display:none;
+    }
+    #header{
+     overflow: hiddlen;
+	 white-space: nowrap;
+	 
+    }
+}
+	
+	
+	
+	

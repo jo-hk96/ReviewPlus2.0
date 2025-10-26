@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+                  
+ 
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/top_rate.css">
+    <link rel="stylesheet" href="/css/now_playing.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/scroll-to-top.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <title>리뷰플러스</title>
+</head>
+<style>
+	#MainMovieList{
+	color:gray;
+	}
+	
+	#MainMovieList:hover{
+	color:black;
+	}
+</style>
+<body>
+	<body>
+	<!--익명사용자(비로그인상태)isAnonymous -->
+	<!--사용자(로그인상태)isAuthenticated -->	  
+    <div id="header" th:fragment="header">                  
+	        <a href="/" class="logo">
+	           <img th:src="@{/images/logo.png}" alt ="로고" >
+	        </a>   
+       	<div sec:authorize="isAuthenticated()" class = "headerLeft">
+       	
+       			<!-- ROLE_DORMANT -->
+			    <span sec:authorize="hasRole('ROLE_DORMANT')">
+			        휴면계정
+			          <b><a href = "/UserDormant" > 관리자문의 </a></b>
+			    </span>
+			    
+	       		<!-- ROLE_ADMIN -->
+			    <span sec:authorize="hasRole('ROLE_ADMIN')">
+			        관리자 : <span th:text = "${#authentication.principal.nickname}"></span>
+			        <b><a href="/Admin/AdminHome">사이트관리</a></b>
+			    </span>
+			    
+			    <!-- ROLE_USER -->
+			    <span sec:authorize="hasRole('ROLE_USER')">
+			       <b><span th:text = "${#authentication.principal.nickname}" ></span></b>
+			    </span>
+			    <span><a href="/MoviesList">인기</a></span>
+			    <span><a href="/MoviesList?category=upcoming">개봉예정</a></span>
+	    </div>
+	    
+	    <div sec:authorize="isAnonymous()" class = "headerLeft">
+			    <span><a href="/MoviesList">인기</a></span>
+			    <span><a href="/MoviesList?category=upcoming">개봉예정</a></span>
+	    </div>
+	    
+	
+	    <div class="headerRight">
+				<div class ="userIndex" sec:authorize="isAnonymous()">
+					<a href = "/UserLoginMain">로그인</a>
+				</div>
+				
+				<div class ="userIndex"  sec:authorize="isAuthenticated()">
+					<a href = "/UserMypage">내정보</a>
+					<a href = "/logout"  onclick = "return confirm('로그아웃 하시겠습니까?')">로그아웃</a>
+				</div>
+				
+			    <div>
+				    <form action="/MoviesList" method="get" class="search-form-container"> 
+					        <input type="text" id="movieSearch" name="movieSearch" 
+					               placeholder="영화 제목을 입력해주세요. ex)반지,반지의,반지의 제왕,The Lord ,Lord of">
+					        
+					        <button type="submit" class="search-icon-btn">
+					            <i class="fa-solid fa-magnifying-glass" style ="color:gray;"></i>
+					        </button>
+				    </form>
+				</div>
+         </div>
+	</div>
+	
+	<div id = "indexMovieList">
+	  	 <!-- 개봉중인 영화  -->
+		 <div class="slider-container2">
+	  		 	<h2><a id = "MainMovieList" href ="/MoviesList?category=now_playing">현재상영중</a></h2>
+			    <button id="prev-btn2" class="nav-btn2">&lt;</button> 
+			  	  <div id="movie-list2"></div>
+			    <button id="next-btn2" class="nav-btn2">&gt;</button> 
+		 </div>
+	 	 <div id="loading-indicator2">영화 리스트 불러오는중...</div>
+	
+		<hr>     	
+		  <!--최고평점-->
+		  <div class="slider-container">
+		  		<h2><a id= "MainMovieList" href ="/MoviesList?category=top_rated">최고평점</a></h2>
+			    <button id="prev-btn" class="nav-btn">&lt;</button> 
+			    	<div id="movie-list"></div>
+			    <button id="next-btn" class="nav-btn">&gt;</button> 
+		  </div>
+		  <div id="loading-indicator">영화 리스트 불러오는중...</div>
+	  		<hr>
+	</div>
+
+
+	<!--  Url 앵커 : #review-' + ${review.reviewId} -->
+	<div class = "slider-container2">	
+			<h2>최신 리뷰</h2>
+			<div class="review-container">
+					  	<a class="review-card" th:each ="review : ${recentReviews}"
+				           th:href="@{/detail/{apiId}(apiId=${review.apiId})} + '#review-' + ${review.reviewId}"
+				           style="text-decoration: none; color: black;">
+								    <span>[[${review.nickname}]]</span><br>
+								  	<b>[[${review.title}]]</b><br>
+								    <b id = "comment">"[[${review.comment}]]"</b><br>
+								    <span class="rating">
+							            <span th:text="${#strings.repeat('⭐', #numbers.formatInteger(review.rating, 0))}"></span>
+						        	</span>
+								    <span id = "regdate">[[${review.regDate}]]</span>
+						</a>
+			</div>
+	</div>
+		<p th:if ="${recentReviews.isEmpty()}">아직 작성된 리뷰가 없습니다.</p>
+		
+	<!-- -----------------------푸터--------------------------- -->
+    <div id = "footer" th:fragment = "footer">
+    	<a href="/" class="logo">
+           <img th:src="@{/images/logo.png}" style ="width:100px;" alt ="로고" >
+        </a> 
+        <p>리뷰플러스에서 사용된 모든 영화 정보는 
+           <span style ="font-size:15px; font-weight:bold" >
+                  <a href ="https://www.themoviedb.org/" style = "text-decoration: none; font-size :17px;">
+                        TMDb(The Movie Database)
+                  </a>
+         </span>통해 제공되었습니다.
+        </p>
+        <p>주소:못골번영로 56번길 8<br>© 2025 ReviewPlus.All Rights Reserved.</p>
+    </div>
+    <!-- --------------------------------------------------------------------- -->
+
+
+
+<button id="scrollToTopBtn" style="display: none;" th:fragment ="scroll-to-top">
+    <i class="fas fa-arrow-up fa-lg"></i>
+</button>
+
+	
+ <!-- 영화검색.js -->	
+ <script src="js/movie_search.js"></script>
+	
+ <!--영화 슬라이더 -->
+ <script src="js/now_playing.js" type="module"></script>
+ <script src="js/top_rate.js" type="module"></script>
+ 
+ <!-- 맨위로가기 -->
+ <script src = "/js/scroll-to-top.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/table-scroll.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>"></link>
+    <title>리뷰플러스 관리자</title>
+   
+</head>
+<body>
+	<div id="header" th:fragment = "header">
+		<div class="nav">
+			<ul class="nav1">
+				<li><a href="/"><img src="/images/logo.png" alt="logo" class="logoimg"></a></li>
+				<li><a href="/Admin/AdminHome">관리자 홈</a></li>
+				<li><a href="/logout">로그아웃</a></li>
+			</ul>
+			<ul class="nav2">
+				<li><a href="/Admin/AdminUser">회원관리</a></li>
+				<li><a href="/Admin/AdminMovie">영화관리</a></li>
+				<li><a href="/Admin/AdminReview">리뷰관리</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="list">
+		<div class="list-title">영화 정보</div>
+			<form action="">
+				<table class="detail-table">
+					<tr>
+						<td class="label-td"><label class="labelname">영화제목</label></td>
+						<td><input type="text" class="inputbar" th:value="${moviesDetail.title}" readonly></td>
+					</tr>
+					<tr>
+						<td class="label-td"><label class="labelname">개봉일</label></td>
+						<td><input type="text" class="inputbar" th:value="${moviesDetail.releaseDate}" readonly></td>
+					</tr>
+					<tr>
+						<td class="label-td"><label class="labelname">영화설명</label></td>
+						<td><textarea class="textarea" th:text = "${moviesDetail.overview}"  readonly></textarea>
+					</tr>
+				</table>
+			</form>
+	
+	
+					<table class="table" >
+					<thead>
+						<tr>
+							<th>영화 ApiID</th>
+							<th>영화 번호</th>
+							<th>유저 번호</th>
+							<th>닉네임</th>
+							<th>좋아요 누른 시간</th>
+						</tr>
+					</thead>
+				<tbody>	
+				<!-- th:block  div 처럼 html 속성이 남는게 아닌 html자체 태그 없이 조건문 생성  -->
+				<th:block th:if="${!#lists.isEmpty(movieUserLikeList)}">	
+					<tr th:each = "likeList : ${movieUserLikeList}"
+						th:data-url ="@{/Admin/AdminUserDetail/{userId}(userId=${likeList.userId})}"
+						onclick="UserDetailLink(this);"
+						id = "UserReviewsList">
+						<td th:text = "${likeList.apiId}"></td>
+						<td th:text = "${likeList.movieId}"></td>
+						<td th:text = "${likeList.userId}"></td>
+						<td th:text = "${likeList.nickname}"></td>
+						<td th:text = "${likeList.likeAt}"></td>
+					</tr>
+					
+				</th:block>	
+					<tr th:if="${#lists.isEmpty(movieUserLikeList)}">
+					    <td colspan="5" style="text-align: center; color: black;">좋아요 목록이 없습니다.</td>
+					</tr>
+				</tbody>
+				</table>
+	</div>
+	
+</body>
+</html>

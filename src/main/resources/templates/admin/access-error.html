@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰플러스 관리자</title>
+   
+</head>
+
+<style>
+	body{
+		display:flex; 
+		justify-content:center; 
+		align-items:center;		
+		min-height:100vh;		
+		margin:0px;		
+	}
+	
+	#error{
+		font-size:20px;
+	}
+	
+	h2{
+		display:flex;
+		justify-content: center;
+		color:red;
+		font-size:30px;
+	}
+	
+	.logo{
+		display:flex; 
+		justify-content:center; 
+		align-items:center;		
+		margin:0px;
+	}
+	
+
+</style>
+
+<body>
+
+<div id ="error">
+		<a href="/" class="logo">
+           <img th:src="@{/images/logo.png}" style ="width:150px;" alt ="로고" >
+        </a> 
+		<h2>권한이 없는 페이지입니다.</h2>
+		<hr style ="height:2px; background-color: red;">
+		<table>
+			<tr>
+				<th>⚠️로그인을 하지 않으셨거나 권한이 없는 페이지로 들어오셨습니다.</th>
+			</tr>
+			<tr>
+				<th>로그인 후 접속하시거나 권한이 있는 계정으로 들어와주세요.</th>
+			</tr>
+			<tr>
+				<th><a href ="/UserLoginForm" style = "text-decoration: none;">로그인 페이지로 이동</a></th>
+			</tr>
+		</table>
+		<hr style ="height:2px; background-color: red;">
+</div>
+</body>
+</html>

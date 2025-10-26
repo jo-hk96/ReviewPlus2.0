@@ -1,0 +1,512 @@
+/* 기본 바디 및 텍스트 */
+body {
+  background-color: #f9fafc;
+  margin: 0;
+  padding:0;
+  color: #222;
+}
+
+#menu-list{
+	margin-top:20px; 
+	display:none; 
+	top:100px; 
+	right:30px; 
+	background:white; 
+	border:1px solid #ccc; 
+	padding:15px; 
+	box-shadow:0 2px 8px rgba(0,0,0,0.2); 
+	z-index:100; 
+	position: fixed;
+}
+
+
+/* 메뉴 버튼 */
+.menu-btn {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  width: 80px;
+  height: 80px;
+  border: none;
+  background-color: #4a90e2;
+  color: #fff;
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 14px;
+  box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+  user-select: none;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+
+.menu-btn:hover {
+  background-color: #357ab8;
+  box-shadow: 0 7px 20px rgba(53, 122, 184, 0.5);
+}
+
+/* 프로필 영역 */
+.profile-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 36px;
+  gap: 24px;
+}
+
+.profile-img:hover {
+  transform: scale(1.07);
+}
+
+.profile {
+  font-size: 34px;
+  font-weight: 700;
+  color: #111;
+  user-select: none;
+  letter-spacing: 0.03em;
+}
+
+/* 제목 스타일 */
+h2 {
+  margin-bottom: 30px;
+  color: #0c1a2b;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* 버튼 */
+.edit-btn {
+  font-size: 15px;
+  text-decoration: none;
+  color: #4a90e2;
+  padding: 8px 20px;
+  border: 2.5px solid #4a90e2;
+  border-radius: 8px;
+  transition: all 0.35s ease;
+  display: inline-block;
+}
+.edit-btn:hover {
+  background-color: #4a90e2;
+  color: white;
+  box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+}
+
+/* 테이블 */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 14px;
+  font-weight: 500;
+}
+
+td {
+  padding: 16px 18px;
+  background-color: #ffffff;
+  font-size: 18px;
+  color: #2e3a59;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgb(46 58 89 / 0.06);
+  border: none;
+}
+
+/* 제출 버튼 */ 
+button[type="submit"]:not(.home-btn) {
+  background-color: #45aaff;;
+  border: none;
+  padding: 12px 0;
+  color: white;
+  font-weight: 800;
+  font-size: 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(69, 170, 255, 0.22);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  letter-spacing: 0.04em;
+  width:140px;
+  display: block;
+  text-align:conter;
+  margin-bottom:10px;
+}
+
+button[type="submit"]:hover {
+  background-color: #d34c4c;
+  box-shadow: 0 8px 20px rgba(211, 76, 76, 0.5);
+}
+
+
+.home-btn {
+  background-color: #45aaff;
+  border: none;
+  padding: 14px 28px;
+  color: white;
+  font-weight: 800;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(69, 170, 255, 0.22); /* 파란 그림자로 바꾸는 게 더 일관성 있음 */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  letter-spacing: 0.04em;
+  text-align:conter;
+  display: block;
+  width:140px;
+}
+
+/* 링크 */
+a {
+  color: #4a90e2;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: #305e8f;
+  text-decoration: underline;
+}
+
+/* 하위 제목 */
+h3 {
+  color: #172a4d;
+  margin-bottom: 22px;
+  border-bottom: 3px solid #4a90e2;
+  padding-bottom: 12px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+}
+
+/* 리뷰 박스 */
+#reviews {
+  width: 95%;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px rgba(74, 144, 226, 0.12);
+  padding: 22px 28px;
+  font-size: 15px;
+  color: #434a56;
+  transition: box-shadow 0.3s ease;
+}
+#reviews:hover {
+  box-shadow: 0 9px 30px rgb(74 144 226 / 0.25);
+}
+
+#reviewsRating {
+  font-size: 24px;
+  color: #ffcc33; /* 금색 별 */
+  user-select: none;
+  margin-bottom: 10px;
+}
+#reviewsRegdate {
+  font-size: 14px;
+  color: #9aa7bb;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+
+/* ------------테스트------------- */
+.profile-main-box {
+  width: 100%; /* 원하는 고정 너비 */
+  min-width: 600px;
+  max-width: 1450px;
+  margin: 48px auto 32px auto;
+  padding: 44px 40px;
+  background: #fff;
+  box-shadow: 0 7px 28px rgba(74, 144, 226, 0.13);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-bottom:250px;
+}
+
+.top-tabs {
+  display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+  margin-bottom: 42px;        /* 통상보다 크게 */
+}
+
+.top-tabs a {
+  color: #4a90e2;
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 2.5px solid transparent;
+  transition: border-bottom 0.2s, color 0.2s;
+}
+
+.top-tabs a.active,
+.top-tabs a:hover {
+  color: #222;
+  border-bottom: 2.5px solid #4a90e2;
+}
+
+/* 안쪽 컨텐츠 폭 조정 */
+.user-info-box,
+.liked-movies-box,
+.user-reviews-box {
+  width: 100%;
+  margin-bottom: 18px;
+  
+  /* 필요시 padding/min-height 추가 */
+}
+/* ---------------------------------*/
+
+
+
+/* 유저 정보 박스 */
+.user-info-box {
+  width: 100%;             /* 부모 대비 크기 */
+  margin: 24px auto 20px auto;
+  box-sizing: border-box; /* padding, border 포함 폭 계산 */
+
+  border: 3px solid #4a90e2;
+  padding: 16px 20px;
+  border-radius: 14px;
+  background-color: #fff;
+  box-shadow: 0 7px 22px rgba(74, 144, 226, 0.18);
+}
+
+.profile-main-container {
+  width: 95%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* 마이페이지 사용자 영화좋아요 목록 Modal창 디자인  */
+.modal {
+    display: none;
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+    background-color: rgba(0,0,0,0.7); 
+}
+
+/* 모달 내용 컨테이너 */
+.modal-content {
+	
+	 display: flex; 
+    flex-direction: column; 
+    background-color: #fefefe;
+    margin: 10% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 600px; 
+    max-width: 600px;
+    max-height: 70vh;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.modal-content-Review{
+	
+	display: flex; 
+    flex-direction: column; 
+    background-color: #fefefe;
+    margin: 10% auto; /* 상하 10%, 좌우 자동(중앙) */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 600px; /* 모달 너비 */
+    max-width: 600px;
+    max-height: 70vh;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#ReviewMoviesContainer{
+	flex-grow: 1;
+	overflow-y : auto; 
+	padding-right: 15px;
+	margin-top: 5px; 
+}
+
+
+#likedMoviesContainer{
+	flex-grow: 1;
+	overflow-y : auto; 
+	padding-right: 15px;
+	margin-top: 5px; 
+	
+}
+
+/* 좋아요 목록 모달 닫기 버튼 */
+.close-btn, .close-btn2 {
+    /* 폰트 및 크기 */
+    color: #aaa; /* 연한 회색 */
+    float: right; /* 오른쪽으로 정렬 */
+    font-size: 20px; /* 크기 조정 */
+    font-weight: bold; /* 굵게 */
+    line-height: 1; /* 높이 조정 */
+    margin-top: -10px; /* 제목과의 간격 조정 (필요에 따라) */
+    margin-right: -10px; /* 오른쪽 경계와의 간격 조정 (필요에 따라) */
+}
+
+/* 마우스 오버 및 포커스 시 스타일 */
+.close-btn:hover,
+.close-btn:focus,
+.close-btn2:hover,
+.close-btn2:focus {
+    color: #000; /* 검정색으로 변경 */
+    text-decoration: none; /* 밑줄 제거 */
+    cursor: pointer; /* 마우스 커서 모양 변경 */
+}
+
+/* 선택 사항: 모달 콘텐츠 내에서의 위치를 더 정확하게 제어하고 싶을 때 */
+.modal-content, .modal-content-Review {
+    position: relative; /* 자식 요소(닫기 버튼)의 절대 위치 기준 설정 */
+    padding: 20px;
+}
+
+/* 닫기 버튼을 모달 콘텐츠 오른쪽 위에 고정하고 싶을 경우 (선택 사항) */
+
+/* 수정 제안: 닫기 버튼을 더 깔끔하고 사용자 친화적으로 */
+.close-btn, .close-btn2 {
+    /* 기존 위치 유지: 모달 콘텐츠를 기준으로 우측 상단 */
+    position: absolute;
+    top: 18px; /* <--- 10px에서 18px로 수정하여 아래로 내림 */
+    right: 15px; /* 우측 여백 유지 */
+    
+    /* 색상 및 폰트 조정 */
+    color: #444; 
+    font-size: 15px; 
+    font-weight: 300; 
+    
+    /* 상호작용 개선 */
+    cursor: pointer; 
+    line-height: 1; 
+    
+    /* 애니메이션 유지 */
+    transition: color 0.3s ease, transform 0.1s ease; 
+    
+    /* 닫기 텍스트 대신 '×' 기호를 사용하는 경우 (추가적인 팁) */
+    /* text-decoration: none; */
+}
+/* ... (나머지 hover 스타일은 그대로 유지) ... */
+
+/* 마우스를 올렸을 때 (Hover/Focus) */
+.close-btn:hover,
+.close-btn:focus,
+.close-btn2:hover,
+.close-btn2:focus {
+    color: #000; 
+    text-decoration: none; 
+    outline: none; 
+    transform: scale(1.05); 
+}
+
+/* 마우스를 올렸을 때 (Hover/Focus) */
+.close-btn:hover,
+.close-btn:focus,
+.close-btn2:hover,
+.close-btn2:focus {
+    color: #000; /* 호버 시 확실하게 검은색으로 변경하여 클릭 유도 */
+    text-decoration: none; /* 밑줄 제거 (일반적으로 사용하지 않음) */
+    outline: none; /* 포커스 시 나타나는 기본 테두리 제거 */
+    transform: scale(1.05); /* 살짝 커지는 효과 추가 (선택 사항) */
+}
+
+
+/* ================================================================= */
+/* 기본 모달 스타일 */
+/* ================================================================= */
+
+/* 두 모달에 모두 적용되는 스타일 */
+.modal {
+    /* 화면 전체를 덮도록 고정 위치 설정 */
+    position: fixed;
+    z-index: 1000; /* 다른 콘텐츠 위에 나타나도록 높은 z-index 설정 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* 내용이 길 경우 스크롤 가능하도록 설정 */
+    background-color: rgba(0, 0, 0, 0.6); /* 배경을 어둡게 처리하기 위한 반투명 검은색 */
+    display: none; /* 기본적으로 숨김 (JavaScript로 제어) */
+    /* 선택 사항: 부드러운 페이드 인 효과 */
+    transition: opacity 0.3s ease;
+}
+
+/* 모달 내부 콘텐츠 컨테이너 스타일 */
+.modal-content, .modal-content-Review {
+    background-color: #fefefe; /* 흰색 배경 */
+    margin: 10% auto; /* 위에서 10% 떨어지고 수평 중앙 정렬 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* 폭 조정 가능 */
+    max-width: 600px; /* 큰 화면에서 가독성을 위한 최대 폭 제한 */
+    border-radius: 8px; /* 둥근 모서리 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 깊이감을 주는 그림자 */
+    animation: slideDown 0.4s; /* 열릴 때 간단한 애니메이션 */
+}
+
+/* 모달 열림 애니메이션 키프레임 */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px); /* 위에서 아래로 슬라이드 */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+h3 {
+    border-bottom: 2px solid #eee; /* 제목 아래 구분선 */
+    padding-bottom: 10px;
+    margin-top: 0;
+    color: #333; /* 진한 회색 텍스트 */
+}
+
+
+
+/* 콘텐츠가 동적으로 로드될 컨테이너 스타일 */
+#likedMoviesContainer, #ReviewMoviesContainer {
+    min-height: 100px; /* 내용이 적어도 기본 높이 유지 */
+    max-height: 400px; /* 최대 높이 제한 및 스크롤 허용 */
+    overflow-y: auto; /* 내용 영역만 스크롤되도록 설정 */
+    padding: 10px 0;
+}
+
+/* "내용 없음" 메시지 스타일 */
+#emptyMessage, #emptyReviewMessage {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f0f0f0; /* 연한 회색 배경 */
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+#emptyMessage p, #emptyReviewMessage p {
+    color: #555;
+    font-style: italic; /* 기울임꼴 */
+    margin: 0;
+}
+
+
+#showLikedMoviesBtn, #showReviewMoviesBtn {
+    background-color: #007bff; /* 기본 파란색 */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    margin-bottom:20px;
+    transition: background-color 0.3s ease;
+}
+
+#showLikedMoviesBtn:hover, #showReviewMoviesBtn:hover {
+    background-color: #0056b3; /* 호버 시 더 진한 파란색 */
+}
+

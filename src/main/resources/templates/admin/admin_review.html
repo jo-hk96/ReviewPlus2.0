@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/table-scroll.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>"></link>
+    <title>리뷰플러스 관리자</title>
+</head>
+<body>
+	<div id="header" th:fragment = "header">
+		<div class="nav">
+			<ul class="nav1">
+				<li><a href="/"><img src="/images/logo.png" alt="logo" class="logoimg"></a></li>
+				<li><a href="/Admin/AdminHome">관리자 홈</a></li>
+				<li><a href="/logout">로그아웃</a></li>
+			</ul>
+			<ul class="nav2">
+				<li><a href="/Admin/AdminUser">회원관리</a></li>
+				<li><a href="/Admin/AdminMovie">영화관리</a></li>
+				<li><a href="/Admin/AdminReview">리뷰관리</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="list">
+		
+		
+			<!-- 유저리뷰삭제완료 -->
+			<div th:if="${sucReviewDelete}" class="alert alert-success">
+			    <p th:text="${sucReviewDelete}"></p>
+			</div>
+			
+			<!-- 유저리뷰삭제오류 -->
+			<div th:if="${userReviewdelError}" class="alert alert-success">
+			    <p th:text="${userReviewdelError}"></p>
+			</div>
+				
+	
+	
+		<div class="list-title">전체 리뷰 목록</div>
+		<div class="searchbar-container">
+			<form action="/Admin/AdminReview" method = "get">			
+				<input type="search" th:value = ${searchKeyword} name ="reviewUserSearch" placeholder="회원 닉네임 입력">
+				<button class="search-btn" type="submit">검색</button>
+			</form>
+		</div>
+			<table class="table" >
+			<thead>
+				<tr>
+					<th>리뷰 번호</th>
+					<th>회원 닉네임</th>
+					<th>영화 제목</th>
+					<th>리뷰 내용</th>
+					<th>등록일</th>
+				</tr>
+			</thead>
+			<tbody>	
+				<tr th:each = "review : ${recentReviews}"
+					th:data-url="@{/Admin/AdminReviewDetail/{reviewId}(reviewId=${review.reviewId})}"
+					onclick="UserDetailLink(this);"
+					id = "UserReviewsList">
+					<td th:text ="${review.reviewId}"></td>
+					<td th:text ="${review.nickname}"></td>
+					<td th:text ="${review.title}"></td>
+					<td th:text ="${review.comment}"></td>
+					<td th:text ="${review.regDate}"></td>
+				</tr>
+			</tbody>	
+			</table>
+	</div>
+
+<script>
+		function UserDetailLink(rowElement){
+			const url = rowElement.getAttribute('data-url');
+			if(url){
+				window.location.href = url;
+			}
+		}
+	</script>	
+	
+</body>
+</html>

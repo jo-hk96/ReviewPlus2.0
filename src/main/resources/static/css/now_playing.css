@@ -1,0 +1,99 @@
+/* 전체 슬라이더 컨테이너 */
+.slider-container2 {
+  position: relative;
+  width: 100%;            
+  max-width: 1500px;     
+  margin: 0 auto;         
+  overflow: hidden;      
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* 영화 카드들이 들어가는 영역 */
+#movie-list2 {
+  display: flex;                  
+  gap: 20px;                      
+  transition: transform 0.4s ease;
+  will-change: transform;
+  
+}
+
+/* 각 영화 카드 */
+.movie-card2 {
+  flex: 0 0 calc(100% - 16px);  
+  max-width: 350px;             
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
+  overflow: hidden; 
+  transition: transform 0.2s;
+}
+
+.movie-card2:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 카드 안의 포스터 */
+.movie-card2 img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+/* 카드 텍스트 영역 */
+.movie-info2 {
+  padding: 5px;
+  font-size: 15px;
+  margin-left: 15px;
+  color:#36454F;
+}
+
+/* 이전/다음 버튼 */
+.nav-btn2 {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.8);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+#prev-btn2 { left: 10px; }
+#next-btn2 { right: 10px; }
+
+
+
+
+/* 반응형 브레이크포인트 */
+@media (max-width: 1200px) {
+  .movie-card2 {
+    flex: 0 0 calc(27% - 16px);
+    max-width: 280px;
+  }
+}
+@media (max-width: 900px) {
+  .movie-card2 {
+    flex: 0 0 calc(34% - 16px); 
+    max-width: 300px;
+  }
+}
+@media (max-width: 600px) {
+  .movie-card2 {
+    flex: 0 0 calc(52% - 16px);
+    max-width: 320px;
+  }
+}
+@media (max-width: 400px) {
+  .movie-card2 {
+    flex: 0 0 calc(100% - 16px); 
+    max-width: none;
+  }
+}

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/table-scroll.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>"></link>
+    <title>리뷰플러스 관리자</title>
+</head> 
+
+<body>
+
+	<!-- 헤더 -->
+	<div id="header" th:fragment = "header">
+		<div class="nav">
+			<ul class="nav1">
+				<li><a href="/"><img src="/images/logo.png" alt="logo" class="logoimg"></a></li>
+				<li><a href="/Admin/AdminHome">관리자 홈</a></li>
+				<li><a href="/logout">로그아웃</a></li>
+			</ul>
+			<ul class="nav2">
+				<li><a href="/Admin/AdminUser">회원관리</a></li>
+				<li><a href="/Admin/AdminMovie">영화관리</a></li>
+				<li><a href="/Admin/AdminReview">리뷰관리</a></li>
+			</ul>
+		</div>
+	</div>
+<div class="list">
+			<div class="list-title">회원 정보</div>
+					<table class="detail-table">
+						<tr>
+							<td class="label-td"><label class="labelname">가입일</label></td>
+							<td><input type="text"  class="inputbar" th:value="${#temporals.format(userDetails.createdAt , 'yyyy-MM-dd HH:mm:ss')}"  readonly></td>
+						</tr>
+						<tr>
+							<td class="label-td"><label class="labelname">아이디</label></td>
+							<td><input type="text" class="inputbar" th:value="${userDetails.userId}" readonly></td>
+						</tr>
+						<tr>
+							<td class="label-td"><label class="labelname">이름</label></td>
+							<td><input type="text" class="inputbar" th:value="${userDetails.pname}" readonly></td>
+						</tr>
+						<tr>
+							<td class="label-td"><label class="labelname">닉네임</label></td>
+							<td><input type="text" class="inputbar" th:value="${userDetails.nickname}" readonly></td>
+						</tr>
+						<tr>
+							<td class="label-td"><label class="labelname">이메일</label></td>
+							<td><input type="text" class="inputbar" th:value="${userDetails.email}" readonly></td>
+						</tr>
+						<tr>
+							<td class="label-td"><label class="labelname">생년월일</label></td>
+							<td><input type="text" class="inputbar" th:value="${userDetails.birthdate}" readonly></td>
+						</tr>
+						<tr>
+							<td class="label-td"><label class="labelname">회원상태</label></td>
+							<td><input type="text" class="inputbar" th:value="${userDetails.role}" readonly></td>
+						</tr>
+					</table>
+					<div class="btn-detail-container">
+						<button type="button" class="btn-detail" onclick="openModal('editUserModal')">회원수정</button>
+						<button type="submit" class="btn-detail" onclick="toggleStatusButtons('userStatusContainer')">회원상태변경</button>
+					</div>
+					
+					<!-- 회원 상태 변경 -->
+					
+				<form action = "/Admin/updateUserStatus" method = "post">
+					<input type ="hidden" name ="userId" th:value ="${userDetails.userId}">
+					<div id="userStatusContainer" class = "UserStatus">
+						<button type="submit" class="btn-detail" name="status" value="ROLE_ADMIN">관리자</button>
+						<button type="submit" class="btn-detail" name="status" value="ROLE_USER">일반회원</button>
+						<button type="submit" class="btn-detail" name="status" value="ROLE_DORMANT">휴면유저</button>
+					</div>
+				</form>	
+				
+				<!-- 회원 수정 모달  -->
+				<div id="editUserModal" class="modal">
+				    <div class="modal-content">
+				        <span class="close-button" onclick="closeModal('editUserModal')">닫기</span>
+				        <h2>회원 정보 수정</h2>
+				        <form action = "/Admin/userEdit" method = "POST">
+				        	<input type = "hidden" name = "userId" th:value ="${userDetails.userId}">
+				            <label for="editNickname">닉네임:</label><br>
+				            <input type="text" id="editNickname" name = "nickname" th:value="${userDetails.nickname}"><br>
+				            <label for="editPname">이름:</label><br>
+				            <input type="text" id="editPname" name = "pname" th:value="${userDetails.pname}"><br>
+				            <label for="editBirthdate">생년월일:</label><br>
+				            <input type="text" id="editBirthdate" name = "birthdate" th:value="${userDetails.birthdate}"><br>
+				            <label for="editEmail">이메일:</label><br>
+				            <input type="text" id="editEmail" name = "email" th:value="${userDetails.email}"><br>
+				            <button type="submit" class="btn-modal-edit">수정</button>
+				        </form>
+				    </div>
+				</div>
+				
+				
+				<!-- 회원 상태 수정 성공 메시지 -->
+				<div th:if="${sucStatus}" class="alert alert-status">
+				    <p th:text="${sucStatus}"></p>
+				</div>
+				
+				<!-- 수정 성공 메시지 -->
+	            <div th:if="${suc}" class="alert alert-success">
+				    <p th:text="${suc}"></p>
+				</div>
+				
+				
+				<!-- 수정 실패 메시지 -->
+	            <div th:if="${userEditError}" class="alert alert-danger">
+				    <p th:text="${userEditError}"></p>
+				</div>
+				
+				
+			<!-- 회원 리뷰 목록 -->	
+		<div class="list-title">회원 리뷰 목록</div>
+				<table class="table" >
+					<thead>
+						<tr>
+							<th>영화 제목</th>
+							<th>닉네임</th>
+							<th>리뷰 내용</th>
+							<th>평점</th>
+							<th>등록일</th>
+						</tr>
+					</thead>	
+					<tbody>
+						<!-- th:block div 처럼 html 속성이 남는게 아닌 html 자체 태그 없이 조건문 생성  -->
+						<th:block th:if="${!#lists.isEmpty(allUserReviews)}">	
+							<tr th:each = "userReviws : ${allUserReviews}"
+								th:data-url="@{/Admin/AdminReviewDetail/{reviewId}(reviewId=${userReviws.reviewId})}"
+								onclick="UserDetailLink(this);"
+								id = "UserReviewsList">
+								<td th:text = "${userReviws.title}"></td>
+								<td th:text = "${userReviws.nickname}"></td>
+								<td th:text = "${userReviws.comment}"></td>
+								<td th:text = "${userReviws.rating}"></td>
+								<td th:text = "${userReviws.regDate}"></td>
+							</tr>
+						</th:block>	
+							<tr th:if="${#lists.isEmpty(allUserReviews)}">
+							    <td colspan="5" style="text-align: center; color: black;">사용자의 리뷰가 없습니다.</td>
+							</tr>
+					</tbody>
+				</table>
+</div>
+	
+	
+	<!-- 회원 리뷰 행 선택시 해당 URL로 이동 -->	
+	<script>
+			function UserDetailLink(rowElement){
+				const url = rowElement.getAttribute('data-url');
+				if(url){
+					window.location.href = url;
+				}
+			}
+	</script>
+	
+	
+	<!-- 수정 모달 스크립트 -->
+<script>
+    // 모달 열기
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'block';
+        }
+    }
+
+    // 모달 닫기
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    // 모달 바깥을 클릭해도 닫힘
+    window.onclick = function(event) {
+        const modal = document.getElementById('editUserModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
+
+<!-- 회원상태 수정창 스크립트 -->
+<script>
+function toggleStatusButtons(containerId){
+	const container = document.getElementById(containerId)
+	  if (container) {
+          //show 클래스가 있으면 제거하고, 없으면 추가함
+          container.classList.toggle('show');
+      }
+  }
+</script>
+
+	
+</body>
+</html>

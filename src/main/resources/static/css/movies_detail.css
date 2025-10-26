@@ -1,0 +1,614 @@
+	
+	#editReviewModal {
+	display: none; 
+	position: fixed; 
+	top: 0; 
+	left: 0; 
+	width: 100%; 
+	height: 100%; 
+	background-color: rgba(0,0,0,0.5); 
+	z-index: 100;
+	}
+	
+	/* =======리뷰작성 디자인======= */
+	.rating-area {
+	    font-size: 2em; /* 별 크기 설정 */
+	    color: #ccc;    /* 기본 색상: 회색 (비활성화) */
+	    cursor: pointer;
+	    user-select: none; /* 드래그 방지 */
+	}
+	
+	/* 개별 별 스타일 */
+	.star {
+	    transition: color 0.2s;
+	}
+	
+	.rating-area:hover .star {
+	    color: gold; 
+	}
+	
+	.star.on {
+	    color: gold;
+	}
+	
+	.rating-area .star:hover ~ .star {
+	    color: #ccc; 
+	}
+	
+	
+	
+	
+	/* 리뷰목록 디자인  */
+	#reviewsRegdate{
+	 font-size: 0.8em; color: #666; margin-top: 5px;
+	}
+	
+	#reviews{
+	border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;
+	}
+	
+	
+	#reviewsRating{
+	padding-right: 10px;
+	}
+	
+	
+	#reviewsRating > span{
+	color: gold;
+	}
+	
+	body {
+    background-color: white;
+    color: #333;
+    align-items: center;
+}
+	
+
+
+/* 좋아요 버튼의 기본 스타일 */
+.like-btn {
+    /* 배경 및 테두리 */
+    background-color: #f0f0f0; 
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 20px; 
+    
+    /* 패딩 및 폰트 */
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer; /* 마우스 오버 시 포인터 변경 */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.1s; 
+    
+    /* 하트 아이콘과 텍스트 간격 */
+    letter-spacing: 1px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 마우스 오버 시 스타일 (호버 효과) */
+.like-btn:hover {
+    background-color: #e0e0e0;
+    border-color: #a0a0a0;
+    /* transform: translateY(-1px); 마우스를 올리면 약간 위로 올라가는 효과 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+/* 클릭 시 스타일 (활성 상태) */
+.like-btn:active {
+    transform: scale(0.98); /* 클릭 시 약간 축소되는 효과 */
+}
+
+/* '좋아요'를 누른 상태의 스타일 (클래스: liked) */
+.like-btn.liked {
+    /* 배경 및 테두리 */
+    background-color: #ff4d4d; /* 빨간색 배경 */
+    color: white; /* 흰색 글자색 */
+    border-color: #ff4d4d;
+    
+    /* 텍스트 강조 */
+    font-weight: bolder;
+    /* box-shadow: 0 0 8px rgba(255, 77, 77, 0.5); 약간의 빛나는 효과 */
+}
+
+/* '좋아요'를 누른 상태의 마우스 오버 시 스타일 */
+.like-btn.liked:hover {
+    background-color: #cc0000;
+    border-color: #cc0000;
+}
+
+/* 리뷰 등록 버튼 기본 스타일 */
+#submit-review-btn {
+    /* 색상 및 배경 */
+    background-color: #4CAF50; 
+    color: white;
+    
+    /* 테두리 및 모서리 */
+    border: none;
+    border-radius: 8px; 
+    
+    /* 패딩 및 폰트 */
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase; 
+    cursor: pointer;
+    
+    /* 배치 및 효과 */
+    margin-top: 15px; 
+    display: block; 
+    width: auto;
+    transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+/* 마우스 오버 시 스타일 (호버 효과) */
+#submit-review-btn:hover {
+    background-color: #45a049; /* 약간 어두운 녹색 */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* 그림자 강화 */
+}
+
+/* 클릭 시 스타일 (활성 상태) */
+#submit-review-btn:active {
+    background-color: #3e8e41; /* 더 어두운 녹색 */
+    transform: translateY(1px); /* 약간 아래로 눌리는 효과 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 약화 */
+}
+
+/* [수정된] 영화 상세 정보 컨테이너 스타일 */
+#movie-detail-container {
+    background-color: #ffffff; /* 흰색 배경 유지 */
+    border-radius: 12px;
+    
+    /* 1. 경계선 강조: 얇지만 진한 색상 */
+    border: 1px solid #c0c0c0; /* 중간 톤의 회색 테두리 */
+    
+    /* 2. 그림자 강화: 더 뚜렷한 입체감 */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12); /* 그림자를 더 강하게 하여 주요 섹션임을 강조 */
+    
+    margin-top: 100px; /* 상단 여백 추가 (원래 스타일에서 부족했다면) */
+}
+
+
+/* 제목 스타일 (h2) */
+h2 {
+    font-size: 26px;
+    font-weight: 700; 
+    color: #1a1a1a;
+    border-left: 5px solid #007bff; 
+    padding-left: 10px;
+    margin-bottom: 20px;
+    /* movie-detail-container 안에 있을 경우, border-left와 충돌하지 않도록 margin-top을 0으로 설정할 수도 있습니다. */
+    margin-top: 0; 
+}
+
+.movie-actions {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    margin-bottom: 20px;
+}
+
+/* 별점 평균 표시 스타일 */
+.rating-display h3 {
+    font-size: 20px;
+    color: #555;
+    margin: 0;
+}
+
+/* 좋아요 버튼 스타일 (이전에 제안된 것과 유사하지만 전문성 강화) */
+.like-btn {
+    background-color: #f0f0f0;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 10px 25px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.like-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.like-btn.liked {
+    background-color: #ff4d4d;
+    color: white;
+    border-color: #ff4d4d;
+    box-shadow: 0 2px 8px rgba(255, 77, 77, 0.4);
+}
+
+.like-btn.liked:hover {
+    background-color: #cc0000;
+    border-color: #cc0000;
+}
+
+/* [수정된] 내 리뷰 작성 컨테이너 스타일 */
+.review-form-container {
+    background-color: #ffffff; /* 흰색 배경 유지 */
+    padding: 30px; /* 패딩을 약간 늘려 여유 공간 확보 */
+    border-radius: 12px;  /* 버튼 꼭짓점을 뭉툭하게 */
+    
+    /* 1. 경계선 강조: 얇지만 진한 색상 */
+    border: 1px solid #c0c0c0; /* 밝은 회색 대신 중간 톤의 회색 */
+    
+    /* 2. 그림자 강화: 더 뚜렷한 입체감 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 그림자를 더 진하게 하여 뚜렷하게 보이게 함 */
+    
+    margin-bottom: 30px;
+}
+
+/* 추가적으로, 입력 필드도 시각적으로 개선하여 폼의 전문성을 높입니다. */
+#review-comment {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    /* 테두리도 진한 색상으로 통일 */
+    border: 1px solid #a0a0a0; 
+    border-radius: 6px;
+    box-sizing: border-box; 
+    font-size: 15px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#review-comment:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* 포커스 시 푸른색 하이라이트 */
+    outline: none;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+
+
+/* 별점 선택 영역 */
+.rating-area {
+    display: flex;
+    font-size: 28px;
+    color: #ccc; /* 기본 회색 */
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.rating-area .star {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* 선택된 별 */
+.rating-area .star.on {
+    color: gold;
+}
+
+/* 호버 중인 별과 그 이전 별 */
+.rating-area .star:hover,
+.rating-area .star:hover ~ .star {
+    color: gold;
+}
+
+/* 리뷰 등록 버튼 스타일 (강조) */
+#submit-review-btn {
+    background-color: #007bff; /* 브랜드 메인 색상 */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    margin-top: 15px;
+}
+
+#submit-review-btn:hover {
+    background-color: #0056b3;
+}
+
+#submit-review-btn:active {
+    transform: scale(0.98);
+}
+
+.review-list-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.no-reviews-message {
+    text-align: center;
+    padding: 30px;
+    color: #999;
+    font-style: italic;
+}
+
+/* 개별 리뷰 카드 스타일 */
+.review-item {
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: box-shadow 0.2s;
+}
+
+.review-item:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* 마우스 오버 시 미묘한 강조 */
+}
+
+.review-header {
+    display: flex;
+   /*  justify-content: space-between; */
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 10px;
+}
+
+.review-header strong {
+    color: #1a1a1a;
+    font-size: 16px;
+}
+
+.review-header span {
+    font-weight: 500;
+    color: #333;
+}
+
+.deleted-user {
+    color: #999;
+    font-style: italic;
+}
+
+.review-content {
+    margin-bottom: 10px;
+}
+
+.review-rating-info {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.review-stars {
+    color: #ffc107; /* 별점 색상 */
+    letter-spacing: 2px;
+}
+
+.review-text {
+    font-size: 15px;
+    color: #555;
+    white-space: pre-wrap; /* 리뷰 내용의 줄바꿈 유지 */
+}
+
+.review-footer {
+    font-size: 13px;
+    color: #999;
+    text-align: right;
+    margin-top: 10px;
+    padding-top: 5px;
+    border-top: 1px solid #f9f9f9;
+}
+
+/* 리뷰 액션 버튼 영역 */
+.review-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+/* 공통 버튼 스타일 */
+.review-actions button {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* 수정 버튼 */
+.review-actions .edit-btn {
+    background-color: #4CAF50; /* 녹색 */
+    color: white;
+}
+
+.review-actions .edit-btn:hover {
+    background-color: #45a049;
+}
+
+/* 삭제 버튼 */
+.review-actions .delete-btn {
+    background-color: #f44336; /* 빨간색 */
+    color: white;
+}
+
+.review-actions .delete-btn:hover {
+    background-color: #da190b;
+}
+
+
+.review-box{
+	font-size : 20px;
+}
+
+/* --- 모달 오버레이 스타일 (전체 화면 배경) --- */
+#editReviewModal {
+    /* 모달이 항상 화면 중앙에 위치하도록 고정 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 배경을 어둡고 투명하게 만들어 모달에 집중되도록 함 */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* 모달 내용을 중앙에 배치 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 기본적으로는 숨김 (JS로 'display: flex' 또는 'display: block'을 주어 보이게 해야 함) */
+    display: none; 
+    z-index: 1000; /* 다른 요소보다 위에 오도록 설정 */
+}
+
+/* --- 모달 내용 박스 스타일 --- */
+/* 원래 HTML 구조의 인라인 스타일을 대체하여 더 깔끔하게 만듭니다. */
+#editReviewModal > div {
+    background-color: #ffffff; /* 흰색 배경 */
+    width: 90%; /* 화면 너비에 맞춰 반응형으로 시작 */
+    max-width: 450px; /* 최대 너비 설정 */
+    padding: 30px;
+    border-radius: 12px; /* 부드러운 모서리 */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* 은은한 그림자 */
+    /* 모달 등장 시 애니메이션 효과를 위해 추가할 수도 있습니다. */
+    transform: scale(1);
+    transition: transform 0.3s ease-out;
+}
+
+#editReviewModal h3 {
+    text-align: center;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #eee; /* 제목 아래 구분선 */
+    padding-bottom: 10px;
+}
+
+/* --- 폼 그룹 및 라벨 스타일 --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label,
+.form-group strong {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+    font-size: 1rem;
+}
+
+/* --- 댓글 입력창 스타일 --- */
+#editComment {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    resize: vertical; /* 수직으로만 크기 조절 가능 */
+    box-sizing: border-box; /* 패딩과 보더가 width에 포함되도록 */
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+}
+
+#editComment:focus {
+    border-color: #007bff; /* 포커스 시 색상 변경 */
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* --- 평점 (별점) 영역 스타일 --- */
+#editRatingArea {
+    display: flex;
+    gap: 5px; /* 별 사이 간격 */
+    font-size: 2rem; /* 별 크기 */
+    cursor: pointer;
+    justify-content: center; /* 별점 중앙 정렬 */
+}
+
+.rating-area .star {
+    color: #ccc; /* 비활성화된 별 색상 (회색) */
+    transition: color 0.2s;
+    user-select: none; /* 드래그 방지 */
+}
+
+.rating-area .star:hover,
+.rating-area .star[aria-checked="true"] {
+    color: #ffc107; /* 활성화 및 호버 시 색상 (노란색/금색) */
+}
+
+/* --- 버튼 스타일 --- */
+#editReviewModal button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-left: 10px;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+#editReviewModal button:first-child {
+    margin-left: 0; /* 첫 번째 버튼은 왼쪽 마진 제거 */
+}
+
+#saveEditBtn {
+    background-color: #007bff; /* 파란색 계열의 '수정 완료' 버튼 */
+    color: white;
+}
+
+#saveEditBtn:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* 취소 버튼 */
+#editReviewModal button[onclick*='none'] {
+    background-color: #6c757d; /* 회색 계열의 '취소' 버튼 */
+    color: white;
+}
+
+#editReviewModal button[onclick*='none']:hover {
+    background-color: #5a6268;
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
+
+/* 버튼들을 오른쪽으로 정렬 */
+#editReviewModal > div > button {
+    float: right;
+    margin-top: 10px;
+}
+
+/* 버튼 주변의 float 문제를 해결하기 위한 컨테이너 (필요하다면) */
+/* HTML 구조에 따라 이 스타일이 필요할 수도, 필요 없을 수도 있습니다. */
+/* 예: <div class="button-group"> 안에 버튼들을 넣고 이 div에 clear:both를 적용 */
+/* 현재 HTML 구조에는 별도의 버튼 그룹이 없으므로, 필요 시 추가해 주세요. */
+/* 임시로 버튼들을 감싸는 부모 요소에 clear fix를 적용합니다. */
+#editReviewModal > div::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* --- 반응형 디자인 --- */
+@media (max-width: 500px) {
+    #editReviewModal > div {
+        margin: 50px auto; /* 작은 화면에서 상하 마진 조정 */
+        padding: 20px;
+    }
+    
+    #editRatingArea {
+        font-size: 1.8rem; /* 작은 화면에서 별 크기 조정 */
+    }
+
+    #editReviewModal button {
+        width: 100%; /* 작은 화면에서 버튼 너비 100% */
+        margin: 5px 0 0 0 !important; /* 마진 정리 */
+        float: none !important; /* float 해제 */
+    }
+}
+
+

@@ -1,0 +1,29 @@
+#scrollToTopBtn {
+   /* 화면 오른쪽 아래에 고정 */
+    position: fixed; 
+    bottom: 50px; 
+    right: 50px; 
+    
+   
+   /* 버튼 모양 */
+    z-index: 99;
+    width:80px;
+    height:80px;
+    border: none; 
+    outline: none; 
+    color: white;
+    cursor: pointer; 
+    padding: 15px; 
+    border-radius: 50px; 
+    background-color:gray;
+    font-size: 18px;
+    opacity: 1.0; 
+    transition: opacity 0.2s;
+     
+}
+
+/* 마우스 올리면 더 진하게 */
+#scrollToTopBtn:hover {
+    opacity: 2;
+    background-color: black;
+}		
