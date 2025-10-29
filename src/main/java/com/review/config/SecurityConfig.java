@@ -87,7 +87,6 @@ public class SecurityConfig {
 		    			.userInfoEndpoint(userInfo -> userInfo
 		    			.userService(customOAuth2UserService)) //DB저장등 후처리 서비스 담당
 		    			
-		    			//SuccessHandler 람다함수
 		    			.successHandler((request , response , authentication) ->{
 		    			    Object principal = authentication.getPrincipal();
 		    			    if(principal instanceof CustomUserDetails) {

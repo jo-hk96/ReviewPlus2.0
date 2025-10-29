@@ -4,7 +4,7 @@
                   
  
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=0.5">
     <link rel="stylesheet" href="/css/top_rate.css">
     <link rel="stylesheet" href="/css/now_playing.css">
     <link rel="stylesheet" href="/css/index.css">
@@ -17,7 +17,7 @@
 </head>
 <style>
 	#MainMovieList{
-	color:gray;
+	color:white;
 	}
 	
 	#MainMovieList:hover{
@@ -93,7 +93,6 @@
 		 </div>
 	 	 <div id="loading-indicator2">영화 리스트 불러오는중...</div>
 	
-		<hr>     	
 		  <!--최고평점-->
 		  <div class="slider-container">
 		  		<h2><a id= "MainMovieList" href ="/MoviesList?category=top_rated">최고평점</a></h2>
@@ -102,13 +101,12 @@
 			    <button id="next-btn" class="nav-btn">&gt;</button> 
 		  </div>
 		  <div id="loading-indicator">영화 리스트 불러오는중...</div>
-	  		<hr>
 	</div>
 
 
 	<!--  Url 앵커 : #review-' + ${review.reviewId} -->
 	<div class = "slider-container2">	
-			<h2>최신 리뷰</h2>
+			<h2 style="color:white;">최신 리뷰</h2>
 			<div class="review-container">
 					  	<a class="review-card" th:each ="review : ${recentReviews}"
 				           th:href="@{/detail/{apiId}(apiId=${review.apiId})} + '#review-' + ${review.reviewId}"

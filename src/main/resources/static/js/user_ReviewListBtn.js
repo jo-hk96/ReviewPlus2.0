@@ -56,7 +56,7 @@
         		
 		   if (movieId) {
            html += `
-            <a href="http://localhost:9090/detail/${movieId}${reviewAnchor}" 
+            <a href="/detail/${movieId}${reviewAnchor}" 
                class="review-link-wrapper" 
                style="text-decoration: none; color: inherit; display: block;">
                 

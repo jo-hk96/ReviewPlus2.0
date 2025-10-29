@@ -2,24 +2,25 @@
 #header{
     display: grid;
     grid-template-columns: auto 1fr auto;
-    /* 높이 및 기본 스타일 */
     height: 75px;
-    background-color: black;
-    align-items: center; /* 세로 중앙 정렬 */
+    align-items: center; 
     padding: 0 20px;
     position: fixed;
-    top: 0;       /* 화면의 맨 아래쪽(0px)에 붙임 */
-    left: 0;         /* 화면의 왼쪽 끝에 붙임 */
+    top: 0;      
+    left: 0;        
     width: 100%;       
-    z-index: 1000;     
-    background-color:white;
+    z-index: 1000; 
     padding: 15px;
     box-sizing: border-box;
     font-size:20px;
-    border-bottom: 1px solid gray;
-     white-space: nowrap;
-}
-
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.17);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    box-shadow: 
+	    0 8px 32px rgba(0, 0, 0, 0.1),
+	}
+	
 a{
 	text-decoration: none;	
 }
@@ -89,21 +90,21 @@ a{
 #movieSearch{
 	width:475px;
 	height:45px;
-	
 }
-
+/* 헤더유저정보 */
 .userIndex > a{
 	font-weight:bold;
-	color:gray;
+	color:white;
 }
-
 .userIndex > a:hover{
 	color:black;
 }
 
+
+/* 헤더메뉴 */
 .headerLeft > span > a{
 		font-weight:bold;
-		color:gray;
+		color:white;
 	}
 	
 .headerLeft > span > a:hover{
