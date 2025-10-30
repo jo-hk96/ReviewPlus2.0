@@ -13,8 +13,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+@Data
 @Entity
 @Table(name = "USER_REVIEW_REPLY") //대댓글테이블
 @Builder
@@ -34,7 +37,7 @@ public class userReviewReplyEntity {
     @JoinColumn(name = "REVIEW_ID") // 외래키 컬럼명
     private userReviewEntity reviewEntity; // Review 엔티티 참조
 
-    // 2. 댓글 작성자 참조
+    // 2. 댓글 작성자 참조	
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private userEntity userEntity;
@@ -47,7 +50,7 @@ public class userReviewReplyEntity {
     @Builder.Default
     @Column(name = "REGDATE", updatable = false)
     private LocalDateTime regDate = LocalDateTime.now();
-	
-	
+
+    
 	
 }

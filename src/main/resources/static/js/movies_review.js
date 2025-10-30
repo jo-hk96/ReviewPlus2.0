@@ -219,8 +219,6 @@ function createReviewHtml(review) {
 	            </table>
 	            ${actionButtonsHtml}
            </div>
-           
-           
 			<div id="reply-form-for-${review.reviewId}" class="reply-form-container reply-form-hidden">
 			    <span style="
 			        font-size: 1.5em;
@@ -232,14 +230,14 @@ function createReviewHtml(review) {
 			        vertical-align: top;
 			    ">└</span>
 			    <textarea id="reply-comment-${review.reviewId}" placeholder="댓글을 작성해주세요." style="width: 50%;" rows="5" cols="100"></textarea>
-			    <button onclick="registerReply(${review.reviewId})">등록</button>
+			    <button onclick="registerReply(${review.reviewId},'${review.nickname}')">등록</button>
 			</div>
 	    `;
 	}
 
 
 //대댓글 등록 로직
-function registerReply(reviewId){
+function registerReply(reviewId,nickname){
 	//대댓글 내용 가져오기
 	const textarea = document.getElementById(`reply-comment-${reviewId}`);
 	const comment = textarea.value.trim();
@@ -254,7 +252,7 @@ function registerReply(reviewId){
 	const replyData = {
 		reviewId: reviewId,
 		comment: comment,
-		userId: loggedInUserId
+		nickname: nickname
 	};
 	
 	//RestAPI로 컨트롤러에 보냄
@@ -272,13 +270,12 @@ function registerReply(reviewId){
 		throw new Error('댓글 등록 실패:' + response.statusText);
 	})
 	.then(newReply => {
-		//성공 시 처리(화면 갱신)
 		alert('댓글이 등록 되었습니다.');
 		textarea.value = ''; //입력창 초기화
-		//newReply안에 있는 객체들을 꺼내서 보여주기...
-		//.....
-		//.....
+		const replyListContainer = document.getElementById('reply-list');
+		const newReplyElement = createReplyElement(newReply);
 		
+		replyListContainer.prepend(newReplyElement);
 		
 	})
 	.catch(error => {
@@ -287,7 +284,24 @@ function registerReply(reviewId){
 	})
 }
 
-
+function createReplyElement(replyData){
+	const formattedDate = new Date(replyData.regDate).toLocaleDateString();
+	
+	const replyItem = document.createElement('div');
+	replyItem.classList.add('reply-item');
+	replyItem.setAttribute('data-reply-id', replyData.replyId);
+	
+	replyItem.innerHTML = `
+		<div class= "reply-header">
+			<span class = "reply-nickname">${replyData.nickname}</span>
+			<span class = "reply-date">${formattedDate}</span>
+		</div>
+		<div class = "reply-comment">
+			<p>${replyData.comment}</p>
+		</div>		
+	`;
+	return replyItem;
+}
 
 
 
@@ -303,7 +317,6 @@ function replyReview(reviewId){
 	}
 }
 
-
 //==============리뷰 삭제 로직===============================
 function deleteReview(reviewId) {
     if (!confirm('리뷰를 삭제하시겠습니까?')) {
@@ -317,21 +330,18 @@ function deleteReview(reviewId) {
         return;
     }
 
-    // 1. DELETE API 호출 (이 로직은 서버 응답이 성공(204)했다고 가정)
     fetch(`/api/userReview/${reviewId}`, {
         method: 'DELETE' 
     })
     .then(response => {
         if (response.status === 204) { 
             // 2. HTML에서 해당 리뷰 요소 제거
-            // ⭐⭐ 요소 검색 코드: 정확한 셀렉터를 사용하고 null 체크 ⭐⭐
             const reviewElement = document.querySelector(`div[data-review-id="${reviewId}"]`);
             
             if (reviewElement) {
-                reviewElement.remove(); // 여기서 에러가 나지 않도록 null 체크
+                reviewElement.remove();
                 alert('리뷰가 삭제되었습니다.');
             } else {
-                // 서버는 삭제되었으나 화면에서 찾지 못했을 때
                 alert('리뷰는 삭제되었으나, 화면 갱신에 문제가 발생했습니다.');
             }
         } else if (response.status === 403) {

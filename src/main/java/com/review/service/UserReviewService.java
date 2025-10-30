@@ -26,15 +26,12 @@ public class UserReviewService{
     
     
     
-    // 데이터 변경 작업(저장)이므로 트랜잭션 관리 어노테이션 사용
     @Transactional
     public userReviewEntity saveReview(UserReviewDTO userReviewDTO , Long apiId ) {
     	//UserEntity에서 userId찾기
 	    userEntity user = userRepository.findByNickname(userReviewDTO.getNickname())
 	    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자 닉네임입니다."));
-	    //api_id로 영화 제목 조회
 	    String movieTitle = tmdbApiService.getMovieTitle(userReviewDTO.getApiId());
-	    //userReviewEntity 에서 리뷰 정보를 저장
         userReviewEntity newReview = userReviewEntity.builder()
         		.userEntity(user)                    // 2번에서 찾은 User Entity
                 .comment(userReviewDTO.getComment()) // DTO에서 받은 리뷰 내용

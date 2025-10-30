@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.review.DTO.ReplyResponseDTO;
 import com.review.DTO.UserReviewDTO;
+import com.review.DTO.UserReviewReplyDTO;
 import com.review.DTO.movieDTO;
 import com.review.config.CustomUserDetails;
 import com.review.entity.userReviewEntity;
 import com.review.service.MovieService;
+import com.review.service.UserReviewReplyService;
 import com.review.service.UserReviewService;
 
 @RestController
@@ -31,6 +34,9 @@ public class UserReviewApiController {
 	
 	@Autowired
 	private MovieService movieService;
+	
+	@Autowired
+	private UserReviewReplyService userReviewReplyService;
 	
 	//사용자 내정보 좋아요 목록
 	@GetMapping("/api/user/likedMovies")
@@ -77,11 +83,26 @@ public class UserReviewApiController {
 	@PatchMapping("api/userReview/{reviewId}")
 	public ResponseEntity<UserReviewDTO> updateReview(
 	        @PathVariable Long reviewId, 
-	        @RequestBody UserReviewDTO updateDto, // 클라이언트가 보낸 원본 DTO
+	        @RequestBody UserReviewDTO updateDto,
 	        @AuthenticationPrincipal CustomUserDetails cud) {
 	    UserReviewDTO updatedReview = userReviewService.updateReview(reviewId, updateDto, cud.getUserId());
 	    return ResponseEntity.ok(updatedReview);
 	}
+	
+	//대댓글 등록
+	@PostMapping("/api/replies")
+	public ResponseEntity<ReplyResponseDTO> CreateReviewReply(@RequestBody UserReviewReplyDTO replyDTO,
+												  @AuthenticationPrincipal CustomUserDetails userDetails
+												  ){
+		//코멘트 내용이 비어있으면 400 Bad Request
+		if(replyDTO.getComment() == null || replyDTO.getComment().trim().isEmpty()) {
+			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+		}
+		Long loggedInUserId = userDetails.getUserId();
+		ReplyResponseDTO responseDTO = userReviewReplyService.registerReply(replyDTO,loggedInUserId);
+	   return new ResponseEntity<ReplyResponseDTO>(responseDTO,HttpStatus.CREATED);
+	}
+	
 
 	
 }
