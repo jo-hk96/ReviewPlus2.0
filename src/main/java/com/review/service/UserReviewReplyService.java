@@ -2,8 +2,11 @@ package com.review.service;
 
 
 
-import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.review.DTO.ReplyResponseDTO;
 import com.review.DTO.UserReviewReplyDTO;
@@ -18,12 +21,16 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserReviewReplyService{
 	
 	private final UserReviewReplyRepository userReviewReplyRepository;
 	private final UserRepository userRepository;
 	private final UserReviewRepository userReviewRepository;
 	
+	
+	
+	//대댓글 등록 서비스
 	public ReplyResponseDTO registerReply(UserReviewReplyDTO replyDTO, Long loggedInUserId) {
 		//replyDTO에서 들고온 객체 참조
 		userReviewEntity reviewEntity = userReviewRepository.getReferenceById(replyDTO.getReviewId());
@@ -37,5 +44,23 @@ public class UserReviewReplyService{
 		userReviewReplyEntity savedReply = userReviewReplyRepository.save(replyEntity);
 		return new ReplyResponseDTO(savedReply);
 	}
+	
+	
+	
+	//대댓글 목록 조회
+	@Transactional(readOnly = true) //트랜잭셔널 읽기 전용
+	public List<ReplyResponseDTO> getRepliesByReviewId(Long reviewId){
+		//Entity 목록을 가져옴
+		List<userReviewReplyEntity> replies = userReviewReplyRepository.findAllByReviewEntity_ReviewId(reviewId);
+		
+		//Entity 목록을 DTO 목록으로 변환
+		return replies.stream()
+				.map(ReplyResponseDTO::new)
+				.collect(Collectors.toList());
+	}
+	
+	
     	
-  }
+
+
+}

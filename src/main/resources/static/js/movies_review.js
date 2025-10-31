@@ -122,7 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     const apiIdInput = document.getElementById('apiId');
     if (!apiIdInput || !apiIdInput.value) {
-        // console.warn("apiId를 찾을 수 없습니다. 리뷰 로딩을 건너뜁니다.");
         return; 
     }
     
@@ -152,7 +151,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // 4. 각 리뷰를 HTML로 만들고 컨테이너에 추가
             reviews.forEach(review => {
                 const reviewHtml = createReviewHtml(review); // 기존 함수 사용
-                // 목록의 끝(가장 아래)에 추가합니다.
                 reviewListContainer.insertAdjacentHTML('beforeend', reviewHtml); 
             });
             scrollToAnchor();
@@ -219,6 +217,8 @@ function createReviewHtml(review) {
 	            </table>
 	            ${actionButtonsHtml}
            </div>
+           
+           
 			<div id="reply-form-for-${review.reviewId}" class="reply-form-container reply-form-hidden">
 			    <span style="
 			        font-size: 1.5em;
@@ -235,31 +235,26 @@ function createReviewHtml(review) {
 	    `;
 	}
 
-
-//대댓글 등록 로직
+//====================대댓글 등록 로직=======================
 function registerReply(reviewId,nickname){
-	//대댓글 내용 가져오기
 	const textarea = document.getElementById(`reply-comment-${reviewId}`);
 	const comment = textarea.value.trim();
 	
-	//내용 비었는지 확인
 	if(!comment){
 		alert('댓글 내용을 입력해주세요.');
 		return;
 	}
 	
-	//서버로 보내기 위한 내용 (JSON형식)
 	const replyData = {
 		reviewId: reviewId,
 		comment: comment,
 		nickname: nickname
 	};
 	
-	//RestAPI로 컨트롤러에 보냄
 	fetch('/api/replies',{
 		method: 'POST',
 		headers:{
-			'Content-Type': 'application/json' //json 형식으로 명시
+			'Content-Type': 'application/json' 
 		},
 		body: JSON.stringify(replyData)
 	})
@@ -271,12 +266,10 @@ function registerReply(reviewId,nickname){
 	})
 	.then(newReply => {
 		alert('댓글이 등록 되었습니다.');
-		textarea.value = ''; //입력창 초기화
+		textarea.value = '';
 		const replyListContainer = document.getElementById('reply-list');
 		const newReplyElement = createReplyElement(newReply);
-		
 		replyListContainer.prepend(newReplyElement);
-		
 	})
 	.catch(error => {
 		console.error('댓글 등록 중 오류:', error);
@@ -305,17 +298,53 @@ function createReplyElement(replyData){
 
 
 
+
+
 //댓글달기 토글
 function replyReview(reviewId){
-	//formId를 만들어줌
 	const formId = `reply-form-for-${reviewId}`;
-	//formId를 불러와서 replyForm 변수저장
 	const replyForm = document.getElementById(formId);
-	//reply
 	if(replyForm){
 		replyForm.classList.toggle('reply-form-hidden');
 	}
 }
+
+//-----------------대댓글 목록 보여주기------------------
+document.addEventListener('DOMContentLoaded', () =>{
+	const reviewId = document.getElementById('current-review-id').value;
+	if(reviewId){
+		fetchReplies(reviewId);
+	}
+});
+
+function fetchReplies(reviewId){
+	const apiUrl = `/api/reviews/${reviewId}/replies`;
+	
+	fetch(apiUrl)
+	.then(response =>{
+		if(!response.ok){
+			throw new Error('댓글 목록을 불러오는데 실패했습니다.');
+		}
+		return response.json();
+	})
+	.then(replies =>{
+		const replyListContainer = document.getElementById('reply-list');
+		replyListContainer.innerHTML = '';
+		
+		replies.forEach(reply =>{
+			const replyElement = createReplyElement(reply);
+			replyListContainer.appendChild(replyElement);
+		});
+		document.getElementById('reply-conut').textContent = replies.length;
+	})
+	.catch(error =>{
+		console.error('댓글 조회 중 오류:', error);
+		document.getElementById('reply-list').innerHTML =
+			`<p style="color:red;">댓글 목록을 불러올 수 없습니다.(${error.message})</p>`;
+	});
+}
+
+
 
 //==============리뷰 삭제 로직===============================
 function deleteReview(reviewId) {
@@ -358,7 +387,6 @@ function deleteReview(reviewId) {
 
 
 
-
 //================리뷰 수정 로직=============================
 //--------------------리뷰 수정 모달-----------------------
 function openEditModal(reviewId) {
@@ -392,8 +420,6 @@ function openEditModal(reviewId) {
     // 5. 모달 표시
     document.getElementById('editReviewModal').style.display = 'block';
 }
-
-
 
 
 //-------------리뷰 수정 별점 이벤트리스너----------------

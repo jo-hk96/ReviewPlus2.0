@@ -96,13 +96,20 @@ public class UserReviewApiController {
 												  ){
 		//코멘트 내용이 비어있으면 400 Bad Request
 		if(replyDTO.getComment() == null || replyDTO.getComment().trim().isEmpty()) {
-			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-		}
+			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);}
 		Long loggedInUserId = userDetails.getUserId();
 		ReplyResponseDTO responseDTO = userReviewReplyService.registerReply(replyDTO,loggedInUserId);
 	   return new ResponseEntity<ReplyResponseDTO>(responseDTO,HttpStatus.CREATED);
 	}
 	
-
+	//대댓글 목록 조회
+	@GetMapping("/api/reviews/${reviewId}/replies")
+	public ResponseEntity<List<ReplyResponseDTO>> getReplies(
+				@PathVariable("reviewId") Long reviewId
+			){
+		//DTO 목록을 호출
+		List<ReplyResponseDTO> replies = userReviewReplyService.getRepliesByReviewId(reviewId);
+		return ResponseEntity.ok(replies);
+	}
 	
 }

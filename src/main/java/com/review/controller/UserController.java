@@ -125,9 +125,9 @@ public class UserController {
 	       re.addFlashAttribute("sucMsg","수정 하신 정보가 변경되었습니다.다시 로그인 해주세요.");
 	    } catch (IllegalArgumentException e) {
 	        re.addFlashAttribute("errorMessage", e.getMessage());
-	        return "redirect:/UserEditForm";  // 수정 폼으로 다시 이동
+	        return "redirect:/UserEditForm";
 	    }
-	    return "redirect:/UserLoginForm";  // 정상 처리 후 페이지 이동
+	    return "redirect:/UserLoginForm";
 	}
 		
 		
@@ -143,7 +143,6 @@ public class UserController {
 	
 	
 	
-	//소셜 로그인시 실제이름,이메일을 들고 user_newjoin 폼으로 이동
 	@GetMapping("/SocialUserEditForm")
 	public String SocialUserJoinInfoForm(@AuthenticationPrincipal CustomUserDetails cud, Model model) {
 		
@@ -156,7 +155,6 @@ public class UserController {
 	}
 	
 	
-	  //폼 데이터 받아서 저장하고 플래그 false로 변경
     @PostMapping("/SocialUserEdit")
     public String completeRegistration(@AuthenticationPrincipal CustomUserDetails cud,
                                        @RequestParam String newNickname,

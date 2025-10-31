@@ -85,10 +85,9 @@
 								</p>
 							</div>
 					</div>
-					
 		</section>
 		
-		
+					<input type="hidden" id="current-review-id" th:value="${reviewId}">
 					<input type="hidden" id="selected-rating" name="rating" value="0">
 					<input type="hidden" id="apiId" name="apiId" th:value="${apiId}">
 
@@ -96,7 +95,6 @@
 <div id="editReviewModal">
     <div style="background-color: white; width: 80%; max-width: 500px; margin: 100px auto; padding: 20px; border-radius: 8px;">
         <h3>리뷰 수정하기</h3>
-        
         <div class="form-group">
             <label for="editComment">댓글 수정:</label>
             <textarea id="editComment" rows="4" cols="50"></textarea>
@@ -129,6 +127,7 @@
 	<script src="/js/movies_detail.js"></script>
 	<!-- 영화 좋아요 버튼 -->
 	<script src="/js/movie_LikeBtn.js"></script>
+	<!-- scroll-to-top -->
 	<script src="/js/scroll-to-top.js"></script>
 </body>
 </html>

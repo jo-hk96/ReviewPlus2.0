@@ -15,10 +15,10 @@ spring:
               - https://www.googleapis.com/auth/userinfo.profile       # 3. 프로필
 #관리자 문의 메일 전송
   mail:
-    host:         # Gmail SMTP 서버 주소
-    port:                      # SMTP 포트 (일반적으로 587)
-    username:   # 발신자 Gmail 주소
-    password: 
+    host:           # Gmail SMTP 서버 주소
+    port:                     # SMTP 포트 (일반적으로 587)
+    username:    # 발신자 Gmail 주소
+    password:          
     properties:
       mail:
         smtp:
