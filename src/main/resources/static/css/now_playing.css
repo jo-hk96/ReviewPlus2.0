@@ -19,24 +19,24 @@
 }
 
 /* 각 영화 카드 */
-.movie-card2 {
+.movie-nowPlayingCard {
   flex: 0 0 calc(100% - 16px);  
   max-width: 350px;             
-  border: 1px solid #ddd;
   border-radius: 12px;
   background: #fff;
+  background-color: #172036;
   box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
   overflow: hidden; 
   transition: transform 0.2s;
 }
 
-.movie-card2:hover {
+.movie-nowPlayingCard:hover {
     transform: translateY(-5px); 
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* 카드 안의 포스터 */
-.movie-card2 img {
+.movie-nowPlayingCard img {
   width: 100%;
   height: auto;
   aspect-ratio: 2 / 3;
@@ -48,7 +48,7 @@
   padding: 5px;
   font-size: 15px;
   margin-left: 15px;
-  color:#36454F;
+  color:white;
 }
 
 /* 이전/다음 버튼 */
@@ -74,25 +74,25 @@
 
 /* 반응형 브레이크포인트 */
 @media (max-width: 1200px) {
-  .movie-card2 {
+  .movie-nowPlayingCard {
     flex: 0 0 calc(27% - 16px);
     max-width: 280px;
   }
 }
 @media (max-width: 900px) {
-  .movie-card2 {
+  .movie-nowPlayingCard {
     flex: 0 0 calc(34% - 16px); 
     max-width: 300px;
   }
 }
 @media (max-width: 600px) {
-  .movie-card2 {
+  .movie-nowPlayingCard {
     flex: 0 0 calc(52% - 16px);
     max-width: 320px;
   }
 }
 @media (max-width: 400px) {
-  .movie-card2 {
+  .movie-nowPlayingCard {
     flex: 0 0 calc(100% - 16px); 
     max-width: none;
   }

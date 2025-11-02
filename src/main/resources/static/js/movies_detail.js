@@ -114,7 +114,7 @@
 	        <div style="text-align: center; width: 100px;">
 	            <img src="${basePosterUrl}${actor.profile_path}"alt="${actor.name}" 
 	                 style="width: 100px; height: 150px; object-fit: cover; border-radius: 8px;">
-	            <p style="margin: 5px 0 0; font-size: 0.9em;"><strong>${actor.name}</strong></p>
+	            <p style="margin: 5px 0 0; font-size: 0.9em; color:white;"><b>${actor.name}</b></p>
 	            <p style="margin: 0; font-size: 0.8em; color: #777;">(${actor.character})</p>
 	        </div>
 	    `).join('');
@@ -125,7 +125,7 @@
 	        <div style="text-align: center; width: 100px;">
 	            <img src="${basePosterUrl}${directors.profile_path}"alt="${directors.name}" 
 	                 style="width: 100px; height: 150px; object-fit: cover; border-radius: 8px;">
-	            <p style="margin: 5px 0 0; font-size: 0.9em;"><strong>${directors.name}</strong></p>
+	            <p style="margin: 5px 0 0; font-size: 0.9em; color: white;"><b>${directors.name}</b></p>
 	            <p style="margin: 0; font-size: 0.8em; color: #777;">(${directors.job})</p>
 	        </div>
 	    `).join('');
@@ -146,27 +146,27 @@
 	            </header>
 	        </div>
 	
-	        <section style="display: flex; gap: 30px; margin-top: 20px; padding: 15px;">
+	        <section style="display: flex; gap: 30px; margin-top: 20px; padding: 15px; color:grey;">
 	            <img src="${basePosterUrl}${data.poster_path}" alt="${data.title} 포스터" style="width: 400px; border-radius: 8px;">
 	            <div style="flex-grow: 1;">
-	                <h2>줄거리</h2>
+	                <h2 style = "color:white;">줄거리</h2>
 	                <p>${data.overview || '줄거리 정보 없음'}</p>
 	                
-	                <h3>기본 정보</h3>
-	                <p><strong>개봉일:</strong> ${data.release_date}</p>
-	                <p><strong>러닝타임:</strong> ${data.runtime}분</p>
-	                <p><strong>제작국가:</strong> ${production_countries}</p>
-	                <p><strong>장르:</strong> ${genres}</p>
-	                <p><strong>기획/제작:</strong> ${production_companies}</p>
-	                <p><strong>태그라인:</strong> <em>${data.tagline || '태그 정보 없음'}</em></p>
-	                <p><strong>외부평점:⭐</strong>  ${data.vote_average.toFixed(1)} / 10</p>
+	                <h3 style="color: white;">기본 정보</h3>
+	                <p><b>개봉일:</b> ${data.release_date}</p>
+	                <p><b>러닝타임:</b> ${data.runtime}분</p>
+	                <p><b>제작국가:</b> ${production_countries}</p>
+	                <p><b>장르:</b> ${genres}</p>
+	                <p><b>기획/제작:</b> ${production_companies}</p>
+	                <p><b>태그라인:</b> <em>${data.tagline || '태그 정보 없음'}</em></p>
+	                <p><b>외부평점:⭐</b>  ${data.vote_average.toFixed(1)} / 10</p>
 	                <p id="average-rating-display"></p>
 	                <div id="like-button-placeholder"></div>
 	            </div>
 	        </section>
 	        
 	        <hr style="margin: 40px 0;">
-	        <h2>감독 / 주요배우</h2>
+	        <h2 style="color:white">감독 / 주요배우</h2>
 	        <div style="display: flex; gap: 15px; overflow-x: auto; padding: 15px;">
 	            ${directorHTML} ${castHTML || '<p>출연진 정보가 없습니다.</p>'}
 	        </div>

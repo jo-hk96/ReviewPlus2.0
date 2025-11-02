@@ -3,7 +3,6 @@ body {
     /* 폰트 설정 등 기본 스타일 */
     margin: 0;
     padding: 0;
-    background-color: #f8f8f8;
 }
 
 /* 영화 목록 컨테이너  */
@@ -16,18 +15,19 @@ body {
     padding: 0 20px;
 }
 
-/*개별 영화 카드 스타일 */
-.movie-card2 {
+/*영화 목록 카드 스타일 */
+.movie-ListCard {
     width: 100%;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
-    background-color: #fff;
+    background-color: #172036;
+    color:white;
     transition: transform 0.2s;
 }
 
-.movie-card2:hover {
+.movie-ListCard:hover {
     transform: translateY(-5px); 
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
@@ -39,7 +39,7 @@ body {
 }
 
 /* 4. 포스터 이미지 스타일 */
-.movie-card2 img {
+.movie-ListCard img {
     width: 100%;
     height: auto;
     display: block;

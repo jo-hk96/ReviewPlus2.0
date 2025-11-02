@@ -64,6 +64,7 @@ public class MovieController {
 		System.out.println("영화ID: " + id);
 		//리뷰 목록 가져오기
 		List<userReviewEntity> existingReviews = userReviewService.getReviewsByMovieId(id);
+		System.out.println("대체 뭐가 나올까" + existingReviews);
 		boolean isLiked = false;
 		if(userDetails != null) {
 			Long userId = userDetails.getUserId();
@@ -75,6 +76,9 @@ public class MovieController {
 		model.addAttribute("reviews", existingReviews );
 		return "movies/movies_detail";
 	}
+	
+	
+	
 	
 	
 	

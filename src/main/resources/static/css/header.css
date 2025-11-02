@@ -9,7 +9,7 @@
     top: 0;      
     left: 0;        
     width: 100%;       
-    z-index: 1000; 
+    z-index: 1000;
     padding: 15px;
     box-sizing: border-box;
     font-size:20px;
@@ -87,10 +87,18 @@ a{
  margin-right: 30px;
 }
 
+
+/* 헤더 검색바 */
 #movieSearch{
 	width:475px;
 	height:45px;
+	border-radius:15px;
+	background-color: #191932;
+	border: none;
+	padding:15px;
+	color:white;
 }
+
 /* 헤더유저정보 */
 .userIndex > a{
 	font-weight:bold;

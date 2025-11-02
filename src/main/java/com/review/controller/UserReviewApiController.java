@@ -103,9 +103,9 @@ public class UserReviewApiController {
 	}
 	
 	//대댓글 목록 조회
-	@GetMapping("/api/reviews/${reviewId}/replies")
+	@GetMapping("/api/reviews/{reviewId}/replies")
 	public ResponseEntity<List<ReplyResponseDTO>> getReplies(
-				@PathVariable("reviewId") Long reviewId
+				@PathVariable("reviewId")Long reviewId
 			){
 		//DTO 목록을 호출
 		List<ReplyResponseDTO> replies = userReviewReplyService.getRepliesByReviewId(reviewId);

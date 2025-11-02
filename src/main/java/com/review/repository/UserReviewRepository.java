@@ -15,9 +15,7 @@ import com.review.entity.userReviewEntity;
 public interface UserReviewRepository extends JpaRepository<userReviewEntity, Long> {
 	
 	
-		@Query(value = "SELECT * FROM USER_REVIEW r WHERE r.API_ID = :apiId ORDER BY r.REGDATE DESC", 
-	           nativeQuery = true)
-	    List<userReviewEntity> findReviewsByApiIdNative(@Param("apiId") Long apiId);
+	    List<userReviewEntity> findAllByApiIdOrderByRegDateDesc(@Param("apiId") Long apiId);
 	    
 	    //최신순 리뷰 5개
 	    List<userReviewEntity> findTop5ByOrderByRegDateDesc();

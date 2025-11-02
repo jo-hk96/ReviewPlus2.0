@@ -15,6 +15,13 @@
 .reply-form-hidden {
     display: none;
 }
+
+.reply-hidden {
+    display: none;
+}
+body{
+background-color: #191932;
+}
 </style>
 
 <body>
@@ -47,10 +54,10 @@
 	<section class="movie-reviews">
 		<hr>
 			<div sec:authorize="isAuthenticated()" class="review-form-container">
-				<h2>내 리뷰 작성</h2>
+				<h2 style = "color:white;">내 리뷰 작성</h2>
 				<form id="review-form">
 					<p>
-						<strong>닉네임:</strong> <span sec:authentication="principal.nickname" id="nickname"></span>
+						<b>닉네임:</b> <span sec:authentication="principal.nickname" id="nickname"></span>
 					</p>
 					
 					<div class="form-group">
@@ -78,7 +85,7 @@
 					    <input type="hidden" id="loggedInUserId" th:value="${#authentication.principal.userId}"> 
 					</div>
 					<div class="review-list-container">
-							<h2>등록된 리뷰</h2>
+							<h2 style = "color:white;">등록된 리뷰</h2>
 							<div id="review-list">
 								<p th:if="${reviews == null or reviews.isEmpty()}" class="no-reviews-message">
 									아직 등록된 리뷰가 없습니다.
@@ -90,6 +97,8 @@
 					<input type="hidden" id="current-review-id" th:value="${reviewId}">
 					<input type="hidden" id="selected-rating" name="rating" value="0">
 					<input type="hidden" id="apiId" name="apiId" th:value="${apiId}">
+
+
 
 <!-- 수정 모달 -->		
 <div id="editReviewModal">

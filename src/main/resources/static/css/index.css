@@ -11,6 +11,15 @@ body{
 	margin-top:140px;
 }
 
+#MainMovieListName{
+	color:#E84545;
+}
+	
+#MainMovieListName:hover{
+color:white;
+}
+
+
 /* 메인 최신리뷰 카드 */
 .review-container {
 	  display: flex; 
@@ -21,24 +30,26 @@ body{
 }
 .review-card {
   width: 250px;
-  border: 1px solid #ddd; 
   border-radius: 12px;
   padding: 12px;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-  overflow: hidden; 
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  overflow: hidden;
+  transition: transform 0.2s;
   height: 200px;          
   position: relative;
-  background-color: #F5F5F5;
-}
-
-.review-card span , .review-card b{
-  display: block;
-  margin-bottom: 4px;
+  background-color: #1A1A3A;
 }
 
 .review-card:hover{
-	background-color: rgba(5,2,2,0.1);
-	
+	transform: translateY(-5px); 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 최신리뷰 안 내용 */
+.review-card span , .review-card b{
+  display: block;
+  margin-bottom: 4px;
+  color: white;
 }
 
 /* index comment 넘침 방지  */
@@ -48,7 +59,7 @@ body{
   display: -webkit-box;    
   -webkit-line-clamp: 2;  
   -webkit-box-orient: vertical; 
-  color:gray;
+  color:white;
 }
 
 /* 최신리뷰 카드 평점 오른쪽 상단 */
@@ -60,6 +71,8 @@ body{
     padding: 0;
     z-index: 10; 
 }
+
+/* 최신리뷰 카드 작성일 */
 #regdate{
 	position: absolute; 
     bottom: 15px;          

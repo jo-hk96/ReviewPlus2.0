@@ -51,7 +51,7 @@ public class UserReviewReplyService{
 	@Transactional(readOnly = true) //트랜잭셔널 읽기 전용
 	public List<ReplyResponseDTO> getRepliesByReviewId(Long reviewId){
 		//Entity 목록을 가져옴
-		List<userReviewReplyEntity> replies = userReviewReplyRepository.findAllByReviewEntity_ReviewId(reviewId);
+		List<userReviewReplyEntity> replies = userReviewReplyRepository.findAllByReviewEntity_ReviewIdOrderByRegDateDesc(reviewId);
 		
 		//Entity 목록을 DTO 목록으로 변환
 		return replies.stream()

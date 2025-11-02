@@ -1,6 +1,4 @@
 let loggedInUserId = null; 
-
-
 const apiIdInput = document.getElementById('apiId');
 const movieApiId = apiIdInput ? apiIdInput.value : null;
 
@@ -152,6 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
             reviews.forEach(review => {
                 const reviewHtml = createReviewHtml(review); // 기존 함수 사용
                 reviewListContainer.insertAdjacentHTML('beforeend', reviewHtml); 
+                fetchReplies(review.reviewId);
             });
             scrollToAnchor();
         })
@@ -168,10 +167,11 @@ function createReviewHtml(review) {
     let actionButtonsHtml = '';
     let restrictedButtonsHtml = '';
     
+    // 로그인한 사용자 ID (전역 변수 loggedInUserId를 사용한다고 가정)
     const currentUserId = (typeof loggedInUserId !== 'undefined' && loggedInUserId !== null) 
                           ? Number(loggedInUserId) 
                           : null; 
-    const reviewAuthorId = Number(review.userId); // 서버에서 넘어온 review.userId를 숫자로 강제 변환
+    const reviewAuthorId = Number(review.userId);
     
    
     if (currentUserId && currentUserId === reviewAuthorId) { 
@@ -181,8 +181,13 @@ function createReviewHtml(review) {
         `;
     }
     
+    
     const replyButtonHtml = `
     	<button type="button" class="reply" onclick="replyReview(${review.reviewId})">댓글달기</button>
+    	<span id="reply-toggle-${review.reviewId}" onclick="toggleReplies(${review.reviewId})"
+    			 style ="cursor: pointer; text-decoration: underline;">
+            댓글 <span id="reply-count-${review.reviewId}">0</span> 개
+        </span>
     `;
     
     actionButtonsHtml = `
@@ -191,49 +196,63 @@ function createReviewHtml(review) {
     		${replyButtonHtml}
     	</div>
     `;
+
+    const replySectionHtml = `
+        <div id="reply-list-${review.reviewId}" class="reply-container reply-hidden"
+        		style = "color:white">
+        </div>
+    `;
+
      return `
-         <div class = "review-box" id="review-${review.reviewId}" data-review-id="${review.reviewId}" style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;">
+         <div class = "review-box" id="review-${review.reviewId}" data-review-id="${review.reviewId}" 
+         					style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;
+         					color: white; border-radius: 15px;">
 	            <table>
-	                <tr>
-	                    <td>
-	               	 		<b><span>${review.nickname}</span></b>
-	                    </td>
-	                </tr>
-	                <tr>
-	                    <td>
-	                        <p>${review.comment}</p>
-	                    </td>
-	                </tr>
-		            <tr>
-			            <td="reviewsRegdate">
-			                작성일: <span>${review.regDate}</span>
-			            </td>
-	           		 </tr>
-	                 <tr>
-	                    <td id="reviewsRating">
-	                        <span>${starHtml}</span> 
-	                    </td>
-	                </tr>
+	                <tr><td><b><span>${review.nickname}</span></b></td></tr>
+	                <tr><td><p>${review.comment}</p></td></tr>
+		            <tr><td>작성일: <span>${review.regDate}</span></td></tr>
+	                <tr><td id="reviewsRating"><span>${starHtml}</span></td></tr>
 	            </table>
 	            ${actionButtonsHtml}
-           </div>
+         </div>
            
-           
-			<div id="reply-form-for-${review.reviewId}" class="reply-form-container reply-form-hidden">
-			    <span style="
-			        font-size: 1.5em;
-			        color: #CCC; 
-			        margin-top:10px;
-			        margin-right: 24px; 
-			        display: inline-block; 
-			        transform: rotate(360deg) scaleY(2.5) scaleX(2.5); 
-			        vertical-align: top;
-			    ">└</span>
-			    <textarea id="reply-comment-${review.reviewId}" placeholder="댓글을 작성해주세요." style="width: 50%;" rows="5" cols="100"></textarea>
-			    <button onclick="registerReply(${review.reviewId},'${review.nickname}')">등록</button>
-			</div>
-	    `;
+         <div id="reply-form-for-${review.reviewId}" class="reply-form-container reply-form-hidden">
+             <span style="
+                 font-size: 1.5em;
+                 color: #CCC; 
+                 margin-top:10px;
+                 margin-right: 24px; 
+                 display: inline-block; 
+                 transform: rotate(360deg) scaleY(2.5) scaleX(2.5); 
+                 vertical-align: top;
+             ">└</span>
+             <textarea id="reply-comment-${review.reviewId}" placeholder="댓글을 작성해주세요." style="width: 50%;" rows="5" cols="100"></textarea>
+             <button onclick="registerReply(${review.reviewId},'${review.nickname}')">등록</button>
+         </div>
+         
+         ${replySectionHtml}
+	`;
+}
+
+function toggleReplies(reviewId){
+	//댓글 목록 컨테이너 불러오기
+	const replyListContainer = document.getElementById(`reply-list-${reviewId}`);
+	
+	if (!replyListContainer) {
+        console.error(`Error: 댓글 목록 컨테이너(reply-list-${reviewId})를 찾을 수 없습니다.`);
+        return;
+    }
+    
+    if(replyListContainer.style.display === 'none' || replyListContainer.classList.contains('reply-hidden')){
+		//style = disply: none; 이거나 class가 reply hidden 일경우
+	replyListContainer.style.display = 'block';
+	replyListContainer.classList.remove('reply-hidden');
+}else{
+	replyListContainer.style.display = 'none';
+	replyListContainer.classList.add('reply-hidden');
+	
 	}
+}
 
 //====================대댓글 등록 로직=======================
 function registerReply(reviewId,nickname){
@@ -267,7 +286,7 @@ function registerReply(reviewId,nickname){
 	.then(newReply => {
 		alert('댓글이 등록 되었습니다.');
 		textarea.value = '';
-		const replyListContainer = document.getElementById('reply-list');
+		const replyListContainer = document.getElementById(`reply-list-${reviewId}`);
 		const newReplyElement = createReplyElement(newReply);
 		replyListContainer.prepend(newReplyElement);
 	})
@@ -277,44 +296,17 @@ function registerReply(reviewId,nickname){
 	})
 }
 
-function createReplyElement(replyData){
-	const formattedDate = new Date(replyData.regDate).toLocaleDateString();
-	
-	const replyItem = document.createElement('div');
-	replyItem.classList.add('reply-item');
-	replyItem.setAttribute('data-reply-id', replyData.replyId);
-	
-	replyItem.innerHTML = `
-		<div class= "reply-header">
-			<span class = "reply-nickname">${replyData.nickname}</span>
-			<span class = "reply-date">${formattedDate}</span>
-		</div>
-		<div class = "reply-comment">
-			<p>${replyData.comment}</p>
-		</div>		
-	`;
-	return replyItem;
-}
-
-
-
-
-
-//댓글달기 토글
-function replyReview(reviewId){
-	const formId = `reply-form-for-${reviewId}`;
-	const replyForm = document.getElementById(formId);
-	if(replyForm){
-		replyForm.classList.toggle('reply-form-hidden');
-	}
-}
-
-//-----------------대댓글 목록 보여주기------------------
+//-----------------대댓글 목록조회------------------
 document.addEventListener('DOMContentLoaded', () =>{
-	const reviewId = document.getElementById('current-review-id').value;
-	if(reviewId){
-		fetchReplies(reviewId);
-	}
+	const reviewElements = document.querySelectorAll('.individual-review');
+    
+    reviewElements.forEach(reviewDiv => {
+        const reviewId = reviewDiv.getAttribute('data-review-id'); 
+        
+        if (reviewId) {
+            fetchReplies(reviewId);
+        }
+    });
 });
 
 function fetchReplies(reviewId){
@@ -328,20 +320,66 @@ function fetchReplies(reviewId){
 		return response.json();
 	})
 	.then(replies =>{
-		const replyListContainer = document.getElementById('reply-list');
-		replyListContainer.innerHTML = '';
-		
-		replies.forEach(reply =>{
-			const replyElement = createReplyElement(reply);
-			replyListContainer.appendChild(replyElement);
-		});
-		document.getElementById('reply-conut').textContent = replies.length;
+		// 1. 고유 ID로 컨테이너 찾기
+		const replyListContainer = document.getElementById(`reply-list-${reviewId}`);
+		const replyCountElement = document.getElementById(`reply-count-${reviewId}`);
+
+		// 2. 요소가 존재하는지 확인 후 처리 (null 에러 방지)
+		if (replyListContainer) {
+            replyListContainer.innerHTML = ''; // 기존 댓글 비우기
+            
+            replies.forEach(reply =>{
+				//새로고침후에 createReplyElement의 HTML 화면 출력
+                const replyElement = createReplyElement(reply);
+                replyListContainer.appendChild(replyElement);
+            });
+            
+            // 3. 댓글 개수 업데이트
+            if (replyCountElement) {
+                replyCountElement.textContent = replies.length;
+            }
+		}
 	})
 	.catch(error =>{
-		console.error('댓글 조회 중 오류:', error);
-		document.getElementById('reply-list').innerHTML =
-			`<p style="color:red;">댓글 목록을 불러올 수 없습니다.(${error.message})</p>`;
+		console.error(`댓글 조회 중 오류 (Review ID: ${reviewId}):`, error);
+        // 에러 메시지 표시 로직은 고유 ID를 사용하도록 수정 필요
+		const errorContainer = document.getElementById(`reply-list-${reviewId}`);
+        if(errorContainer) {
+            errorContainer.innerHTML =
+			    `<p style="color:red;">댓글 목록을 불러올 수 없습니다.(${error.message})</p>`;
+        }
 	});
+}
+
+
+
+//==========대댓글 목록 화면 HTML====================
+function createReplyElement(replyData){
+	const formattedDate = new Date(replyData.regDate).toLocaleDateString();
+	
+	const replyItem = document.createElement('div');
+	replyItem.classList.add('reply-item');
+	replyItem.setAttribute('data-reply-id', replyData.replyId);
+	replyItem.innerHTML = `
+		<div class= "reply-header">
+			<span class = "reply-nickname">${replyData.nickname}</span>
+			<span class = "reply-date">${formattedDate}</span>
+		</div>
+		<div class = "reply-comment">
+			<p>${replyData.comment}</p>
+		</div>		
+	`;
+	return replyItem;
+}
+
+
+//댓글달기 토글
+function replyReview(reviewId){
+	const formId = `reply-form-for-${reviewId}`;
+	const replyForm = document.getElementById(formId);
+	if(replyForm){
+		replyForm.classList.toggle('reply-form-hidden');
+	}
 }
 
 

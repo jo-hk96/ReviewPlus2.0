@@ -18,24 +18,24 @@
 }
 
 /* 각 영화 카드 */
-.movie-card {
+.movie-topRateCard {
   flex: 0 0 calc(100% - 16px);   
   max-width: 350px;             
-  border: 1px solid #ddd;
   border-radius: 12px;
-  background: #fff;
+  background-color: #172036;
+  color:white;
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
   overflow: hidden;
   transition: transform 0.2s;
 }
 
-.movie-card:hover {
+.movie-topRateCard:hover {
     transform: translateY(-5px); 
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* 카드 안의 포스터 */
-.movie-card img {
+.movie-topRateCard img {
   width: 100%;
   height: auto; 
   aspect-ratio: 2 / 3; 
@@ -47,7 +47,7 @@
   padding: 5px;
   font-size: 15px;
   margin-left: 15px;
-  color:#36454F;
+  color:white;
 }
 
 /* 이전/다음 버튼 */
@@ -73,25 +73,25 @@
 
 /* 반응형 브레이크포인트 */
 @media (max-width: 1200px) {
-  .movie-card {
+  .movie-topRateCard {
     flex: 0 0 calc(27% - 16px); /* 4개 → 좀 더 크게 */
     max-width: 280px;
   }
 }
 @media (max-width: 900px) {
-  .movie-card {
+  .movie-topRateCard {
     flex: 0 0 calc(34% - 16px); /* 3개 */
     max-width: 300px;
   }
 }
 @media (max-width: 600px) {
-  .movie-card {
+  .movie-topRateCard {
     flex: 0 0 calc(52% - 16px); /* 2개 */
     max-width: 320px;
   }
 }
 @media (max-width: 400px) {
-  .movie-card {
+  .movie-topRateCard {
     flex: 0 0 calc(100% - 16px); /* 1개 (최대 크기) */
     max-width: none;
   }

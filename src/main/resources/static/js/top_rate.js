@@ -42,12 +42,12 @@
 		  	const userStars = generateOurStars(ourRating);
 		    
 		    const card = document.createElement('div');
-		    card.className = 'movie-card';
+		    card.className = 'movie-topRateCard';
 		    card.innerHTML = `
 		      <a href="${detailUrl}" class="movie-link">
 			      <img src="${posterUrl}" alt="${movie.title} 포스터">
 			      <div class="movie-info">
-			        <h2 style = "color:black;">${movie.title}</h2>
+			        <h2 style = "color:white;">${movie.title}</h2>
 			        ${scoreText !== 'N/A' ? `<h2>${userStars}${scoreText}</h2>` : `<h2>평점없음</h2>`}
 			        
 			        <p>외부평점: ${movie.vote_average.toFixed(1)} / 10</p>
@@ -64,7 +64,7 @@
 		}
 		
 		function updateSlidePosition() {
-		  const firstCard = movieListContainer.querySelector('.movie-card');
+		  const firstCard = movieListContainer.querySelector('.movie-topRateCard');
 		  if (!firstCard || allMovies.length === 0) {
 		    prevBtn.disabled = true;
 		    nextBtn.disabled = true;

@@ -55,7 +55,7 @@ function renderMovies(newMovies) {
 
 
         const card = document.createElement('div');
-        card.className = 'movie-card2';
+        card.className = 'movie-ListCard';
         card.innerHTML = `
           <a href="${detailUrl}" class="movie-link">
               <img src="${posterUrl}" alt="${movie.title} 포스터">

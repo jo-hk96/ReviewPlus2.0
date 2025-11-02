@@ -62,7 +62,7 @@ public class UserReviewService{
     //영화 리뷰 가져오기
     public List<userReviewEntity> getReviewsByMovieId(Long apiId) {
         //apiId를 조회해서 반환
-        return userReviewRepository.findReviewsByApiIdNative(apiId);
+        return userReviewRepository.findAllByApiIdOrderByRegDateDesc(apiId);
     }
     
     
