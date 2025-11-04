@@ -1,7 +1,7 @@
 body{
 	margin:0;
 	padding:0;
-	background-color: #191932;
+	background-color: #040F16;
 }
 
 #indexMovieList{
@@ -37,7 +37,7 @@ color:white;
   transition: transform 0.2s;
   height: 200px;          
   position: relative;
-  background-color: #1A1A3A;
+  background-color: #0c2850;
 }
 
 .review-card:hover{
