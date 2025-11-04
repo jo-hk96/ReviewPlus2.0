@@ -1,6 +1,6 @@
 /* 기본 바디 및 텍스트 */
 body {
-  background-color: #f9fafc;
+  background-color:#191932;
   margin: 0;
   padding:0;
   color: #222;
@@ -210,8 +210,8 @@ h3 {
   min-width: 600px;
   max-width: 1450px;
   margin: 48px auto 32px auto;
-  padding: 44px 40px;
-  background: #fff;
+  padding: 44px 40px; 
+  background-color :  #191932;
   box-shadow: 0 7px 28px rgba(74, 144, 226, 0.13);
   border-radius: 18px;
   display: flex;

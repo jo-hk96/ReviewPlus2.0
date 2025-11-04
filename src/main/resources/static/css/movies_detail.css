@@ -40,11 +40,15 @@
 	
 	/* 리뷰목록 디자인  */
 	#reviewsRegdate{
-	 font-size: 0.8em; color: #666; margin-top: 5px;
+	 font-size: 0.8em; 
+	 color: #666; 
+	 margin-top: 5px;
 	}
 	
 	#reviews{
-	border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;
+	border: 1px solid #ccc; 
+	margin-bottom: 10px; 
+	padding: 10px;
 	}
 	
 	
@@ -64,6 +68,18 @@
 }
 	
 
+/* 대댓글디자인 */
+.reply-item{
+	margin-left: 50px;
+	margin-bottom:10px;	
+	border: 1px soild;
+	box-shadow: 0 5px 7px rgba(0, 0, 0, 0.5);
+	border-radius: 15px;
+	padding: 10px;
+}
+
+
+
 
 /* 좋아요 버튼의 기본 스타일 */
 .like-btn {
@@ -77,7 +93,7 @@
     padding: 8px 15px;
     font-size: 14px;
     font-weight: bold;
-    cursor: pointer; /* 마우스 오버 시 포인터 변경 */
+    cursor: pointer; 
     transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.1s; 
     
     /* 하트 아이콘과 텍스트 간격 */
@@ -92,25 +108,21 @@
 .like-btn:hover {
     background-color: #e0e0e0;
     border-color: #a0a0a0;
-    /* transform: translateY(-1px); 마우스를 올리면 약간 위로 올라가는 효과 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 /* 클릭 시 스타일 (활성 상태) */
 .like-btn:active {
-    transform: scale(0.98); /* 클릭 시 약간 축소되는 효과 */
+    transform: scale(0.98);
 }
 
 /* '좋아요'를 누른 상태의 스타일 (클래스: liked) */
 .like-btn.liked {
     /* 배경 및 테두리 */
-    background-color: #ff4d4d; /* 빨간색 배경 */
-    color: white; /* 흰색 글자색 */
+    background-color: #ff4d4d;
+    color: white; 
     border-color: #ff4d4d;
-    
-    /* 텍스트 강조 */
     font-weight: bolder;
-    /* box-shadow: 0 0 8px rgba(255, 77, 77, 0.5); 약간의 빛나는 효과 */
 }
 
 /* '좋아요'를 누른 상태의 마우스 오버 시 스타일 */

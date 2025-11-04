@@ -85,7 +85,7 @@ background-color: #191932;
 					    <input type="hidden" id="loggedInUserId" th:value="${#authentication.principal.userId}"> 
 					</div>
 					<div class="review-list-container">
-							<h2 style = "color:white;">등록된 리뷰</h2>
+							<h2 style = "color:white;">리뷰</h2>
 							<div id="review-list">
 								<p th:if="${reviews == null or reviews.isEmpty()}" class="no-reviews-message">
 									아직 등록된 리뷰가 없습니다.

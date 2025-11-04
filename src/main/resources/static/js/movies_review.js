@@ -205,7 +205,7 @@ function createReviewHtml(review) {
 
      return `
          <div class = "review-box" id="review-${review.reviewId}" data-review-id="${review.reviewId}" 
-         					style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;
+         					style=" box-shadow:0 5px 8px rgba(0,0,0,0.2);  margin-bottom: 10px; padding: 10px;
          					color: white; border-radius: 15px;">
 	            <table>
 	                <tr><td><b><span>${review.nickname}</span></b></td></tr>
