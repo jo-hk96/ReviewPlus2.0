@@ -1,30 +1,9 @@
 
 
-#구글 소셜 로그인
 spring:
   security:
     oauth2:
       client:
         registration:
           google:
-            client-id: 
-            client-secret: 
-            scope:
-              - openid                                                 # 1. openid
-              - https://www.googleapis.com/auth/userinfo.email         # 2. 이메일
-              - https://www.googleapis.com/auth/userinfo.profile       # 3. 프로필
-#관리자 문의 메일 전송
-  mail:
-    host:         # Gmail SMTP 서버 주소
-    port:                      # SMTP 포트 (일반적으로 587)
-    username:   # 발신자 Gmail 주소
-    password: 
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
-
-
+       

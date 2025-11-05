@@ -25,24 +25,6 @@ a{
 	text-decoration: none;	
 }
 
-/* 왼쪽 영역 스타일 (로고와 메뉴 정렬) */
-.headerleft {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    color: white;  
-     
-}
-
-/* 오른쪽 영역 스타일 (검색창과 버튼 정렬) */
-.headerRight {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; 
-    gap: 15px;
-}
-
-
 /*로고 */
 .logo {
     color: #e50914; 
@@ -56,7 +38,6 @@ a{
 .headerRight a,
 .headerRight span,
 .headerRight input {
-  /* 오른쪽에 10px 간격을 줍니다. */
   margin-right: 5px; 
   margin-left: 6px;
 }
@@ -66,13 +47,31 @@ a{
   margin-left: 0;
 }
 
-.headerLeft a,
-.headerLeft span,
-.headerLeft input { /* headerLeft 내부의 주요 요소들 */
-  margin-right: 5px; 
-  margin-left: 5px;
+
+/* 오른쪽 영역 스타일 (검색창과 버튼 정렬) */
+.headerRight {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+    gap: 15px;
 }
 
+/* 헤더 왼쪽 정보  */
+.headerLeft a,
+.headerLeft span,
+.headerLeft input { 
+  margin-right: 5px; 
+  margin-left: 5px;
+  color:white;
+}
+
+/* 왼쪽 영역 스타일 (로고와 메뉴 정렬) */
+.headerleft {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    color: white;
+}
 
 .headerLeft > *:first-child {
   margin-left: 0;

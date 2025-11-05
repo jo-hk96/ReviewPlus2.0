@@ -60,9 +60,7 @@ if(ratingStars.length > 0){
     // 클릭 이벤트: 숨겨진 input의 value를 업데이트하고 'on' 클래스 적용
     star.addEventListener('click', function() {
         const rating = this.getAttribute('data-rating');
-        
-        // 숨겨진 input 필드에 값 저장
-        document.getElementById('selected-rating').value = rating; 
+        document.getElementById('selected-rating').value = rating;
         
         // 'on' 클래스 초기화 및 재적용
         const allStars = this.parentElement.querySelectorAll('.star');
@@ -77,11 +75,12 @@ if(ratingStars.length > 0){
     
    //--- 마우스 over 이벤트 
    star.addEventListener('mouseover',function(){
-	this.parentElement.querySelectorAll('.star').forEach(s => s.classList.remove('on'));
+	const allStars = this.parentElement.querySelectorAll('.star');
+    allStars.forEach(s => s.classList.remove('hover')); // hover 초기화
 	
 	let currentStar = this;
 	while (currentStar){
-		currentStar.classList.add('on');
+		currentStar.classList.add('hover');
 		currentStar = currentStar.previousElementSibling;
 		}
    });
@@ -89,9 +88,12 @@ if(ratingStars.length > 0){
 
     // 마우스 leave 이벤트: 선택된 별점까지 색상을 유지하도록 처리
     star.parentElement.addEventListener('mouseleave', function() {
+		 const allStars = this.parentElement.querySelectorAll('.star');
+		 allStars.forEach(s => s.classList.remove('hover'));
         const selectedRating = parseInt(document.getElementById('selected-rating').value);
         
-        document.querySelectorAll('.rating-area .star').forEach(s => {
+        document.querySelectorAll('.rating-area .star')
+        allStars.forEach(s => {
             const starRating = parseInt(s.getAttribute('data-rating'));
             if (starRating <= selectedRating) {
                 s.classList.add('on');
@@ -104,6 +106,7 @@ if(ratingStars.length > 0){
 }
     
 });
+
 
 //=========================리뷰 목록 데이터 내용을 불러오는 로직============================
 function generateStars(rating) {
@@ -499,11 +502,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (editRatingArea) {
         editRatingArea.querySelectorAll('.star').forEach(star => {
             
-            // 별점 클릭 시 'editSelectedRating' 값을 업데이트하는 이벤트 리스너
             star.addEventListener('click', function() {
                 const rating = this.getAttribute('data-rating');
                 
-                // 1. 숨겨진 input 값 업데이트 (API 전송을 위한 데이터 저장)
                 editRatingInput.value = rating; 
                 
                 // 2. 시각화 로직

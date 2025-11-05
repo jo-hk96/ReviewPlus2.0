@@ -12,31 +12,24 @@
 	
 	/* =======리뷰작성 디자인======= */
 	.rating-area {
-	    font-size: 2em; /* 별 크기 설정 */
-	    color: #ccc;    /* 기본 색상: 회색 (비활성화) */
-	    cursor: pointer;
-	    user-select: none; /* 드래그 방지 */
+	  display: flex;
+	  font-size: 2em;
+	  color: #ccc;
+	  cursor: pointer;
+	  user-select: none;
 	}
 	
-	/* 개별 별 스타일 */
 	.star {
-	    transition: color 0.2s;
-	}
-	
-	.rating-area:hover .star {
-	    color: gold; 
+	  transition: color 0.2s;
 	}
 	
 	.star.on {
-	    color: gold;
+	  color: gold;
 	}
 	
-	.rating-area .star:hover ~ .star {
-	    color: #ccc; 
+	.star.hover {
+	  color: orange;
 	}
-	
-	
-	
 	
 	/* 리뷰목록 디자인  */
 	#reviewsRegdate{
@@ -158,15 +151,15 @@
 
 /* 마우스 오버 시 스타일 (호버 효과) */
 #submit-review-btn:hover {
-    background-color: #45a049; /* 약간 어두운 녹색 */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* 그림자 강화 */
+    background-color: #45a049; 
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); 
 }
 
 /* 클릭 시 스타일 (활성 상태) */
 #submit-review-btn:active {
-    background-color: #3e8e41; /* 더 어두운 녹색 */
-    transform: translateY(1px); /* 약간 아래로 눌리는 효과 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 약화 */
+    background-color: #3e8e41; 
+    transform: translateY(1px); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 /* [수정된] 영화 상세 정보 컨테이너 스타일 */
@@ -278,33 +271,6 @@ h2 {
     font-weight: 600;
     margin-bottom: 8px;
     color: #333;
-}
-
-
-
-/* 별점 선택 영역 */
-.rating-area {
-    display: flex;
-    font-size: 28px;
-    color: #ccc; /* 기본 회색 */
-    gap: 5px;
-    margin-top: 5px;
-}
-
-.rating-area .star {
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-/* 선택된 별 */
-.rating-area .star.on {
-    color: gold;
-}
-
-/* 호버 중인 별과 그 이전 별 */
-.rating-area .star:hover,
-.rating-area .star:hover ~ .star {
-    color: gold;
 }
 
 /* 리뷰 등록 버튼 스타일 (강조) */
@@ -474,13 +440,12 @@ h2 {
 /* --- 모달 내용 박스 스타일 --- */
 /* 원래 HTML 구조의 인라인 스타일을 대체하여 더 깔끔하게 만듭니다. */
 #editReviewModal > div {
-    background-color: #ffffff; /* 흰색 배경 */
-    width: 90%; /* 화면 너비에 맞춰 반응형으로 시작 */
-    max-width: 450px; /* 최대 너비 설정 */
+    background-color: #ffffff; 
+    width: 90%; 
+    max-width: 450px; 
     padding: 30px;
-    border-radius: 12px; /* 부드러운 모서리 */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* 은은한 그림자 */
-    /* 모달 등장 시 애니메이션 효과를 위해 추가할 수도 있습니다. */
+    border-radius: 12px; 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     transform: scale(1);
     transition: transform 0.3s ease-out;
 }
@@ -530,21 +495,10 @@ h2 {
 /* --- 평점 (별점) 영역 스타일 --- */
 #editRatingArea {
     display: flex;
-    gap: 5px; /* 별 사이 간격 */
-    font-size: 2rem; /* 별 크기 */
+    gap: 5px;
+    font-size: 2rem; 
     cursor: pointer;
-    justify-content: center; /* 별점 중앙 정렬 */
-}
-
-.rating-area .star {
-    color: #ccc; /* 비활성화된 별 색상 (회색) */
-    transition: color 0.2s;
-    user-select: none; /* 드래그 방지 */
-}
-
-.rating-area .star:hover,
-.rating-area .star[aria-checked="true"] {
-    color: #ffc107; /* 활성화 및 호버 시 색상 (노란색/금색) */
+    justify-content: center; 
 }
 
 /* --- 버튼 스타일 --- */
