@@ -99,7 +99,7 @@
 	
 	<!--  Url 앵커 : #review-' + ${review.reviewId} -->
 	<div class = "slider-container2">	
-			<h2 style="color:#E84545;">최신 리뷰</h2>
+			<h2 style="color:#e83939;">최신 리뷰</h2>
 			<div class="review-container">
 					  	<a class="review-card" th:each ="review : ${recentReviews}"
 				           th:href="@{/detail/{apiId}(apiId=${review.apiId})} + '#review-' + ${review.reviewId}"
@@ -117,16 +117,16 @@
 		<p th:if ="${recentReviews.isEmpty()}">아직 작성된 리뷰가 없습니다.</p>
 		
 	<!-- -----------------------푸터--------------------------- -->
-    <div id = "footer" th:fragment = "footer">
+    <div id = "footer" th:fragment = "footer" style="color:white;">
     	<a href="/" class="logo">
            <img th:src="@{/images/logo.png}" style ="width:100px;" alt ="로고" >
         </a> 
-        <p>리뷰플러스에서 사용된 모든 영화 정보는 
+        <p style = "color:grey;">리뷰플러스에서 사용된 모든 영화 정보는 
            <span style ="font-size:15px; font-weight:bold" >
                   <a href ="https://www.themoviedb.org/" style = "text-decoration: none; font-size :17px;">
                         TMDb(The Movie Database)
                   </a>
-         </span>통해 제공되었습니다.
+         	</span>통해 제공되었습니다.
         </p>
         <p>주소:못골번영로 56번길 8<br>© 2025 ReviewPlus.All Rights Reserved.</p>
     </div>

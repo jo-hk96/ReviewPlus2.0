@@ -123,7 +123,7 @@ public class UserReviewService{
     
 	
 	
-	// 1. 삭제 메서드: 권한 확인(Optional) 후 삭제
+	//리뷰 삭제 서비스
 	@Transactional
 	public void deleteReview(Long reviewId, Long userId) {
 	    // 1. 리뷰 ID로 Entity를 찾고, 작성자가 userId와 일치하는지 확인
@@ -132,7 +132,7 @@ public class UserReviewService{
 	    userReviewRepository.delete(review);
 	}
 
-	// 2. 수정 메서드
+	//리뷰 수정 서비스
 	@Transactional
 	public UserReviewDTO updateReview(Long reviewId, UserReviewDTO updateDto, Long userId) {
 	    // 1. 리뷰 ID로 Entity를 찾고, 작성자가 userId와 일치하는지 확인
@@ -162,8 +162,6 @@ public class UserReviewService{
 			return Math.round(averageRating * 10.0) /10.0;
 				
 	}
-		
-		
 		
 			//관리자 회원 리뷰 수정
 			@Transactional

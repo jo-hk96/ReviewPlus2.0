@@ -9,12 +9,11 @@
         const path = window.location.pathname; 
 
         // 2. 경로를 '/' 기준으로 쪼개고, 빈 문자열을 제거해서 배열을 깔끔하게 만듦
-        // 예: ["detail", "1007734"]
+        //["detail", "1007734"]
         const cleanParts = path.split('/').filter(Boolean); 
 
         let movieId = null;
 
-        // 3. ID는 배열의 '마지막' 요소에 있을 것으로 예상
         if (cleanParts.length > 0) {
             const lastPart = cleanParts[cleanParts.length - 1];
             // 마지막 요소가 숫자인지 확인해서 ID로 확정
@@ -24,8 +23,6 @@
         }
         
         const detailContainer = document.getElementById('movie-detail-container');
-
-        // 4. 추출된 ID로 API 호출
         if (movieId) {
             console.log("추출된 영화 ID:", movieId);
             fetchMovieDetail(movieId); 
@@ -50,22 +47,23 @@
 			    const detailUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=ko-KR`;
 			    // 출연진/제작진 정보 요청 URL
 			    const creditsUrl = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=ko-KR`;
+			 	const videosUrl = `https://api.themoviedb.org/3/movie/${movieId}/videos?language=ko-KR`;
 			 	const ourRatingUrl = `/api/detail/${movieId}`; 
 			    // Promise.all로 두 요청을 병렬로 처리
 			     Promise.all([
-		        fetch(detailUrl, options).then(res => res.json()), // 0: TMDB 상세
-		        fetch(creditsUrl, options).then(res => res.json()), // 1: TMDB 크레딧
-		        // 네 서버 API는 options 없이 호출 (토큰 필요 없음)
-		        fetch(ourRatingUrl).then(res => res.json()) // 2: 네 서버 평점
-		        
+			        fetch(detailUrl, options).then(res => res.json()), // TMDB 상세
+			        fetch(creditsUrl, options).then(res => res.json()), // TMDB 크레딧
+			        fetch(videosUrl, options).then(res => res.json()),
+			        fetch(ourRatingUrl).then(res => res.json()) // 2: 네 서버 평점
 			    ])
-			    .then(([detailData, creditsData, ourData]) => { 
-        				
+			    .then(([detailData, creditsData, videosData, ourData]) => {
+						//응답 배열 순서 detail, credits, videos, ourData
         				const averageRatingValue  = ourData.averageRating;
-				        // ourRatingValue는 이제 Map이 아니라 순수한 숫자 값(double)입니다.
+        				
 				        const combinedData = {
 				            ...detailData, 
-				            credits: creditsData,
+				            credits: creditsData, //크레딧
+				            videos: videosData.results, //비디오
 				            ourAverageRating: averageRatingValue  
 				        };
 			        //combinedData 변수를 renderMovieDetail 함수에 전달
@@ -81,8 +79,7 @@
     
     
     
-    	// 3. 영화 상세 정보를 HTML로 표시하는 함수
-	//수정된 renderMovieDetail 함수 (감독, 배우 추가 로직 포함)
+    // 3. 영화 상세 정보를 HTML로 표시하는 함수
 	function renderMovieDetail(data) {
 	    const detailContainer = document.getElementById('movie-detail-container');
 	    const basePosterUrl = "https://image.tmdb.org/t/p/w500"; 
@@ -130,6 +127,37 @@
 	        </div>
 	    `).join('');
 	    
+	    //비디오 트레일러 HTML 처리 로직 
+	    let trailerHTML = '';
+	    
+	    //data.videos 는 fetchMovieDetail에서 videosData.results로 저장된 배열
+	    if(data.videos && data.videos.length > 0){
+			const trailer = data.videos.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+			
+			if(trailer){
+				const youtubeEmbedUrl = `https://www.youtube.com/embed/${trailer.key}?rel=0&amp;showinfo=0&amp;modestbranding=1`;
+				
+				trailerHTML = `
+					<h2 style="color:white; margin-top: 40px;">예고편</h2>
+	                <div style="margin: 20px 0;
+	                	 width:100%;
+	                	 max-width: 800px;">
+	                    <iframe 
+	                        width="100%" 
+	                        height="500" 
+	                        src="${youtubeEmbedUrl}" 
+	                        frameborder="0" 
+	                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+	                        allowfullscreen 
+	                        style="border-radius: 10px;">
+	                    </iframe>
+	                </div>
+				`;
+				
+			}
+			
+		}
+	    
 	    // ----------------------------------------------------
 	   const detailHtml = `
 	         <div class="backdrop-header" 
@@ -151,7 +179,6 @@
 	            <div style="flex-grow: 1;">
 	                <h2 style = "color:white;">줄거리</h2>
 	                <p>${data.overview || '줄거리 정보 없음'}</p>
-	                
 	                <h3 style="color: white;">기본 정보</h3>
 	                <p><b>개봉일:</b> ${data.release_date}</p>
 	                <p><b>러닝타임:</b> ${data.runtime}분</p>
@@ -164,6 +191,8 @@
 	                <div id="like-button-placeholder"></div>
 	            </div>
 	        </section>
+	        
+	        ${trailerHTML}
 	        
 	        <hr style="margin: 40px 0;">
 	        <h2 style="color:white">감독 / 주요배우</h2>
@@ -200,7 +229,7 @@
 			//리뷰가없거나 점수가 0일경우
 			   if (rating <= 0 || isNaN(rating)) {
 	            displayElement.innerHTML = `
-	                <div style="padding: 10px; border: 1px dashed #ccc;">
+	                <div style="padding: 10px; border: 1px solid; width:120px; border-radius: 15px;">
 	                    평점이 없습니다.
 	                </div>`;
 	            return;

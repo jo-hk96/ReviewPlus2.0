@@ -54,7 +54,7 @@ background-color: #191932;
 	<section class="movie-reviews">
 		<hr>
 			<div sec:authorize="isAuthenticated()" class="review-form-container">
-				<h2 style = "color:white;">내 리뷰 작성</h2>
+				<h2 style = "color:white;">리뷰쓰기</h2>
 				<form id="review-form">
 					<p>
 						<b>닉네임:</b> <span sec:authentication="principal.nickname" id="nickname"></span>
@@ -75,7 +75,6 @@ background-color: #191932;
 							<span class="star" data-rating="5" tabindex="0" role="radio" aria-checked="false">★</span>
 						</div>
 					</div>
-
 					<button type="button" id="submit-review-btn">리뷰 등록</button>
 				</form>
 			</div>

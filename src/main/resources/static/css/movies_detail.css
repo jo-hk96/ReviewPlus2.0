@@ -183,12 +183,11 @@
 }
 
 
-/* 제목 스타일 (h2) */
+/* 영화 상세페이지 제목 스타일 */
 h2 {
     font-size: 26px;
     font-weight: 700; 
     color: #1a1a1a;
-    border-left: 5px solid #007bff; 
     padding-left: 10px;
     margin-bottom: 20px;
     /* movie-detail-container 안에 있을 경우, border-left와 충돌하지 않도록 margin-top을 0으로 설정할 수도 있습니다. */

@@ -60,7 +60,14 @@ public class UserReviewReplyService{
 	}
 	
 	
-    	
+	//대댓글 삭제
+	@Transactional
+	public void deleteReviewReply(Long replyId, Long userId) {
+	    userReviewReplyEntity reply = userReviewReplyRepository.findByReplyIdAndUserEntity_UserId(replyId, userId)
+	        .orElseThrow(() -> new IllegalArgumentException("삭제할 리뷰를 찾을 수 없거나 권한이 없습니다."));
+	    userReviewReplyRepository.delete(reply);
+	}
+
 
 
 }

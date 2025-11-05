@@ -54,9 +54,7 @@ const movieApiId = apiIdInput ? apiIdInput.value : null;
     
     }
     
-    const ratingStars = document.querySelectorAll('.rating-area .star');
-
-
+const ratingStars = document.querySelectorAll('.rating-area .star');
 if(ratingStars.length > 0){
 	ratingStars.forEach(star => {
     // 클릭 이벤트: 숨겨진 input의 value를 업데이트하고 'on' 클래스 적용
@@ -76,6 +74,18 @@ if(ratingStars.length > 0){
             currentStar = currentStar.previousElementSibling; 
         }
     });
+    
+   //--- 마우스 over 이벤트 
+   star.addEventListener('mouseover',function(){
+	this.parentElement.querySelectorAll('.star').forEach(s => s.classList.remove('on'));
+	
+	let currentStar = this;
+	while (currentStar){
+		currentStar.classList.add('on');
+		currentStar = currentStar.previousElementSibling;
+		}
+   });
+    
 
     // 마우스 leave 이벤트: 선택된 별점까지 색상을 유지하도록 처리
     star.parentElement.addEventListener('mouseleave', function() {
@@ -87,18 +97,11 @@ if(ratingStars.length > 0){
                 s.classList.add('on');
             } else {
                 s.classList.remove('on');
-            }
-        });
-    });
-    
-	    // 마우스 enter 이벤트: 호버 시 모든 별 색칠
-	    star.parentElement.addEventListener('mouseenter', function() {
-	        document.querySelectorAll('.rating-area .star').forEach(s => s.classList.remove('on'));
+	            }
+	        });
 	    });
 	});
 }
-
-    
     
 });
 
@@ -106,8 +109,6 @@ if(ratingStars.length > 0){
 function generateStars(rating) {
     const count = Math.round(rating); 
     const filledStars = '★'.repeat(count); // 별점 수만큼 ★ 반복
-    
-    // 스타일을 gold로 지정하여 별점이 눈에 띄게
     return `<span style="color: gold;">${filledStars}</span>`; 
 }
 
@@ -172,8 +173,6 @@ function createReviewHtml(review) {
                           ? Number(loggedInUserId) 
                           : null; 
     const reviewAuthorId = Number(review.userId);
-    
-   
     if (currentUserId && currentUserId === reviewAuthorId) { 
         restrictedButtonsHtml = `
                 <button type="button" class="edit-btn" onclick="openEditModal(${review.reviewId})">수정</button>
@@ -182,6 +181,7 @@ function createReviewHtml(review) {
     }
     
     
+    //댓글(N)개 버튼
     const replyButtonHtml = `
     	<button type="button" class="reply" onclick="replyReview(${review.reviewId})">댓글달기</button>
     	<span id="reply-toggle-${review.reviewId}" onclick="toggleReplies(${review.reviewId})"
@@ -352,8 +352,37 @@ function fetchReplies(reviewId){
 }
 
 
+//===================대댓글 삭제======================
+function deleteReviewReply(replyId){
+	 if (!confirm('댓글를 삭제하시겠습니까?')) {
+        return;
+    }
+	fetch(`/api/userReviewReply/${replyId}`,{
+		method: 'DELETE'
+	})
+	.then(response => {
+		if(response.status === 204){
+			const replyElement = document.querySelector(`.reply-item[data-reply-id="${replyId}]`);
+			
+			if(replyElement){
+				replyElement.remove();
+				alert('대댓글이 삭제되었습니다.');
+			}
+			
+		}else if(response.status === 403){
+			alert('삭제 권한이 없습니다.');
+			
+		}else{
+			alert('대댓글 삭제에 실패했습니다.');
+		}
+	})	
+	.catch(error => {
+		console.error('삭제 요청 오류 발생:', error);
+		alert('서버와의 통신에 문제가 발생했습니다.');
+	});	
+}
 
-//==========대댓글 목록 화면 HTML====================
+//==================대댓글 목록 화면 HTML====================
 function createReplyElement(replyData){
 	const formattedDate = new Date(replyData.regDate).toLocaleDateString();
 	
@@ -364,6 +393,7 @@ function createReplyElement(replyData){
 		<div class= "reply-header">
 			<span class = "reply-nickname">${replyData.nickname}</span>
 			<span class = "reply-date">${formattedDate}</span>
+			<button type="button" class="deleteReply-btn" onclick="deleteReviewReply(${replyData.replyId})">삭제</button>
 		</div>
 		<div class = "reply-comment">
 			<p>${replyData.comment}</p>
@@ -398,7 +428,7 @@ function deleteReview(reviewId) {
     }
 
     fetch(`/api/userReview/${reviewId}`, {
-        method: 'DELETE' 
+        method: 'DELETE'
     })
     .then(response => {
         if (response.status === 204) { 
@@ -489,7 +519,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    //'수정 완료' 버튼 (saveEditBtn) 클릭 이벤트 리스너
+    //수정 완료 이벤트 리스너
     document.getElementById('saveEditBtn')?.addEventListener('click', function() {
         
         // 1. 필요한 데이터 가져오기 및 유효성 검사
@@ -539,7 +569,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (ratingSpan) {
                      ratingSpan.innerHTML = newStarHtml;
                 }
-                
                 alert('리뷰가 성공적으로 수정되었습니다.');
                 document.getElementById('editReviewModal').style.display = 'none';
             }
@@ -550,6 +579,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
 
 //--------------앵커--------------------
 function scrollToAnchor() {

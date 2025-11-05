@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.review.DTO.ReplyResponseDTO;
@@ -71,14 +72,6 @@ public class UserReviewApiController {
 	    return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
 	}
 	
-	
-	//리뷰 삭제
-	@DeleteMapping("api/userReview/{reviewId}")
-	public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId, @AuthenticationPrincipal CustomUserDetails cud) {
-	    userReviewService.deleteReview(reviewId, cud.getUserId()); 
-	    return ResponseEntity.noContent().build();
-	}
-	
 	//리뷰수정
 	@PatchMapping("api/userReview/{reviewId}")
 	public ResponseEntity<UserReviewDTO> updateReview(
@@ -87,6 +80,14 @@ public class UserReviewApiController {
 	        @AuthenticationPrincipal CustomUserDetails cud) {
 	    UserReviewDTO updatedReview = userReviewService.updateReview(reviewId, updateDto, cud.getUserId());
 	    return ResponseEntity.ok(updatedReview);
+	}
+	
+	
+	//리뷰 삭제
+	@DeleteMapping("api/userReview/{reviewId}")
+	public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId, @AuthenticationPrincipal CustomUserDetails cud) {
+		userReviewService.deleteReview(reviewId, cud.getUserId()); 
+		return ResponseEntity.noContent().build();
 	}
 	
 	//대댓글 등록
@@ -111,5 +112,15 @@ public class UserReviewApiController {
 		List<ReplyResponseDTO> replies = userReviewReplyService.getRepliesByReviewId(reviewId);
 		return ResponseEntity.ok(replies);
 	}
+	
+	//대댓글 삭제
+	@DeleteMapping("/api/userReviewReply/{replyId}")
+	public ResponseEntity<Void> deleteReviewReply(@PathVariable Long replyId, @AuthenticationPrincipal CustomUserDetails cud){
+		userReviewReplyService.deleteReviewReply(replyId, cud.getUserId());
+		return ResponseEntity.noContent().build();
+		
+		
+	}
+	
 	
 }
