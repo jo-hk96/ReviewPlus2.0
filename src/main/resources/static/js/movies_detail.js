@@ -47,16 +47,22 @@
 			    const detailUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=ko-KR`;
 			    // 출연진/제작진 정보 요청 URL
 			    const creditsUrl = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=ko-KR`;
+			 	//트레일러 URL
 			 	const videosUrl = `https://api.themoviedb.org/3/movie/${movieId}/videos?language=ko-KR`;
+			 	//영화 이미지 주소
+			 	const stillCutUrl = `https://api.themoviedb.org/3/movie/${movieId}/images`;
+			 	
+			 	
 			 	const ourRatingUrl = `/api/detail/${movieId}`; 
 			    // Promise.all로 두 요청을 병렬로 처리
 			     Promise.all([
 			        fetch(detailUrl, options).then(res => res.json()), // TMDB 상세
 			        fetch(creditsUrl, options).then(res => res.json()), // TMDB 크레딧
 			        fetch(videosUrl, options).then(res => res.json()),
-			        fetch(ourRatingUrl).then(res => res.json()) // 2: 네 서버 평점
+			        fetch(stillCutUrl, options).then(res => res.json()),
+			        fetch(ourRatingUrl).then(res => res.json()) // 리뷰플러스 사이트 평점
 			    ])
-			    .then(([detailData, creditsData, videosData, ourData]) => {
+			    .then(([detailData, creditsData, videosData,stillCutData, ourData]) => {
 						//응답 배열 순서 detail, credits, videos, ourData
         				const averageRatingValue  = ourData.averageRating;
         				
@@ -64,6 +70,7 @@
 				            ...detailData, 
 				            credits: creditsData, //크레딧
 				            videos: videosData.results, //비디오
+				            stillCut: stillCutData,
 				            ourAverageRating: averageRatingValue  
 				        };
 			        //combinedData 변수를 renderMovieDetail 함수에 전달
@@ -155,9 +162,33 @@
 				`;
 				
 			}
-			
 		}
-	    
+		
+		const BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w1280"; 
+
+		const backdrops = data.stillCut.backdrops || []; 
+		const limitedStills = backdrops.slice(0, 5); 
+		
+		const stillCutItemsHtml = limitedStills.map(backdrop => {
+		    const imageUrl = BASE_IMAGE_URL + backdrop.file_path;
+		    
+		    return `
+		        <div class="stillcut-item">
+		            <img src="${imageUrl}" alt="영화 스틸컷" class="stillcut-image">
+		        </div>
+		    `; 
+		}).join(''); 
+		
+		const imageGalleryHTML = `
+		    <h2 style="color:white; margin-top: 40px; padding: 0 15px;">영화 스틸컷 (5장)</h2>
+		    <div class="stillcut-gallery-wrapper" style="display: flex; gap: 10px; overflow-x: auto; padding: 15px;">
+		        ${stillCutItemsHtml}
+		    </div>
+		`;
+		
+		
+		
+		
 	    // ----------------------------------------------------
 	   const detailHtml = `
 	         <div class="backdrop-header" 
@@ -191,6 +222,11 @@
 	                <div id="like-button-placeholder"></div>
 	            </div>
 	        </section>
+	        
+	        ${imageGalleryHTML}
+    
+    		${trailerHTML}
+	        
 	        
 	        ${trailerHTML}
 	        

@@ -78,8 +78,6 @@ background-color: #191932;
 					<button type="button" id="submit-review-btn">리뷰 등록</button>
 				</form>
 			</div>
-			
-			
 					<div sec:authorize="isAuthenticated()">
 					    <input type="hidden" id="loggedInUserId" th:value="${#authentication.principal.userId}"> 
 					</div>
@@ -92,7 +90,6 @@ background-color: #191932;
 							</div>
 					</div>
 		</section>
-		
 					<input type="hidden" id="current-review-id" th:value="${reviewId}">
 					<input type="hidden" id="selected-rating" name="rating" value="0">
 					<input type="hidden" id="apiId" name="apiId" th:value="${apiId}">

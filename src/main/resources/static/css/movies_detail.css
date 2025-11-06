@@ -60,6 +60,21 @@
     align-items: center;
 }
 	
+	
+	.ReplyComment{
+		border-radius:15px;
+		padding:10px;
+		width: 50%;
+		background-color: #191932;
+		color:white;
+		font-size:14px;
+		width: 400px; 
+	    height: 100px;
+	    /* textarea 크기 제한 */
+	    resize: none;
+	}
+	
+	
 
 /* 대댓글디자인 */
 .reply-item{

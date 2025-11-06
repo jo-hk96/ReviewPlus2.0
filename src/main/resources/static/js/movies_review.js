@@ -40,6 +40,7 @@ const movieApiId = apiIdInput ? apiIdInput.value : null;
         })
         .then(newReview => {
             const reviewHtml = createReviewHtml(newReview);
+            //리뷰 등록 후 새로고침 없이 화면목록 추가
             document.getElementById('review-list').insertAdjacentHTML('afterbegin', reviewHtml);
             document.querySelector('textarea[name="comment"]').value = '';
             document.getElementById('selected-rating').value = '0';
@@ -53,7 +54,10 @@ const movieApiId = apiIdInput ? apiIdInput.value : null;
     });
     
     }
-    
+
+
+
+//==================리뷰 별점 Rating===============
 const ratingStars = document.querySelectorAll('.rating-area .star');
 if(ratingStars.length > 0){
 	ratingStars.forEach(star => {
@@ -115,8 +119,6 @@ function generateStars(rating) {
     return `<span style="color: gold;">${filledStars}</span>`; 
 }
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
 	const userIdInput = document.getElementById('loggedInUserId');
     if (userIdInput && userIdInput.value) {
@@ -140,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 throw new Error('리뷰 목록 로딩 실패: ' + response.status);
             }
-            return response.json(); // 서버가 보낸 JSON 배열 (리뷰 목록)
+            return response.json();
         })
         .then(reviews => {
             // 3. 기존 컨테이너 내용 초기화
@@ -150,9 +152,8 @@ document.addEventListener('DOMContentLoaded', function() {
                  reviewListContainer.innerHTML = '<p class="no-reviews-message">아직 등록된 리뷰가 없습니다.</p>';
                  return;
             }
-            // 4. 각 리뷰를 HTML로 만들고 컨테이너에 추가
             reviews.forEach(review => {
-                const reviewHtml = createReviewHtml(review); // 기존 함수 사용
+                const reviewHtml = createReviewHtml(review);
                 reviewListContainer.insertAdjacentHTML('beforeend', reviewHtml); 
                 fetchReplies(review.reviewId);
             });
@@ -174,7 +175,7 @@ function createReviewHtml(review) {
     // 로그인한 사용자 ID (전역 변수 loggedInUserId를 사용한다고 가정)
     const currentUserId = (typeof loggedInUserId !== 'undefined' && loggedInUserId !== null) 
                           ? Number(loggedInUserId) 
-                          : null; 
+                          : null;
     const reviewAuthorId = Number(review.userId);
     if (currentUserId && currentUserId === reviewAuthorId) { 
         restrictedButtonsHtml = `
@@ -182,7 +183,6 @@ function createReviewHtml(review) {
                 <button type="button" class="delete-btn" onclick="deleteReview(${review.reviewId})">삭제</button>
         `;
     }
-    
     
     //댓글(N)개 버튼
     const replyButtonHtml = `
@@ -229,13 +229,14 @@ function createReviewHtml(review) {
                  transform: rotate(360deg) scaleY(2.5) scaleX(2.5); 
                  vertical-align: top;
              ">└</span>
-             <textarea id="reply-comment-${review.reviewId}" placeholder="댓글을 작성해주세요." style="width: 50%;" rows="5" cols="100"></textarea>
+             <textarea class="ReplyComment" id="reply-comment-${review.reviewId}" placeholder="댓글을 작성해주세요.400자 제한"
+             																		maxlength="400"></textarea>
              <button onclick="registerReply(${review.reviewId},'${review.nickname}')">등록</button>
          </div>
-         
          ${replySectionHtml}
 	`;
 }
+
 
 function toggleReplies(reviewId){
 	//댓글 목록 컨테이너 불러오기
@@ -287,11 +288,11 @@ function registerReply(reviewId,nickname){
 		throw new Error('댓글 등록 실패:' + response.statusText);
 	})
 	.then(newReply => {
-		alert('댓글이 등록 되었습니다.');
 		textarea.value = '';
 		const replyListContainer = document.getElementById(`reply-list-${reviewId}`);
-		const newReplyElement = createReplyElement(newReply);
-		replyListContainer.prepend(newReplyElement);
+		const newReplyHtml = createReplyHtml(newReply);
+		replyListContainer.insertAdjacentHTML('afterbegin',newReplyHtml);
+		alert('댓글이 등록 되었습니다.');
 	})
 	.catch(error => {
 		console.error('댓글 등록 중 오류:', error);
@@ -329,12 +330,11 @@ function fetchReplies(reviewId){
 
 		// 2. 요소가 존재하는지 확인 후 처리 (null 에러 방지)
 		if (replyListContainer) {
-            replyListContainer.innerHTML = ''; // 기존 댓글 비우기
+            replyListContainer.innerHTML = ''; 
             
             replies.forEach(reply =>{
-				//새로고침후에 createReplyElement의 HTML 화면 출력
-                const replyElement = createReplyElement(reply);
-                replyListContainer.appendChild(replyElement);
+                const replyHtml = createReplyHtml(reply);
+                replyListContainer.insertAdjacentHTML('afterbegin', replyHtml);
             });
             
             // 3. 댓글 개수 업데이트
@@ -365,11 +365,11 @@ function deleteReviewReply(replyId){
 	})
 	.then(response => {
 		if(response.status === 204){
-			const replyElement = document.querySelector(`.reply-item[data-reply-id="${replyId}]`);
+			const replyElement = document.querySelector(`.reply-item[data-reply-id="${replyId}"]`);
 			
 			if(replyElement){
 				replyElement.remove();
-				alert('대댓글이 삭제되었습니다.');
+				alert('댓글이 삭제되었습니다.');
 			}
 			
 		}else if(response.status === 403){
@@ -386,23 +386,30 @@ function deleteReviewReply(replyId){
 }
 
 //==================대댓글 목록 화면 HTML====================
-function createReplyElement(replyData){
-	const formattedDate = new Date(replyData.regDate).toLocaleDateString();
-	
-	const replyItem = document.createElement('div');
-	replyItem.classList.add('reply-item');
-	replyItem.setAttribute('data-reply-id', replyData.replyId);
-	replyItem.innerHTML = `
-		<div class= "reply-header">
-			<span class = "reply-nickname">${replyData.nickname}</span>
-			<span class = "reply-date">${formattedDate}</span>
-			<button type="button" class="deleteReply-btn" onclick="deleteReviewReply(${replyData.replyId})">삭제</button>
-		</div>
-		<div class = "reply-comment">
-			<p>${replyData.comment}</p>
-		</div>		
-	`;
-	return replyItem;
+function createReplyHtml(replyData){
+	let replyDeleteButtonHTML = '';
+    const formattedDate = new Date(replyData.regDate).toLocaleDateString();
+    const currentReplyUserId = (typeof loggedInUserId !== 'undefined' && loggedInUserId !== null) 
+                          ? Number(loggedInUserId) 
+                          : null;
+    const replyAuthorId = Number(replyData.userId);
+		if(currentReplyUserId && currentReplyUserId === replyAuthorId){
+		replyDeleteButtonHTML =	`
+				<button type="button" class="deleteReply-btn" onclick="deleteReviewReply(${replyData.replyId})">삭제</button>
+			`;
+    }
+    return `
+        <div class="reply-item" data-reply-id="${replyData.replyId}">
+            <div class="reply-header">
+                <span class="reply-nickname">${replyData.nickname}</span>
+                <span class="reply-date">${formattedDate}</span>
+                ${replyDeleteButtonHTML}
+            </div>
+            <div class="reply-comment">
+                <p>${replyData.comment}</p>
+            </div>		
+        </div>
+    `;
 }
 
 
