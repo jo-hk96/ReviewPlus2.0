@@ -31,7 +31,6 @@ public class userReviewReplyEntity {
     @Column(name = "REPLYID")
     private Long replyId;
 
-    // 1. 어떤 '리뷰'에 달린 댓글인지 참조 (필수)
     // 댓글은 하나인데 리뷰는 여러 개일 수 없으므로 [다대일]
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REVIEW_ID") // 외래키 컬럼명
@@ -43,7 +42,7 @@ public class userReviewReplyEntity {
     private userEntity userEntity;
 
     // 3. 댓글 내용
-    @Column(name = "COMMENT", nullable = false, length = 300)
+    @Column(name = "COMMENT", nullable = false)
     private String comment;
 
     // 4. 작성일

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.review.DTO.UserDTO;
@@ -33,16 +34,17 @@ public class UserController {
 	private UserService userService;
 	
 	
-	 // 이메일 중복 체크 API
+	 // 이메일 중복 체크 텍스트 API
     @GetMapping("/check/email")
+    @ResponseBody
     public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
         boolean isDuplicated = userService.checkEmailDuplication(email);
-        // isDuplicated가 true면 중복, false면 사용 가능
         return ResponseEntity.ok(isDuplicated);
     }
 
-    // 닉네임 중복 체크 API
+    // 닉네임 중복 체크 텍스트 API 따로 텍스트만 바
     @GetMapping("/check/nickname")
+    @ResponseBody
     public ResponseEntity<Boolean> checkNickname(@RequestParam String nickname) {
         boolean isDuplicated = userService.checkNicknameDuplication(nickname);
         return ResponseEntity.ok(isDuplicated);
@@ -56,28 +58,13 @@ public class UserController {
 	}
 	
 	
-	
 	//회원가입
 	 @PostMapping("/UserJoin")
 	    public String userJoin(UserDTO userDto , RedirectAttributes re) {
-		 
-		   // 1. 이메일 중복 검사
-	        if (userService.checkEmailDuplication(userDto.getEmail())) {
-	            re.addFlashAttribute("errorMessage", "이미 사용 중인 이메일입니다.");
-	            return "redirect:/UserJoinForm"; // 가입 폼으로 리다이렉트
-	        }
-	        
-	        // 2. 닉네임 중복 검사
-	        if (userService.checkNicknameDuplication(userDto.getNickname())) {
-	            re.addFlashAttribute("errorMessage", "이미 사용 중인 닉네임입니다.");
-	            return "redirect:/UserJoinForm"; // 가입 폼으로 리다이렉트
-	        }
-	        
-	        // 3. 중복이 없으면 회원가입 진행
 	        userService.joinUser(userDto);
-	        
 	        return "redirect:/login"; // 성공 후 로그인 페이지로 이동
 	    }
+	 
 	
 
 	//로그인 메인
@@ -110,17 +97,15 @@ public class UserController {
 	public String userEdit(
 			@AuthenticationPrincipal CustomUserDetails cud, 
 			@ModelAttribute UserEditDTO userDto,
-			//Request, Reponse 를 주입 한다
 			RedirectAttributes re, HttpServletRequest request,HttpServletResponse response) {
 		
 		//userid 가져오기
 		Long userid = cud.getUserId();
 		try {
 	        userService.updateUser(userid, userDto);
-	        //로그아웃 핸들러
 	        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 	        //현재 인증 정보와 요청/응답을 사용해 로그아웃 처리
-	        // 세션 무효화 및 시큐리티 컨텍스트 클리어
+	        //세션 무효화 및 시큐리티 컨텍스트 클리어
 	        logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
 	       re.addFlashAttribute("sucMsg","수정 하신 정보가 변경되었습니다.다시 로그인 해주세요.");
 	    } catch (IllegalArgumentException e) {

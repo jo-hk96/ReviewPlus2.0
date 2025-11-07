@@ -33,7 +33,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	                user,oauth2User.getAttributes()      
 	                );
 	    }
-	        
 			
 		    private userEntity saveOrUpdate(OAuth2Attributes attributes) {
 		        userEntity user = userRepository.findByEmail(attributes.getEmail())

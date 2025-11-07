@@ -22,7 +22,17 @@
 				    <img src="/images/google.png" alt="구글 로그인">
 				    <span>구글 로그인</span>
 				</a>
+			    
+			    <a href="/oauth2/authorization/kakao" id = "kakao-login" >
+				    <img src="/images/google.png" alt="카카오 로그인">
+				    <span>카카오 로그인</span>
+				</a>
 				
+			    <a href="/oauth2/authorization/naver" id = "naver-login" >
+				    <img src="/images/google.png" alt="네이버 로그인">
+				    <span>네이버 로그인</span>
+				</a>
+			    
 				<div th:if="${socialEditMsg}">
 					<p th:text= "${socialEditMsg}" style="color: #e84545; font-weight: bold; font-size:17px;"></p>
 				</div>

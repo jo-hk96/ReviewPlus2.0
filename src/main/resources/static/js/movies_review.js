@@ -186,11 +186,9 @@ function createReviewHtml(review) {
     
     //댓글(N)개 버튼
     const replyButtonHtml = `
-    	<button type="button" class="reply" onclick="replyReview(${review.reviewId})">댓글달기</button>
-    	<span id="reply-toggle-${review.reviewId}" onclick="toggleReplies(${review.reviewId})"
-    			 style ="cursor: pointer; text-decoration: underline;">
-            댓글 <span id="reply-count-${review.reviewId}">0</span> 개
-        </span>
+    	<span class="reply-toggleButton" id="reply-toggle-${review.reviewId}" onclick="replyReview(${review.reviewId}); toggleReplies(${review.reviewId})">
+        댓글 <span id="reply-count-${review.reviewId}">0</span> 개
+    </span>
     `;
     
     actionButtonsHtml = `
@@ -388,7 +386,7 @@ function deleteReviewReply(replyId){
 //==================대댓글 목록 화면 HTML====================
 function createReplyHtml(replyData){
 	let replyDeleteButtonHTML = '';
-    const formattedDate = new Date(replyData.regDate).toLocaleDateString();
+    const formattedDate = new Date(replyData.regDate).toLocaleString();
     const currentReplyUserId = (typeof loggedInUserId !== 'undefined' && loggedInUserId !== null) 
                           ? Number(loggedInUserId) 
                           : null;

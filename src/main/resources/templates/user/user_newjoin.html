@@ -22,9 +22,6 @@
 <body>
 
 	<h1>회원가입</h1>
-		<div th:if="${errorMessage}" style="color: red; font-weight: bold; margin-bottom: 15px;">
-			    <span th:text="${errorMessage}"></span>
-			</div>
 <form action="/UserJoin" method="post" id="joinForm">
 	    <input type="text" name="pname" id="pname" th:value="${inputData?.pname}" placeholder ="이름"><br>
 	    <span id="pnameCheckResult" ></span>
@@ -46,7 +43,7 @@
             id="birthdate" min="1900-01-01" max="2025-09-27" th:value="${inputData?.birthdate}" placeholder = "생일"><br>
     <span id="birthdateCheckResult" ></span>
      
-    <button type = "submit" >회원가입</button>
+    <button type = "submit">회원가입</button>
 </form>
 		
 	<div th:insert="index/index :: footer"></div>

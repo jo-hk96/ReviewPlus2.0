@@ -37,13 +37,14 @@ public class SecurityConfig {
 		            authorizeRequests
 		            	//관리자
 			            .requestMatchers("/Admin/**").hasAnyRole("ADMIN")
-		            	//로그인 없이 모두 허용할 경로
+			            //로그인시 이용 경로(일반,관리자)
 			            .requestMatchers("/UserMypage" , "/detail/**").hasAnyRole("USER","ADMIN")
+			            //로그인 없이 모두 허용할 경로
 		                .requestMatchers("/",
 		                		"/css/**","/js/**","images/**",
 		                		"/detail/**",
 				                "/UserJoinForm","/UserLoginMain",
-		                        "/UserJoin","/MoviesList","/TopRate","/api/**"
+		                        "/UserJoin","/MoviesList","/TopRate","/api/**","/check/nickname","/check/email"
 				                ).permitAll()
 		                .anyRequest().authenticated()
 		        ) 
@@ -82,8 +83,7 @@ public class SecurityConfig {
 		    //OAuth2로그인
 		    http
 		    	.oauth2Login(oauth2 -> oauth2
-		    			.loginPage("/UserLoginForm")// 소셜 로그인 버튼을 보여줄 페이지
-		    			//사용자 정보 처리 서비스 지정
+		    			.loginPage("/UserLoginForm")
 		    			.userInfoEndpoint(userInfo -> userInfo
 		    			.userService(customOAuth2UserService)) //DB저장등 후처리 서비스 담당
 		    			

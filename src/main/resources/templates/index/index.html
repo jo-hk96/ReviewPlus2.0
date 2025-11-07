@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="/css/scroll-to-top.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href= "/css/latest_news.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>리뷰플러스</title>
 </head>
 <body>
@@ -87,6 +89,63 @@
 			    <button id="next-btn2" class="nav-btn2">&gt;</button> 
 		 </div>
 	 	 <div id="loading-indicator2">영화 리스트 불러오는중...</div>
+	 	 
+	 	 <!-- 영화 매거진 슬라이더 -->
+	 	 <h2 class="news-title">최신 기사</h2>
+	 	 <div class="carousel-container">
+         
+        <div class="carousel-wrapper">
+            <button class="arrow-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+
+            <div class="news-list-container">
+                <div class="news-list">
+                    <div class="news-item">
+                        <img src="images/example.png" alt="뉴스 이미지 1">
+                        <p class="title">[LIST] 남도형이 말하는 요즘 빠져있는 것들의 목록</p>
+                        <p class="date">2025-11-03 | 피네21취재팀, 오계욱</p>
+                    </div>
+                    <div class="news-item">
+                        <img src="https://via.placeholder.com/300x180?text=News+2" alt="뉴스 이미지 2">
+                        <p class="title">[LA] 검찰기의 매력, 화제작 <굿 포토> 공개...</p>
+                        <p class="date">2025-11-03 | 안소연</p>
+                    </div>
+                    <div class="news-item">
+                        <img src="https://via.placeholder.com/300x180?text=News+3" alt="뉴스 이미지 3">
+                        <p class="title">[오수경의 TVIEW] 저스트 메이크업</p>
+                        <p class="date">2025-10-31 | 오수경</p>
+                    </div>
+                    <div class="news-item">
+                        <img src="https://via.placeholder.com/300x180?text=News+4" alt="뉴스 이미지 4">
+                        <p class="title">[OTT리뷰] 하우스 오브 다이너마이트</p>
+                        <p class="date">2025-10-31 | 이윤채</p>
+                    </div>
+                    <div class="news-item">
+                        <img src="https://via.placeholder.com/300x180?text=News+5" alt="뉴스 이미지 5">
+                        <p class="title">[인터뷰] 그 이상한 행동이 유쾌한 유쾌한 사건!...</p>
+                        <p class="date">2025-10-31 | 이자연, 백종현</p>
+                    </div>
+                    <div class="news-item">
+                        <img src="https://via.placeholder.com/300x180?text=News+6" alt="뉴스 이미지 6">
+                        <p class="title">[기획] 변화와 기회의 시대, '딥 포커스' 창작자 토크...</p>
+                        <p class="date">2025-10-31 | 이우빈</p>
+                    </div>
+                    <div class="news-item">
+                        <img src="https://via.placeholder.com/300x180?text=News+7" alt="뉴스 이미지 7">
+                        <p class="title">[인터뷰] 잘 웃어서 흐르는 눈물, <자매의 등산> 김수현...</p>
+                        <p class="date">2025-10-31 | 김소미, 백종현</p>
+                    </div>
+                    <div class="news-item">
+                        <img src="https://via.placeholder.com/300x180?text=News+8" alt="뉴스 이미지 8">
+                        <p class="title">[인터뷰] 고모하고 철저한 전략, 그리고 진정성, <포슐>...</p>
+                        <p class="date">2025-10-31 | 이우빈, 최성열</p>
+                    </div>
+                    </div>
+            </div>
+
+            <button class="arrow-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+	 	 
 		  <!--최고평점-->
 		  <div class="slider-container">
 		  		<h2><a id= "MainMovieListName" href ="/MoviesList?category=top_rated">최고평점</a></h2>
@@ -148,5 +207,8 @@
  
  <!-- 맨위로가기 -->
  <script src = "/js/scroll-to-top.js"></script>
+ 
+ <!-- 뉴스 슬라이드 효과 -->
+ <script src="/js/latest_news.js" defer></script>
 </body>
 </html>

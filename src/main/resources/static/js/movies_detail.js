@@ -224,10 +224,6 @@
 	        </section>
 	        
 	        ${imageGalleryHTML}
-    
-    		${trailerHTML}
-	        
-	        
 	        ${trailerHTML}
 	        
 	        <hr style="margin: 40px 0;">

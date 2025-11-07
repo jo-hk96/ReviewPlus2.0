@@ -95,7 +95,6 @@ public class UserService implements UserDetailsService {
 	            throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
 	        }
 	        user.setNickname(newNickname);
-	        
 	    }
 	    
 	    
@@ -127,6 +126,10 @@ public class UserService implements UserDetailsService {
 			}
 
 		}
+	
+	
+	
+	
 	
 		//관리자 회원 정보 수정
 		@Transactional 

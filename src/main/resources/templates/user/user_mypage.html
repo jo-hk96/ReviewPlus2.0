@@ -27,13 +27,9 @@
 	    <button type="submit" onclick="return confirm('정말 탈퇴 하시겠습니까?')"
 	    	style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer;"
 	    	    onmouseover="this.style.backgroundColor='red'"
-	    	    onmouseout="this.style.backgroundColor='#d34c4c'"
-	    >회원 탈퇴</button>
-	    	
+	    	    onmouseout="this.style.backgroundColor='#d34c4c'">회원 탈퇴</button>
 	  </form>
-	  
 </div>
-
 <script>
 	function toggleMenu() {
 	  const menu = document.getElementById("menu-list");
@@ -46,10 +42,15 @@
 </script>
 
 <div class="profile-main-box">
-
+	
 	<h1 style = "color:white;">마이페이지</h1>
 	<div class="user-info-outer">
 		<div class="user-info-box">
+		
+		<!-- 프로필이미지 넣기 -->
+		<div class = "profileImageBox">
+		</div>
+		
 			<table>
 				<tr>
 					<td>이메일: <span sec:authentication="principal.username"></span></td>
@@ -89,27 +90,26 @@
 					<div id="emptyMessage" style="display:none;">
 						<p>아직 좋아요가 없습니다.</p>
 					</div>
-					
 			</div>
 		</div>
 	<!-- 사용자 리뷰 목록 MODAL -->
-	<button id="showReviewMoviesBtn" onclick="openReviewModal()">
-	    리뷰 목록 보기
-	</button>
-	<div id="ReviewModal" class="modal" style="display:none;">
-	
-		<div class ="modal-content-Review">
-			<span class = "close-btn2">닫기</span>
-			<h3><span sec:authentication="principal.nickname"></span>님의 리뷰 목록</h3>
-			
-			<!-- 사용자 좋아요 목록 컨테이너 -->
-			<div id="ReviewMoviesContainer"></div>		
+		<button id="showReviewMoviesBtn" onclick="openReviewModal()">
+		    리뷰 목록 보기
+		</button>
+		<div id="ReviewModal" class="modal" style="display:none;">
 		
-				<div id="emptyReviewMessage" style="display:none;">
-					<p>아직 등록된 리뷰가 없습니다.</p>
-				</div>
+			<div class ="modal-content-Review">
+				<span class = "close-btn2">닫기</span>
+				<h3><span sec:authentication="principal.nickname"></span>님의 리뷰 목록</h3>
+				
+				<!-- 사용자 좋아요 목록 컨테이너 -->
+				<div id="ReviewMoviesContainer"></div>		
+			
+					<div id="emptyReviewMessage" style="display:none;">
+						<p>아직 등록된 리뷰가 없습니다.</p>
+					</div>
+			</div>
 		</div>
-	</div>
 	
 	
 </div>

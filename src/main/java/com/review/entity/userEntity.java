@@ -64,6 +64,9 @@ public class userEntity implements Serializable{
 		@Column(name = "BIRTHDATE" , nullable = false)
 		private String birthdate; // 생일
 		
+		@Column(name = "PROFILE_IMAGE_URL" ,nullable = true)
+		private String profileImageUrl; //프로필 이미지 URL
+		
 		//사용자가 최초로그인시 회원수정을 했는지 true false 로 확인
 		@Column(name = "IRIM",nullable = false)
 		@Builder.Default // boolean의 기본값인 false로 만들지않기 위해 true를 초기값을 로둠
@@ -75,7 +78,7 @@ public class userEntity implements Serializable{
 		private SocialType socialType;
 		
 		@Column(name = "ROLE") //관리자 권한
-		private String role; // 예: "ROLE_USER", "ROLE_ADMIN" 등의 문자열 저장
+		private String role; //"ROLE_USER", "ROLE_ADMIN"문자열 저장
 		
 		
 		//DB에 최초 저장(INSERT)될 때 현재 시간을 자동으로 기록
@@ -92,11 +95,16 @@ public class userEntity implements Serializable{
 		private List<userReviewEntity> reviews = new ArrayList<>(); 
 		
 		
-		//소셜 로그인시 성함 , 생일이  DB에 업데이트댐
+		//소셜 로그인시 성함 , 생일이  DB업데이트
 		 public userEntity update(String name) {
 			 this.pname = name;
 			return this;
 		    }
+		 
+		 //유저 프로필 사진 DB업데이트
+		 public void updateUrl(String profileImageUrl) {
+			 this.profileImageUrl = profileImageUrl;
+		 }
 
 
 }
