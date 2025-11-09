@@ -48,9 +48,11 @@
 		<div class="user-info-box">
 		
 		<!-- 프로필이미지 넣기 -->
-		<div class = "profileImageBox">
-		</div>
-		
+		<img
+		    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}"
+		    alt="프로필 사진" 
+		    style="width: 150px; height: 150px; border-radius: 30;">
+		<div id="resultMessage" style="margin-top: 15px; color: green;"></div>
 			<table>
 				<tr>
 					<td>이메일: <span sec:authentication="principal.username"></span></td>
@@ -69,7 +71,6 @@
 			</table>
 		</div>
 	</div>
-	
 	<!-- 사용자 좋아요 목록 MODAL -->
 		<button id="showLikedMoviesBtn" onclick="openLikeModal()">
 		    좋아요 목록 보기
@@ -115,9 +116,17 @@
 </div>
 
 <!------------------------------------------------------------------>
+<script th:inline="javascript">
+    const LOGGED_IN_USER_ID = [[${currentUserId}]];
+    console.log("주입된 userId:", LOGGED_IN_USER_ID);
+    if (LOGGED_IN_USER_ID) {
+        loadProfileImage(LOGGED_IN_USER_ID); 
+    }
+</script>
 
 
-
+<script src="js/upload.js"></script>
+		
 <!-- index/index 파일에 있는 "footer" 태그를 가져옴  -->
 <div th:insert="index/index :: footer"></div>
 

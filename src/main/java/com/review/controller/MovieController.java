@@ -15,16 +15,17 @@ import com.review.DTO.UserReviewDTO;
 import com.review.config.CustomUserDetails;
 import com.review.entity.userReviewEntity;
 import com.review.service.MovieLikeService;
+import com.review.service.TmdbApiService;
 import com.review.service.UserReviewService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class MovieController {
 	
-	@Autowired
-	private UserReviewService userReviewService;
-
-	@Autowired
-	private MovieLikeService movieLikeService;
+	private final UserReviewService userReviewService;
+	private final MovieLikeService movieLikeService;
 	
 	//메인홈
 	@GetMapping("/")
@@ -53,8 +54,6 @@ public class MovieController {
 			return "movies/movies_list";
 		}
 
-			
-	
 			
 	
 	//영화 상세 정보

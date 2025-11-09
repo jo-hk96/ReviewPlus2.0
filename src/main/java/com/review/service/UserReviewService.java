@@ -27,10 +27,8 @@ public class UserReviewService{
     
     
     @Transactional
-    public userReviewEntity saveReview(UserReviewDTO userReviewDTO , Long apiId ) {
+    public userReviewEntity saveReview(UserReviewDTO userReviewDTO , userEntity user ) {
     	//UserEntity에서 userId찾기
-	    userEntity user = userRepository.findByNickname(userReviewDTO.getNickname())
-	    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자 닉네임입니다."));
 	    String movieTitle = tmdbApiService.getMovieTitle(userReviewDTO.getApiId());
         userReviewEntity newReview = userReviewEntity.builder()
         		.userEntity(user)                    // 2번에서 찾은 User Entity
@@ -62,7 +60,8 @@ public class UserReviewService{
     //영화 리뷰 가져오기
     public List<userReviewEntity> getReviewsByMovieId(Long apiId) {
         //apiId를 조회해서 반환
-        return userReviewRepository.findAllByApiIdOrderByRegDateDesc(apiId);
+        return userReviewRepository.findAllByApiIdWithUser(apiId);
+        
     }
     
     
@@ -114,13 +113,30 @@ public class UserReviewService{
     
     
     //영화 유저 리뷰 목록
-	public List<UserReviewDTO> getReviewsByMovieApiId(Long apiId) {
-	        List<userReviewEntity> reviewEntities = userReviewRepository.findByApiIdOrderByRegDateDesc(apiId);
-	        return reviewEntities.stream()
-	                .map(UserReviewDTO::fromEntity) // UserReviewDTO의 정적 팩토리 메서드(fromEntity) 사용 가정
-	                .collect(Collectors.toList());
-	    }
-    
+    public List<UserReviewDTO> getReviewsByMovieApiId(Long apiId) {
+        
+        List<userReviewEntity> reviewEntities = userReviewRepository.findAllByApiIdWithUser(apiId);
+        return reviewEntities.stream()
+                .map(entity -> {
+                    UserReviewDTO dto = UserReviewDTO.fromEntity(entity); 
+                    
+                    String profileUrl = null;
+                    if (entity.getUserEntity() != null) {
+                        profileUrl = entity.getUserEntity().getProfileImageUrl();
+                    }
+
+                    // 5. DB에 파일명이 없으면 default.png로 대체
+                    if (profileUrl == null || profileUrl.isEmpty()) {
+                        profileUrl = "default.png"; 
+                    }
+                    
+                    dto.setProfileImageUrl(profileUrl); // DTO에 설정
+                    
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
 	
 	
 	//리뷰 삭제 서비스

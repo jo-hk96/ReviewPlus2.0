@@ -1,6 +1,8 @@
 package com.review.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.IOException;
+import java.security.Principal;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,46 +11,40 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.review.DTO.UserDTO;
 import com.review.DTO.UserEditDTO;
 import com.review.config.CustomUserDetails;
 import com.review.repository.UserRepository;
+import com.review.service.FileStoreService;
 import com.review.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
 	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private UserService userService;
+	private final UserRepository userRepository;
+	private final UserService userService;
+	private final FileStoreService fileStoreService;
 	
 	
-	 // 이메일 중복 체크 텍스트 API
-    @GetMapping("/check/email")
-    @ResponseBody
-    public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
-        boolean isDuplicated = userService.checkEmailDuplication(email);
-        return ResponseEntity.ok(isDuplicated);
-    }
-
-    // 닉네임 중복 체크 텍스트 API 따로 텍스트만 바
-    @GetMapping("/check/nickname")
-    @ResponseBody
-    public ResponseEntity<Boolean> checkNickname(@RequestParam String nickname) {
-        boolean isDuplicated = userService.checkNicknameDuplication(nickname);
-        return ResponseEntity.ok(isDuplicated);
-    }
+	//회원가입
+	@PostMapping("/UserJoin")
+	public String userJoin(UserDTO userDto , RedirectAttributes re) {
+		userService.joinUser(userDto);
+		return "redirect:/login";
+	}
 	
 	
 	//회원가입 폼으로 이동
@@ -56,17 +52,58 @@ public class UserController {
 	public String userJoinForm() {
 		return "user/user_newjoin";
 	}
-	
-	
-	//회원가입
-	 @PostMapping("/UserJoin")
-	    public String userJoin(UserDTO userDto , RedirectAttributes re) {
-	        userService.joinUser(userDto);
-	        return "redirect:/login"; // 성공 후 로그인 페이지로 이동
-	    }
-	 
-	
 
+		 // 이메일 중복 체크 텍스트 API
+	    @GetMapping("/check/email")
+	    @ResponseBody
+	    public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
+	        boolean isDuplicated = userService.checkEmailDuplication(email);
+	        return ResponseEntity.ok(isDuplicated);
+	    }
+	    
+	    // 닉네임 중복 체크 텍스트 API 따로 텍스트만 바
+	    @GetMapping("/check/nickname")
+	    @ResponseBody
+	    public ResponseEntity<Boolean> checkNickname(@RequestParam String nickname) {
+	        boolean isDuplicated = userService.checkNicknameDuplication(nickname);
+	        return ResponseEntity.ok(isDuplicated);
+	    }
+		
+    //프로필 사진 업로드
+    @PostMapping("/api/profile/upload")
+    @ResponseBody
+    public String uploadProfileImage(
+        @AuthenticationPrincipal CustomUserDetails customUserDetails, // ⭐️ 로그인된 사용자 정보
+        @RequestParam("file") MultipartFile imageFile
+    ) throws IOException {
+        
+        if (customUserDetails == null) {
+            // 로그인되지 않은 경우의 처리 (예: 401 Unathorized 반환)
+            throw new IllegalStateException("로그인이 필요합니다.");
+        }
+        
+        // ⭐️ CustomUserDetails에서 DB 조회 없이 바로 Long 타입의 userId를 가져옴
+        Long currentUserId = customUserDetails.getUserId(); 
+
+        // 파일 저장 처리 (Service 호출)
+        String storeFileName = fileStoreService.storeFile(imageFile);
+        
+        // DB 업데이트
+        if(storeFileName != null) {
+            userService.updateProfilImage(currentUserId, storeFileName); 
+        }
+        
+        return "파일 업로드 및 DB 업데이트 성공! 저장된 파일명: " + storeFileName;
+    }
+	 
+	 //회원 프로필 사진 조회
+	 @GetMapping("/api/profile/image/{userId}")
+	 @ResponseBody
+	 public String getProfileImageUrl(@PathVariable Long userId) {
+		 String storedFileName = userService.getProfileImageUrl(userId);
+		 return storedFileName;
+	 }
+	 
 	//로그인 메인
 	@GetMapping("/UserLoginMain")
 	public String userLoginMain() {
@@ -81,16 +118,42 @@ public class UserController {
 	
 	//마이페이지
 	@GetMapping("/UserMypage")
-	public String userMypage() {
+	public String userMypage(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+		// 1. 로그인된 사용자 ID 확인
+	    Long currentUserId = customUserDetails != null ? customUserDetails.getUserId() : null;
+	    String storedFileName = "default.png";
+	    
+	    if (currentUserId != null) {
+	        String dbFileName = userService.getProfileImageUrl(currentUserId);
+	        
+	        // 3. 파일명이 있다면 업데이트
+	        if (dbFileName != null && !dbFileName.isEmpty()) {
+	            storedFileName = dbFileName;
+	        }
+	    }
+	    model.addAttribute("profileFileName", storedFileName); 
+	    model.addAttribute("currentUserId", currentUserId);
 		return "user/user_mypage";
 	}
 	
 	
 	//회원정보수정폼으로 이동
 	@GetMapping("/UserEditForm")
-	public String userEditForm() {
+	public String userEditForm(@AuthenticationPrincipal CustomUserDetails cud ,Model model) {
+	    Long currentUserId = cud != null ? cud.getUserId() : null;
+	    String storedFileName = "default.png";
+	    
+	    if (currentUserId != null) {
+	        String dbFileName = userService.getProfileImageUrl(currentUserId);
+	        // 3. 파일명이 있다면 업데이트
+	        if (dbFileName != null && !dbFileName.isEmpty()) {
+	            storedFileName = dbFileName;
+	        }
+	    }
+	    model.addAttribute("profileFileName", storedFileName); 
 		return "user/user_edit";
 	}
+	
 	
 	//회원정보수정
 	@PostMapping("/UserEdit")
@@ -98,7 +161,6 @@ public class UserController {
 			@AuthenticationPrincipal CustomUserDetails cud, 
 			@ModelAttribute UserEditDTO userDto,
 			RedirectAttributes re, HttpServletRequest request,HttpServletResponse response) {
-		
 		//userid 가져오기
 		Long userid = cud.getUserId();
 		try {
@@ -107,7 +169,8 @@ public class UserController {
 	        //현재 인증 정보와 요청/응답을 사용해 로그아웃 처리
 	        //세션 무효화 및 시큐리티 컨텍스트 클리어
 	        logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-	       re.addFlashAttribute("sucMsg","수정 하신 정보가 변경되었습니다.다시 로그인 해주세요.");
+	        re.addFlashAttribute("sucMsg","수정 하신 정보가 변경되었습니다.다시 로그인 해주세요.");
+	        //에러
 	    } catch (IllegalArgumentException e) {
 	        re.addFlashAttribute("errorMessage", e.getMessage());
 	        return "redirect:/UserEditForm";
@@ -130,12 +193,10 @@ public class UserController {
 	
 	@GetMapping("/SocialUserEditForm")
 	public String SocialUserJoinInfoForm(@AuthenticationPrincipal CustomUserDetails cud, Model model) {
-		
 		 model.addAttribute("email" , cud.getUsername());
 		 model.addAttribute("pname" , cud.getUserEntity().getPname());
 		 model.addAttribute("nickname", cud.getNickname());
 		 model.addAttribute("socialType", cud.getUserEntity().getSocialType()); 
-		    
 		return "user/user_socialEdit";
 	}
 	

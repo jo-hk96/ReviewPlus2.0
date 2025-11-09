@@ -102,7 +102,7 @@ public class userEntity implements Serializable{
 		    }
 		 
 		 //유저 프로필 사진 DB업데이트
-		 public void updateUrl(String profileImageUrl) {
+		 public void updateProfileImage(String profileImageUrl) {
 			 this.profileImageUrl = profileImageUrl;
 		 }
 

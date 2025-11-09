@@ -21,23 +21,24 @@ import com.review.DTO.UserReviewDTO;
 import com.review.DTO.UserReviewReplyDTO;
 import com.review.DTO.movieDTO;
 import com.review.config.CustomUserDetails;
+import com.review.entity.userEntity;
 import com.review.entity.userReviewEntity;
+import com.review.service.MovieLikeService;
 import com.review.service.MovieService;
+import com.review.service.TmdbApiService;
 import com.review.service.UserReviewReplyService;
 import com.review.service.UserReviewService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class UserReviewApiController {
 	
 	
-	@Autowired
-	private UserReviewService userReviewService;
-	
-	@Autowired
-	private MovieService movieService;
-	
-	@Autowired
-	private UserReviewReplyService userReviewReplyService;
+	private final UserReviewService userReviewService;
+	private final MovieService movieService;
+	private final UserReviewReplyService userReviewReplyService;
 	
 	//사용자 내정보 좋아요 목록
 	@GetMapping("/api/user/likedMovies")
@@ -64,13 +65,31 @@ public class UserReviewApiController {
 	}
 	
 	
+	
+	
 	//영화 리뷰 등록
 	@PostMapping("/api/userReview")
-	public ResponseEntity<?> createReview (@RequestBody UserReviewDTO reviewDto,Long apiId){
-	    userReviewEntity newReview = userReviewService.saveReview(reviewDto,apiId);
-	    UserReviewDTO responseDto = UserReviewDTO.fromEntity(newReview); 
+	public ResponseEntity<?> createReview(@RequestBody UserReviewDTO reviewDto,Long apiId ,
+			@AuthenticationPrincipal CustomUserDetails customUserDetails){
+		
+		if (customUserDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+		
+		userEntity user = customUserDetails.getUserEntity();
+		userReviewEntity newReview = userReviewService.saveReview(reviewDto, user);
+		UserReviewDTO responseDto = UserReviewDTO.fromEntity(newReview);
+		
+		String profileUrl = user.getProfileImageUrl();
+		if (profileUrl == null || profileUrl.isEmpty()) {
+            profileUrl = "default.png";
+        }
+		
+		responseDto.setProfileImageUrl(profileUrl);
 	    return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
 	}
+	
+	
 	
 	//리뷰수정
 	@PatchMapping("api/userReview/{reviewId}")

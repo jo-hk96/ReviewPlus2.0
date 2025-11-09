@@ -19,7 +19,7 @@ const movieApiId = apiIdInput ? apiIdInput.value : null;
 
             if (comment.trim() === '' || rating === '0') {
                 alert('리뷰 내용과 별점을 모두 입력해 주세요.');
-                return;
+                return;	
             }
 
             const reviewData = {
@@ -52,10 +52,7 @@ const movieApiId = apiIdInput ? apiIdInput.value : null;
             alert('리뷰 등록 실패');
         });
     });
-    
-    }
-
-
+}
 
 //==================리뷰 별점 Rating===============
 const ratingStars = document.querySelectorAll('.rating-area .star');
@@ -165,19 +162,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 });
 
-
 //===============리뷰 목록 생성====================
 function createReviewHtml(review) {
     const starHtml = generateStars(review.rating);
     let actionButtonsHtml = '';
     let restrictedButtonsHtml = '';
     
+    const storedFileName = review.profileImageUrl || 'default.png'; 
+    const profileSrc = `/images/profile/${storedFileName}`;
+    
+    
     // 로그인한 사용자 ID (전역 변수 loggedInUserId를 사용한다고 가정)
     const currentUserId = (typeof loggedInUserId !== 'undefined' && loggedInUserId !== null) 
                           ? Number(loggedInUserId) 
                           : null;
     const reviewAuthorId = Number(review.userId);
-    if (currentUserId && currentUserId === reviewAuthorId) { 
+    if (currentUserId && currentUserId === reviewAuthorId) { 2
         restrictedButtonsHtml = `
                 <button type="button" class="edit-btn" onclick="openEditModal(${review.reviewId})">수정</button>
                 <button type="button" class="delete-btn" onclick="deleteReview(${review.reviewId})">삭제</button>
@@ -208,6 +208,18 @@ function createReviewHtml(review) {
          <div class = "review-box" id="review-${review.reviewId}" data-review-id="${review.reviewId}" 
          					style=" box-shadow:0 5px 8px rgba(0,0,0,0.2);  margin-bottom: 10px; padding: 10px;
          					color: white; border-radius: 15px;">
+         					
+         	   <div class="review-profile-area" style="margin-right: 15px;">
+                    <img 
+                        src="${profileSrc}" 
+                        alt="${review.nickname}님의 프로필" 
+                        style="
+                            width: 75px; 
+                            height: 75px; 
+                            border-radius: 50%;
+                            object-fit: cover; 
+                            border: 2px solid #EEE;">
+                </div>		
 	            <table>
 	                <tr><td><b><span>${review.nickname}</span></b></td></tr>
 	                <tr><td><p>${review.comment}</p></td></tr>
@@ -237,7 +249,6 @@ function createReviewHtml(review) {
 
 
 function toggleReplies(reviewId){
-	//댓글 목록 컨테이너 불러오기
 	const replyListContainer = document.getElementById(`reply-list-${reviewId}`);
 	
 	if (!replyListContainer) {

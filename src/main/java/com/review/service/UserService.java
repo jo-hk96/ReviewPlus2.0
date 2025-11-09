@@ -24,9 +24,27 @@ import lombok.RequiredArgsConstructor;
 public class UserService implements UserDetailsService {
 	private final PasswordEncoder passwordEncoder;
 	private final UserRepository userRepository;
-
 	
 	
+	//회원 프로필 사진 조회
+	@Transactional(readOnly = true)
+	public String getProfileImageUrl(Long userId) {
+		userEntity user = userRepository.findById(userId)
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원 ID입니다:" + userId));
+		return user.getProfileImageUrl();
+	}
+	
+	//회원 프로필 이미지 URL 업데이트
+	@Transactional 
+	public void updateProfilImage(Long userId, String storeFileName) {
+		userEntity user = userRepository.findById(userId)
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원 ID입니다:" + userId));
+		user.updateProfileImage(storeFileName);
+	}
+	
+	
+	
+	//userId
 	public userEntity findById(Long userId) {
 			return userRepository.findById(userId).orElseThrow(null);
 		}

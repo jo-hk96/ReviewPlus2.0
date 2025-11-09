@@ -14,8 +14,11 @@ import com.review.entity.userReviewEntity;
 @Repository
 public interface UserReviewRepository extends JpaRepository<userReviewEntity, Long> {
 	
+		
 	
-	    List<userReviewEntity> findAllByApiIdOrderByRegDateDesc(@Param("apiId") Long apiId);
+		
+		@Query("SELECT r FROM userReviewEntity r JOIN FETCH r.userEntity u WHERE r.apiId = :apiId ORDER BY r.regDate DESC")
+		List<userReviewEntity> findAllByApiIdWithUser(@Param("apiId") Long apiId);
 	    
 	    //최신순 리뷰 5개
 	    List<userReviewEntity> findTop5ByOrderByRegDateDesc();

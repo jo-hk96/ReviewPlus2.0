@@ -42,8 +42,20 @@
         
         <!-- 예외 메시지 출력 영역 -->
         <!-- 프로필이미지 넣기 -->
-		<div class = "profileImageBox">
-		</div>
+        
+        
+        <form id="profileUploadForm" action="/api/profile/upload/1" method="post" enctype="multipart/form-data">
+		    <div>
+		        <label for="profileImageInput">새 프로필 이미지 선택:</label>
+		        <input type="file" id="profileImageInput" name="file" accept="image/*" required>
+		    </div>
+		    ㄴ
+		    <button type="submit" id="uploadButton">업로드하고 저장</button>
+		</form>
+		<img
+		    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}"
+		    alt="프로필 사진" 
+		    style="width: 150px; height: 150px; border-radius: 30;">
 		
         <form action="/UserEdit" method="post" class="user-edit-form">
             <div class="form-group">
@@ -116,5 +128,10 @@
         this.submit();
     });
 </script>
+
+
+<script src="js/upload.js"></script>
+
+
 </body>
 </html>

@@ -11,8 +11,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-
-
 	//로그인한 사용자의 세션정보들을 담아두기위한 class
 	//여기서 필요한 세션정보를 꺼내서 씀
 	public class CustomUserDetails implements UserDetails ,Serializable , OAuth2User {

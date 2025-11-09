@@ -23,8 +23,10 @@ public class UserReviewDTO {
 		private String title;
 		private String regDate;     
 		private Long userId;
-		
+		private String profileImageUrl; //프로필 사진 주소
 
+		
+		
 		
 	    public static UserReviewDTO fromEntity(userReviewEntity entity) {
 	    	  Long userId = null;
@@ -46,6 +48,4 @@ public class UserReviewDTO {
 	                .regDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(entity.getRegDate()))
 	                .build();
 	    }
-
-	    
 }

@@ -5,5 +5,4 @@ spring:
   security:
     oauth2:
       client:
-        registration:
-       
+   

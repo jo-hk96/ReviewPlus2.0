@@ -16,7 +16,7 @@ public class UserReviewReplyDTO {
 	private Long reviewId;
 	private String comment;//내용
 	private String nickname; //작성자 닉네임
-	private Long userId;
-	
+	private Long userId; //유저ID
+	private String profileImageUrl; //유저 프로필 Url
 	
 }
