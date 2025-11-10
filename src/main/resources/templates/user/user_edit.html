@@ -44,19 +44,6 @@
         <!-- 프로필이미지 넣기 -->
         
         
-        <form id="profileUploadForm" action="/api/profile/upload/1" method="post" enctype="multipart/form-data">
-		    <div>
-		        <label for="profileImageInput">새 프로필 이미지 선택:</label>
-		        <input type="file" id="profileImageInput" name="file" accept="image/*" required>
-		    </div>
-		    ㄴ
-		    <button type="submit" id="uploadButton">업로드하고 저장</button>
-		</form>
-		<img
-		    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}"
-		    alt="프로필 사진" 
-		    style="width: 150px; height: 150px; border-radius: 30;">
-		
         <form action="/UserEdit" method="post" class="user-edit-form">
             <div class="form-group">
                 <label for="email">이메일</label>
@@ -84,7 +71,7 @@
                 <input type="password" id="confirmNewPassword" name="confirmNewPassword">
                 <p id="passwordMismatchError" class="error-message"></p>
             </div>
-            <button type="submit" class="submit-button">수정</button>
+            <button type="submit" class="submit-button" style = "margin: 0 auto;">수정</button>
         </form>
     </div>
     <div th:insert="index/index :: footer"></div>
@@ -127,6 +114,15 @@
         }
         this.submit();
     });
+</script>
+
+
+<script th:inline="javascript">
+    const LOGGED_IN_USER_ID = [[${currentUserId}]];
+    console.log("주입된 userId:", LOGGED_IN_USER_ID);
+    if (LOGGED_IN_USER_ID) {
+        loadProfileImage(LOGGED_IN_USER_ID); 
+    }
 </script>
 
 

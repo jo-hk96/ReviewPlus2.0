@@ -46,13 +46,19 @@
 	<h1 style = "color:white;">마이페이지</h1>
 	<div class="user-info-outer">
 		<div class="user-info-box">
-		
-		<!-- 프로필이미지 넣기 -->
-		<img
-		    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}"
-		    alt="프로필 사진" 
-		    style="width: 150px; height: 150px; border-radius: 30;">
-		<div id="resultMessage" style="margin-top: 15px; color: green;"></div>
+			<!-- 프로필이미지 -->
+			
+			
+			<img
+			    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}" 
+			    alt="프로필 사진" >
+			    <div id="resultMessage" style="text-align:center; color: green; margin-bottom:10px;"></div>
+			<form id="profileUploadForm" action="/api/profile/upload/1" method="post" enctype="multipart/form-data">
+			    <div>
+			        <input type="file" id="profileImageInput" name="file" accept="image/*" required style = "display: none;">
+			    </div>
+			    <button type="submit" id="uploadButton" style = "margin: 0 auto;">프로필 저장</button>
+			</form>
 			<table>
 				<tr>
 					<td>이메일: <span sec:authentication="principal.username"></span></td>
@@ -123,6 +129,17 @@
         loadProfileImage(LOGGED_IN_USER_ID); 
     }
 </script>
+
+<script>
+	const profileImage = document.getElementById('userProfilePicture');
+	const fileInput = document.getElementById('profileImageInput');
+
+	profileImage.addEventListener('click', function(){
+		fileInput.click();
+	});
+	
+</script>
+
 
 
 <script src="js/upload.js"></script>

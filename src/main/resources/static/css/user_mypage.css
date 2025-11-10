@@ -20,6 +20,24 @@ body {
 }
 
 
+
+#userProfilePicture{
+    display: block;
+    margin-left: auto;
+    margin-right: auto; 
+    margin-bottom: 10px;
+	width: 150px;
+	height: 150px;
+	border-radius:20px;
+	cursor: pointer;
+}
+
+.profile-container {
+    text-align: center;
+    width: 100%;
+}
+
+
 /* 메뉴 버튼 */
 .menu-btn {
   position: fixed;
@@ -208,7 +226,7 @@ h3 {
 .profile-main-box {
   width: 100%; /* 원하는 고정 너비 */
   min-width: 600px;
-  max-width: 1450px;
+  max-width: 600px;
   margin: 48px auto 32px auto;
   padding: 44px 40px; 
   background-color :  #191932;
@@ -263,9 +281,12 @@ h3 {
 
 
 
+
+
+
 /* 유저 정보 박스 */
 .user-info-box {
-  width: 100%;             /* 부모 대비 크기 */
+  width: 550px;        
   margin: 24px auto 20px auto;
   box-sizing: border-box; /* padding, border 포함 폭 계산 */
 
@@ -507,8 +528,7 @@ h3 {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-right: 10px;
-    margin-bottom:20px;
+    margin: 0 auto;
     transition: background-color 0.3s ease;
 }
 

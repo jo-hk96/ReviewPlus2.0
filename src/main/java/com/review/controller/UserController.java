@@ -93,7 +93,7 @@ public class UserController {
             userService.updateProfilImage(currentUserId, storeFileName); 
         }
         
-        return "파일 업로드 및 DB 업데이트 성공! 저장된 파일명: " + storeFileName;
+        return "프로필 사진이 수정 되었습니다.";
     }
 	 
 	 //회원 프로필 사진 조회
@@ -139,21 +139,9 @@ public class UserController {
 	
 	//회원정보수정폼으로 이동
 	@GetMapping("/UserEditForm")
-	public String userEditForm(@AuthenticationPrincipal CustomUserDetails cud ,Model model) {
-	    Long currentUserId = cud != null ? cud.getUserId() : null;
-	    String storedFileName = "default.png";
-	    
-	    if (currentUserId != null) {
-	        String dbFileName = userService.getProfileImageUrl(currentUserId);
-	        // 3. 파일명이 있다면 업데이트
-	        if (dbFileName != null && !dbFileName.isEmpty()) {
-	            storedFileName = dbFileName;
-	        }
-	    }
-	    model.addAttribute("profileFileName", storedFileName); 
+	public String userEditForm() {
 		return "user/user_edit";
 	}
-	
 	
 	//회원정보수정
 	@PostMapping("/UserEdit")
@@ -211,14 +199,25 @@ public class UserController {
         // 현재 로그인된 사용자의 이메일을 가져와서 해당 계정을 찾게 함
         String email = cud.getUsername(); 
         
+        
+        String socialType = cud.getUserEntity().getSocialType().toString();       
+        
         // 서비스 레이어에서 DB 업데이트 처리
         userService.completeRegistration(email, newNickname, newBirthdate);
         
+        String socialName = "";
+        if("GOOGLE".equalsIgnoreCase(socialType)) {
+        	socialName = "구글";
+        }else if("NAVER".equalsIgnoreCase(socialType)) {
+        	socialName = "네이버";
+        }else {
+        	socialName = "소셜";
+        }
+        
+        //로그아웃
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
-        //현재 인증 정보와 요청/응답을 사용해 로그아웃 처리
-        // 세션 무효화 및 시큐리티 컨텍스트 클리어
         logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-        re.addFlashAttribute("socialEditMsg","구글 회원가입이 완료 되었습니다.");
+        re.addFlashAttribute("socialEditMsg",socialName + "회원가입이 완료 되었습니다.");
         // 모든 정보 입력이 완료되었으니 홈으로 이동
         return "redirect:/UserLoginMain";
     }

@@ -10,6 +10,26 @@
 	z-index: 100;
 	}
 	
+	
+	/* 리뷰 프로필 디자인 */
+	
+
+.review-profile-area .profile-image {
+    width: 75px; 
+    height: 75px; 
+    border-radius: 50%;
+    object-fit: cover; 
+    border: 2px solid #EEE;
+    margin-right: 10px; 
+}
+
+	.review-profile-area {
+    display: flex; 
+    align-items: center; 
+    margin-right: 15px; 
+}
+	
+	
 	/* =======리뷰작성 디자인======= */
 	.rating-area {
 	  display: flex;
@@ -60,7 +80,6 @@
     align-items: center;
 }
 	
-	
 	.ReplyComment{
 		border-radius:15px;
 		padding:10px;
@@ -70,8 +89,8 @@
 		font-size:14px;
 		width: 400px; 
 	    height: 100px;
-	    /* textarea 크기 제한 */
 	    resize: none;
+	    margin-top:20px;
 	}
 	
 	

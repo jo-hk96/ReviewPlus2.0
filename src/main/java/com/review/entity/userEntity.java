@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.Check;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -26,7 +27,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity //DB 테이블과 매핑
 @Table(name = "MOVIE_USER") //DB테이블 이름
@@ -74,6 +74,7 @@ public class userEntity implements Serializable{
 		
 		//소셜 로그인시 SocialType에 해당하는 문자열을 DB에 저장
 		@Enumerated(EnumType.STRING)
+		@Check(constraints = "SOCIAL_TYPE IN ('LOCAL','GOOGLE','NAVER','KAKAO')")
 		@Column(name = "SOCIAL_TYPE" , nullable = false)
 		private SocialType socialType;
 		

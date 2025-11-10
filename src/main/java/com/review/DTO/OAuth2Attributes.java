@@ -4,6 +4,8 @@ package com.review.DTO;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.text.html.HTML.Attribute;
+
 import com.review.Enum.SocialType;
 import com.review.entity.userEntity;
 
@@ -20,21 +22,26 @@ public class OAuth2Attributes {
 	    private final String email;
 	    private final String birthdate;
 	    private final SocialType socialType;
+	    private final String picture;
+	    
+	    
 	    
 	    @Builder
 	    public OAuth2Attributes(Map<String, Object> attributes, String nameAttributeKey, 
-	                            String name, String email ,String birthdate ,SocialType socialType) {
+	                            String name, String email ,String birthdate ,String picture,SocialType socialType) {
 	        this.attributes = attributes;
 	        this.nameAttributeKey = nameAttributeKey;
 	        this.name = name;
 	        this.email = email;
+	        this.picture = picture;
 	        this.birthdate = birthdate;
 	        this.socialType = socialType;
 }
 	    
-	 // Google, Naver 등 서비스별로 다르게 넘어오는 정보를 처리하는 팩토리 메서드
+	    // Google, Naver 등 서비스별로 다르게 넘어오는 정보를 처리하는 팩토리 메서드
 	    public static OAuth2Attributes of(String registrationId, Map<String, Object> attributes) {
 	        if ("naver".equals(registrationId)) {
+	        	return ofNaver(attributes);
 	        }
 	        return ofGoogle(attributes); 
 	    }
@@ -42,6 +49,7 @@ public class OAuth2Attributes {
 	    @SuppressWarnings("unchecked")
 	    private static OAuth2Attributes ofGoogle(Map<String, Object> attributes) {
 	    	String rawBirthdate = null;
+	    	String picture = (String) attributes.get("picture");
 	    	if (attributes.containsKey("birthdays")) {
 	            List<Map<String, Object>> birthdays = (List<Map<String, Object>>) attributes.get("birthdays");
 	            if (!birthdays.isEmpty()) {
@@ -62,14 +70,50 @@ public class OAuth2Attributes {
 	                .nameAttributeKey("sub") // 구글 고유키
 	                .attributes(attributes)
 	                .birthdate(rawBirthdate)
+	                .picture(picture)
+	                .socialType(SocialType.GOOGLE)
 	                .build();
 	    }
+	    
+	    
+	    @SuppressWarnings("unchecked")
+	    private static OAuth2Attributes ofNaver(Map<String, Object> attributes) {
+	    	Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+	        
+	        // 필드 추출 및 포맷팅
+	        String name = (String) response.get("name");
+	        String email = (String) response.get("email");
+	        String picture = (String) response.get("profile_image"); 
+	        
+	        // 생년월일 조합 
+	        String rawBirthdate = null;
+	        String birthyear = (String) response.get("birthyear"); 
+	        String birthday = (String) response.get("birthday"); // 월-일 (예: 12-20)
+	        
+	        if (birthyear != null && birthday != null) {
+	            // YYYY-MM-DD 형태로 조합
+	            rawBirthdate = String.format("%s-%s", birthyear, birthday); 
+	        }
+	        
+	        // 추출한 정보로 빌더를 사용하여 OAuth2Attributes 객체 생성
+	        return OAuth2Attributes.builder()
+	                .name(name)
+	                .email(email)
+	                .nameAttributeKey("id") 
+	                .attributes(attributes)
+	                .birthdate(rawBirthdate)
+	                .picture(picture)
+	                .socialType(SocialType.NAVER)
+	                .build();
+	    }
+	    	
+	    	
 	    
 	    
 	    
 	    // DB에 저장할 UserEntity 객체를 생성하는 메서드
 	    public userEntity toEntity() {
-	    	// birthdate가 null이면 임시값("1900-01-01")을 사용하도록 처리합니다.
+	    	// birthdate가 null이면 임시값("1900-01-01")
 	        String finalBirthdate = (this.birthdate != null && !this.birthdate.isEmpty()) 
 	                                 ? this.birthdate : "1900-01-01"; 
 	        return userEntity.builder()
@@ -79,7 +123,7 @@ public class OAuth2Attributes {
 	                .role("ROLE_USER") // 최초 가입 시 권한은 ROLE_USER로 설정
 	                .birthdate(finalBirthdate) //DTO에서 받은 값을 사용
 	                .password("oauth2_temp_password")
-	                .socialType(SocialType.GOOGLE)
+	                .socialType(this.socialType)
 	                .isRequiredInfoMissing(true)
 	                .build();
 	    }

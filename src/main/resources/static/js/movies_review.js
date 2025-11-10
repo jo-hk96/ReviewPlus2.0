@@ -184,6 +184,7 @@ function createReviewHtml(review) {
         `;
     }
     
+    
     //댓글(N)개 버튼
     const replyButtonHtml = `
     	<span class="reply-toggleButton" id="reply-toggle-${review.reviewId}" onclick="replyReview(${review.reviewId}); toggleReplies(${review.reviewId})">
@@ -210,30 +211,27 @@ function createReviewHtml(review) {
          					color: white; border-radius: 15px;">
          					
          	   <div class="review-profile-area" style="margin-right: 15px;">
-                    <img 
-                        src="${profileSrc}" 
-                        alt="${review.nickname}님의 프로필" 
-                        style="
-                            width: 75px; 
-                            height: 75px; 
-                            border-radius: 50%;
-                            object-fit: cover; 
-                            border: 2px solid #EEE;">
-                </div>		
+                    <img class="profile-image" src="${profileSrc}" alt="${review.nickname}님의 프로필">
+                   <div class="profile-info-text">
+                    	<table>
+                            <tr>
+                            	<td><span>${review.nickname}</span></td>
+                            	<td id="reviewsRating"><span>${starHtml}</span></td>
+                            </tr>
+                            <tr><td><span style = "color:gray">${review.regDate}</span></td></tr>
+                		</table>
+                	</div>
+        	  </div>
 	            <table>
-	                <tr><td><b><span>${review.nickname}</span></b></td></tr>
 	                <tr><td><p>${review.comment}</p></td></tr>
-		            <tr><td>작성일: <span>${review.regDate}</span></td></tr>
-	                <tr><td id="reviewsRating"><span>${starHtml}</span></td></tr>
 	            </table>
 	            ${actionButtonsHtml}
-         </div>
            
          <div id="reply-form-for-${review.reviewId}" class="reply-form-container reply-form-hidden">
              <span style="
                  font-size: 1.5em;
                  color: #CCC; 
-                 margin-top:10px;
+                 margin-top:30px;
                  margin-right: 24px; 
                  display: inline-block; 
                  transform: rotate(360deg) scaleY(2.5) scaleX(2.5); 
