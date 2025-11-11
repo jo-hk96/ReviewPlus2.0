@@ -48,11 +48,12 @@
 		<div class="user-info-box">
 			<!-- 프로필이미지 -->
 			
-			
 			<img
 			    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}" 
 			    alt="프로필 사진" >
-			    <div id="resultMessage" style="text-align:center; color: green; margin-bottom:10px;"></div>
+			<div id="resultMessage" style="text-align:center; color: green; margin-bottom:10px;"></div>
+			
+			
 			<form id="profileUploadForm" action="/api/profile/upload/1" method="post" enctype="multipart/form-data">
 			    <div>
 			        <input type="file" id="profileImageInput" name="file" accept="image/*" required style = "display: none;">

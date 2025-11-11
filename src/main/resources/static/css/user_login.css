@@ -157,15 +157,6 @@
     transition : background-color 0.2s;
 	}
 	
-	#kakao-login:hover{
-		background-color: #e0e0e0;
-	
-	}
-	
-	#kakao-login img {
-	    width: 50px;
-	    height: 50px;
-	}
 	
 	/* 네이버 로그인 */
 	#naver-login {
@@ -179,16 +170,12 @@
     margin-top:20px;
     color:white;
     font-weight:bold;
-    background-color:#2DB400;
+    background-color:#03C75A;
     width:350px;
     border-radius: 4px;
     transition : background-color 0.2s;
 	}
 	
-	#naver-login:hover{
-		background-color: #e0e0e0;
-	
-	}
 	
 	#naver-login img {
 	    width: 50px;

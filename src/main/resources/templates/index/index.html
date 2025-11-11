@@ -17,6 +17,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>리뷰플러스</title>
 </head>
+<style>
+#userProfilePicture{
+	width: 50px;
+	height: 50px;
+	border-radius: 10px;
+	border:1px solid white;
+}
+
+</style>
+
 <body>
 	<body>
 	<!--익명사용자(비로그인상태)isAnonymous -->
@@ -24,9 +34,13 @@
     <div id="header" th:fragment="header">                  
 	        <a href="/" class="logo">
 	           <img th:src="@{/images/logo.png}" alt ="로고" >
-	        </a>   
+	        </a>
        	<div sec:authorize="isAuthenticated()" class = "headerLeft">
        	
+				<img
+				    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}" 
+				    alt="프로필 사진" >
+				    
        			<!-- ROLE_DORMANT -->
 			    <span sec:authorize="hasRole('ROLE_DORMANT')">
 			        휴면계정
@@ -296,6 +310,9 @@
     <i class="fas fa-arrow-up fa-lg"></i>
 </button>
 
+
+
+<script src="js/upload.js"></script>
 	
  <!-- 영화검색.js -->	
  <script src="js/movie_search.js"></script>

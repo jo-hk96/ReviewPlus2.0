@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.review.DTO.UserReviewDTO;
 import com.review.config.CustomUserDetails;
 import com.review.entity.userReviewEntity;
+import com.review.repository.UserRepository;
+import com.review.service.FileStoreService;
 import com.review.service.MovieLikeService;
 import com.review.service.TmdbApiService;
 import com.review.service.UserReviewService;
+import com.review.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,9 +30,10 @@ public class MovieController {
 	private final UserReviewService userReviewService;
 	private final MovieLikeService movieLikeService;
 	
+	
 	//메인홈
 	@GetMapping("/")
-	public String Home(Principal principal, Model model) {
+	public String Home(@AuthenticationPrincipal CustomUserDetails cud ,Principal principal, Model model) {
 		 if (principal != null) {
 	            // principal.getName()은 UserDetailsService에서 반환한 getUsername() 값,
 	            //로그인 한 사용자의 이메일

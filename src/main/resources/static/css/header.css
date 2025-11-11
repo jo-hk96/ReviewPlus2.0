@@ -4,7 +4,6 @@
     grid-template-columns: auto 1fr auto;
     height: 75px;
     align-items: center; 
-    padding: 0 20px;
     position: fixed;
     top: 0;      
     left: 0;        
@@ -17,8 +16,7 @@
     background: #040F16;
     backdrop-filter: blur(9px);
     -webkit-backdrop-filter: blur(9px);
-    box-shadow: 
-	    0 8px 32px rgba(0, 0, 0, 0.1),
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 	}
 	
 a{
@@ -66,10 +64,10 @@ a{
 }
 
 /* 왼쪽 영역 스타일 (로고와 메뉴 정렬) */
-.headerleft {
+.headerLeft {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 6px;
     color: white;
 }
 

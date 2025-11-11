@@ -118,21 +118,7 @@ public class UserController {
 	
 	//마이페이지
 	@GetMapping("/UserMypage")
-	public String userMypage(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
-		// 1. 로그인된 사용자 ID 확인
-	    Long currentUserId = customUserDetails != null ? customUserDetails.getUserId() : null;
-	    String storedFileName = "default.png";
-	    
-	    if (currentUserId != null) {
-	        String dbFileName = userService.getProfileImageUrl(currentUserId);
-	        
-	        // 3. 파일명이 있다면 업데이트
-	        if (dbFileName != null && !dbFileName.isEmpty()) {
-	            storedFileName = dbFileName;
-	        }
-	    }
-	    model.addAttribute("profileFileName", storedFileName); 
-	    model.addAttribute("currentUserId", currentUserId);
+	public String userMypage() {
 		return "user/user_mypage";
 	}
 	
