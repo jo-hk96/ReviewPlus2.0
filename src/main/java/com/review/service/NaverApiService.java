@@ -31,7 +31,7 @@ public class NaverApiService {
         }
 
         // 쿼리 파라미터를 포함한 최종 API URL
-        String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&sort=date&display=100";
+        String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&display=100";
 
         // 헤더 설정 (ID, Secret)
         Map<String, String> requestHeaders = new HashMap<>();

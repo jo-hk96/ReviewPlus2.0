@@ -21,9 +21,9 @@ public class NaverSearchController {
     private NaverApiService naverApiService;
 
 
-    @GetMapping("/api/naver/news") // 💡 이 URL로 요청이 들어오면 실행됩니다.
+    @GetMapping("/api/naver/news") 
     // public String searchNews(@RequestParam(defaultValue = "영화") String query, Model model) {
-    public List<Item> searchNews(@RequestParam(defaultValue = "영화") String query) {
+    public List<Item> searchNews(@RequestParam(defaultValue = "Movie") String query) {
 
         // 1. Service 호출: JSON 문자열 받기
         String jsonResult = naverApiService.searchNews(query);
@@ -32,8 +32,6 @@ public class NaverSearchController {
         Gson gson = new Gson();
         NaverResponse response = gson.fromJson(jsonResult, NaverResponse.class);
 
-        // 3. List<Item> 객체를 바로 리턴
-        // Spring이 이 객체 리스트를 자동으로 JSON 형식으로 변환하여 응답합니다.
         return response.getItems();
     }
 }

@@ -178,7 +178,7 @@ public class UserController {
 	}
 	
 	
-	
+	//소셜가입 유저 회원수정 페이지
 	@GetMapping("/SocialUserEditForm")
 	public String SocialUserJoinInfoForm(@AuthenticationPrincipal CustomUserDetails cud, Model model) {
 		 model.addAttribute("email" , cud.getUsername());
@@ -188,7 +188,7 @@ public class UserController {
 		return "user/user_socialEdit";
 	}
 	
-	
+	//소셜 가입 유저 회원 수정
     @PostMapping("/SocialUserEdit")
     public String completeRegistration(@AuthenticationPrincipal CustomUserDetails cud,
                                        @RequestParam String newNickname,
@@ -210,6 +210,8 @@ public class UserController {
         	socialName = "구글";
         }else if("NAVER".equalsIgnoreCase(socialType)) {
         	socialName = "네이버";
+        }else if("KAKAO".equalsIgnoreCase(socialType)){
+        	socialName = "카카오";
         }else {
         	socialName = "소셜";
         }

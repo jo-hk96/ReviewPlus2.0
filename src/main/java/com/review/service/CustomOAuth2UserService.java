@@ -21,7 +21,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	private final UserRepository userRepository;
 	
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException{
-			// 구글 서버에서 사용자 정보를 가져옴
 			OAuth2User oauth2User =  super.loadUser(userRequest);
 			String registrationId = userRequest.getClientRegistration().getRegistrationId();
 			OAuth2Attributes attributes = OAuth2Attributes.of(registrationId, oauth2User.getAttributes());
@@ -33,7 +32,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	                user,oauth2User.getAttributes()      
 	                );
 	    }
-			
 		    private userEntity saveOrUpdate(OAuth2Attributes attributes) {
 		        userEntity user = userRepository.findByEmail(attributes.getEmail())
 		                .map(entity -> entity.update(attributes.getName())) // 이름 업데이트만 한다고 가정

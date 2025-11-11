@@ -23,18 +23,20 @@ public class OAuth2Attributes {
 	    private final String birthdate;
 	    private final SocialType socialType;
 	    private final String picture;
+	    private final String nickname;
 	    
 	    
 	    
 	    @Builder
 	    public OAuth2Attributes(Map<String, Object> attributes, String nameAttributeKey, 
-	                            String name, String email ,String birthdate ,String picture,SocialType socialType) {
+	                            String name, String email ,String birthdate ,String picture,String nickname,SocialType socialType) {
 	        this.attributes = attributes;
 	        this.nameAttributeKey = nameAttributeKey;
 	        this.name = name;
 	        this.email = email;
 	        this.picture = picture;
 	        this.birthdate = birthdate;
+	        this.nickname = nickname;
 	        this.socialType = socialType;
 }
 	    
@@ -43,9 +45,14 @@ public class OAuth2Attributes {
 	        if ("naver".equals(registrationId)) {
 	        	return ofNaver(attributes);
 	        }
+	        if("kakao".equals(registrationId)) {
+	        	return ofKakao(attributes);
+	        }
 	        return ofGoogle(attributes); 
 	    }
 	    
+	    
+	    //구글
 	    @SuppressWarnings("unchecked")
 	    private static OAuth2Attributes ofGoogle(Map<String, Object> attributes) {
 	    	String rawBirthdate = null;
@@ -76,6 +83,8 @@ public class OAuth2Attributes {
 	    }
 	    
 	    
+	    
+	    //네이버
 	    @SuppressWarnings("unchecked")
 	    private static OAuth2Attributes ofNaver(Map<String, Object> attributes) {
 	    	Map<String, Object> response = (Map<String, Object>) attributes.get("response");
@@ -106,14 +115,50 @@ public class OAuth2Attributes {
 	                .socialType(SocialType.NAVER)
 	                .build();
 	    }
-	    	
-	    	
 	    
 	    
+	    //카카오
+	    @SuppressWarnings("unchecked")
+	    private static OAuth2Attributes ofKakao(Map<String, Object> attributes) {
+	    	
+	    	Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+	    	Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+	    	
+	        // 필드 추출 및 포맷팅
+	    	String name = (String) kakaoAccount.get("name");
+	    	String email = (String) kakaoAccount.get("email");
+	    	String nickname = (String) profile.get("nickname");
+	    	String picture = (String) profile.get("profile_image_url"); 
+	        
+	        // 생년월일 조합 
+	        String rawBirthdate = null;
+	        String birthyear = (String) kakaoAccount.get("birthyear"); 
+	        String birthday = (String) kakaoAccount.get("birthday");
+	        
+	       if(birthyear != null && birthday != null && birthday.length() == 4) {
+	    	   rawBirthdate = String.format("%s-%s-%s",
+	    			   						birthyear,
+	    			   						birthday.substring(0,2), //MM
+	    			   						birthday.substring(2)); //DD
+	       }
+	        
+	        
+	        return OAuth2Attributes.builder()
+	                .name(name)
+	                .email(email)
+	                .nameAttributeKey("id") 
+	                .attributes(attributes)
+	                .birthdate(rawBirthdate)
+	                .picture(picture)
+	                .nickname(nickname)
+	                .socialType(SocialType.KAKAO)
+	                .build();
+	    }
+	    
+	    	
 	    
 	    // DB에 저장할 UserEntity 객체를 생성하는 메서드
 	    public userEntity toEntity() {
-	    	// birthdate가 null이면 임시값("1900-01-01")
 	        String finalBirthdate = (this.birthdate != null && !this.birthdate.isEmpty()) 
 	                                 ? this.birthdate : "1900-01-01"; 
 	        return userEntity.builder()
