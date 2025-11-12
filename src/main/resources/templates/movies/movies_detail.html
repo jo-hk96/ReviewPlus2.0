@@ -22,6 +22,16 @@
 	body{
 		background-color: #191932;
 	}
+	
+	
+	#userProfilePicture{
+		width: 50px;
+		height: 50px;
+		border-radius: 25px;
+		border:1px solid white;
+		object-fit:cover;
+	}
+
 </style>
 
 <body>
@@ -122,6 +132,8 @@
         <button type="button" onclick="document.getElementById('editReviewModal').style.display='none'">취소</button>
     </div>
 </div>
+
+    <!-- 프로필 사진 -->
 	<script src="js/upload.js"></script>
 	<!-- 푸터 -->
 	<footer th:insert="index/index :: footer"></footer>

@@ -174,7 +174,9 @@ public class UserController {
 		return "user/user_socialEdit";
 	}
 	
-	//소셜 가입 유저 회원 수정
+	
+	
+	//소셜 가입 유저 회원 수정하기
     @PostMapping("/SocialUserEdit")
     public String completeRegistration(@AuthenticationPrincipal CustomUserDetails cud,
                                        @RequestParam String newNickname,
@@ -206,7 +208,6 @@ public class UserController {
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
         logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         re.addFlashAttribute("socialEditMsg",socialName + "회원가입이 완료 되었습니다.");
-        // 모든 정보 입력이 완료되었으니 홈으로 이동
         return "redirect:/UserLoginMain";
     }
 	

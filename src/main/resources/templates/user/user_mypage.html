@@ -43,7 +43,6 @@
 
 <div class="profile-main-box">
 	
-	<h1 style = "color:white;">마이페이지</h1>
 	<div class="user-info-outer">
 		<div class="user-info-box">
 			<!-- 프로필이미지 -->
@@ -52,8 +51,6 @@
 			    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}" 
 			    alt="프로필 사진" >
 			<div id="resultMessage" style="text-align:center; color: green; margin-bottom:10px;"></div>
-			
-			
 			<form id="profileUploadForm" action="/api/profile/upload/1" method="post" enctype="multipart/form-data">
 			    <div>
 			        <input type="file" id="profileImageInput" name="file" accept="image/*" required style = "display: none;">
@@ -79,28 +76,29 @@
 		</div>
 	</div>
 	<!-- 사용자 좋아요 목록 MODAL -->
-		<button id="showLikedMoviesBtn" onclick="openLikeModal()">
-		    좋아요 목록 보기
-		</button>
-		
-		<div id="likeModal" class="modal" style="display:none;">
-		
-			<div class ="modal-content">
-					<span class = "close-btn">닫기</span>
-					<h3>
-						<span sec:authentication="principal.nickname"></span>님의 좋아요 목록 
-					</h3>
-					
-					<!-- 사용자 좋아요 목록보여주는 컨테이너 -->
-					<div id="likedMoviesContainer">
-					</div>		
-					
-					<div id="emptyMessage" style="display:none;">
-						<p>아직 좋아요가 없습니다.</p>
-					</div>
-			</div>
+	<button id="showLikedMoviesBtn" onclick="openLikeModal()">
+	    좋아요 목록 보기
+	</button>
+	
+	<div id="likeModal" class="modal" style="display:none;">
+	
+		<div class ="modal-content">
+				<span class = "close-btn">닫기</span>
+				<h3>
+					<span sec:authentication="principal.nickname"></span>님의 좋아요 목록 
+				</h3>
+				
+				<!-- 사용자 좋아요 목록보여주는 컨테이너 -->
+				<div id="likedMoviesContainer">
+				</div>		
+				
+				<div id="emptyMessage" style="display:none;">
+					<p>아직 좋아요가 없습니다.</p>
+				</div>
 		</div>
-	<!-- 사용자 리뷰 목록 MODAL -->
+	</div>
+		
+	    <!-- 사용자 리뷰 목록 MODAL -->
 		<button id="showReviewMoviesBtn" onclick="openReviewModal()">
 		    리뷰 목록 보기
 		</button>

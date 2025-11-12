@@ -192,8 +192,6 @@ public class UserService implements UserDetailsService {
 			user.setRole(newStatus); 
 		}
 
-	
-		
 		
 		
 	   @Transactional

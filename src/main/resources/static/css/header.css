@@ -2,7 +2,7 @@
 #header{
     display: grid;
     grid-template-columns: auto 1fr auto;
-    height: 75px;
+    height: 80px;
     align-items: center; 
     position: fixed;
     top: 0;      
