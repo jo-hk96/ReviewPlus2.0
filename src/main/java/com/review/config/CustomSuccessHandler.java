@@ -20,9 +20,9 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler{
 	    ) throws IOException {
 	        SimpleGrantedAuthority dormantAuthority = new SimpleGrantedAuthority("ROLE_DORMANT");
 	        if (authentication.getAuthorities().contains(dormantAuthority)) {
-	            response.sendRedirect("/UserDormant");
-	        } else {
-	            response.sendRedirect("/"); 
+	            response.sendRedirect("/");
+	        }else {
+	        	response.sendRedirect("/");
 	        }
 	    }
 	}

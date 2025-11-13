@@ -327,7 +327,7 @@ h3 {
 	display: flex; 
     flex-direction: column; 
     background-color: #fefefe;
-    margin: 10% auto; 
+    margin: 10% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 600px; 
@@ -338,7 +338,6 @@ h3 {
 }
 
 .modal-content-Review{
-	
 	display: flex; 
     flex-direction: column; 
     background-color: #fefefe;

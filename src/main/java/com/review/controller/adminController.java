@@ -50,12 +50,6 @@ public class adminController {
 		return "admin/access-error";
 	}
 	
-	//휴면 유정 계정 접속페이지
-	@GetMapping("/UserDormant")
-	public String UserDormant() {
-		return "user/user_dormant";
-	}
-	
 	
 	//관리자 홈
 	@GetMapping("/Admin/AdminHome")
