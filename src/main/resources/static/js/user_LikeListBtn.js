@@ -1,20 +1,21 @@
-
-// ⭐️ 1. 좋아요 목록을 가져오는 AJAX 함수 (TMDB API 호출) ⭐️
-function loadLikedMovies(){
-	const likedMoviesContainer = document.getElementById('likedMoviesContainer');
-	const emptyMessage = document.getElementById('emptyMessage');
-    
-    if (!likedMoviesContainer || !emptyMessage) {
-        console.error("좋아요 모달의 컨테이너 요소를 찾을 수 없습니다.");
-        return; 
-    }
+	//좋아요 목록 가져오기
+	function loadLikedMovies(){
+		const likedMoviesContainer = document.getElementById('likedMoviesContainer');
+		const emptyMessage = document.getElementById('emptyMessage');
+	    
+	    if (!likedMoviesContainer || !emptyMessage) {
+	        console.error("좋아요 모달의 컨테이너 요소를 찾을 수 없습니다.");
+	        return; 
+	    }
+	
 	
 	// 로딩 메시지 표시
 	likedMoviesContainer.innerHTML = '<p>영화 좋아요 목록을 가져오고있습니다...</p>';
-	emptyMessage.style.display = 'none'; // 메시지 숨김
+	emptyMessage.style.display = 'none'; 
+	
 	
 	// 좋아요 목록을 JSON으로 반환하는 Controller API 엔드포인트로 요청
-	fetch('/api/user/likedMovies') // ⭐️ Controller에서 JSON 반환 필요 ⭐️
+	fetch('/api/user/likedMovies')
 		.then(response =>{
 			if(!response.ok){
 				throw new Error('좋아요 목록 가져오기 실패' + response.status + ')');

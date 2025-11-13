@@ -1,325 +1,281 @@
 const getElement = (id) => document.getElementById(id);
 
+document.addEventListener("DOMContentLoaded", () => {
+    const form = getElement("joinForm");
+    const pnameInput = getElement("pname");
+    const nicknameInput = getElement("nickname");
+    const emailInput = getElement("email");
+    const passwordInput = getElement("password");
+    const passwordConfirmInput = getElement("passwordConfirm");
+    const birthdateInput = getElement("birthdate");
 
-document.addEventListener('DOMContentLoaded', function() {
-    // 폼 요소와 필수 입력 필드 요소들을 가져옵니다.
-    const form = document.getElementById('joinForm');
-    const pnameInput = document.getElementById('pname');
-    const nicknameInput = document.getElementById('nickname');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const passwordConfirmInput = getElement('passwordConfirm');
-    const birthdateInput = document.getElementById('birthdate'); // ⭐️ 생년월일 입력 필드
-    
-    let checkNickname = true;
-    let checkEmail = true; 
+    // 상태 플래그 (false = 통과, true = 실패)
     let checkPname = true;
-    let checkPassword = true;       
-    // checkBirthdate 플래그는 필요 없으며, 함수 리턴 값으로 처리합니다.
-    
-    // --- 이름 유효성 검사 함수 (validationPname) - 2~10자 한글/영문만 허용 ---
-    function validationPname() {
-        const pnameCheckResult = getElement('pnameCheckResult'); 
+    let checkNickname = true;
+    let checkEmail = true;
+    let checkPassword = true;
+
+    // --- 이름 유효성 검사 ---
+    const validatePname = () => {
         const pname = pnameInput.value.trim();
-        
-        // 1. 미입력 검사
-        if (pname.length === 0) {
-            pnameCheckResult.textContent = "이름을 입력하세요.";
-            pnameCheckResult.style.color = 'red';
-            checkPname = true; 
+        const result = getElement("pnameCheckResult");
+
+        if (!pname) {
+            result.textContent = "이름을 입력하세요.";
+            result.style.color = "red";
+            checkPname = true;
             return false;
-        } 
-        
-        // 2. 길이 및 문자 형식 검사: 2~10자의 한글 또는 영문만 허용
-        const nameRegex = /^[가-힣a-zA-Z]{2,10}$/; 
-        
+        }
+
+        const nameRegex = /^[가-힣a-zA-Z]{2,10}$/;
         if (!nameRegex.test(pname)) {
-            pnameCheckResult.textContent = "이름은 2~10자의 한글 또는 영문만 가능합니다.";
-            pnameCheckResult.style.color = 'red';
-            checkPname = true; // 실패
+            result.textContent = "이름은 2~10자의 한글 또는 영문만 가능합니다.";
+            result.style.color = "red";
+            checkPname = true;
             return false;
         }
-        
-        // 모든 검사 통과
-        pnameCheckResult.textContent = ""; 
-        pnameCheckResult.style.color = 'green';
-        checkPname = false; // 성공
+
+        result.textContent = "사용 가능한 이름입니다.";
+        result.style.color = "green";
+        checkPname = false;
         return true;
-    }
-    // ------------------------------------
-    
- 
-    
-    // --- 비밀번호 유효성 검사 함수 ---
-    function validatePassword() {
-        const passwordCheckResult = getElement('passwordCheckResult');
+    };
+
+    // --- 비밀번호 유효성 검사 ---
+    const validatePassword = () => {
         const password = passwordInput.value;
-        const passwordLength = password.length;
+        const result = getElement("passwordCheckResult");
 
-      
-        let charTypeCount = 0;
-        if (/[a-z]/.test(password)) charTypeCount++;    // 소문자
-        if (/[A-Z]/.test(password)) charTypeCount++;    // 대문자
-        if (/\d/.test(password)) charTypeCount++;       // 숫자
-        if (/[!@#$%^&*()_+]/.test(password)) charTypeCount++; // 특수문자 (예시)
+        const charTypeCount =
+            [/[a-z]/, /[A-Z]/, /\d/, /[!@#$%^&*()_+]/].filter((r) =>
+                r.test(password)
+            ).length;
 
-        // 1. 길이 검사
-        if (passwordLength < 8 || passwordLength > 16) {
-            passwordCheckResult.textContent = "비밀번호는 8자 이상 16자 이하로 설정해야 합니다.";
-            passwordCheckResult.style.color = 'red';
+        if (password.length < 8 || password.length > 16) {
+            result.textContent = "비밀번호는 8~16자여야 합니다.";
+            result.style.color = "red";
             checkPassword = true;
             return;
         }
 
-        // 2. 복잡성 검사 (3가지 이상 포함)
         if (charTypeCount < 3) {
-            passwordCheckResult.textContent = "영문 대/소문자, 숫자, 특수문자 중 3가지 이상을 포함해야 합니다.";
-            passwordCheckResult.style.color = 'red';
+            result.textContent =
+                "영문 대/소문자, 숫자, 특수문자 중 3가지 이상을 포함해야 합니다.";
+            result.style.color = "red";
             checkPassword = true;
             return;
         }
-        
-        // 모든 검사 통과
-        passwordCheckResult.textContent = "사용 가능한 비밀번호입니다.";
-        passwordCheckResult.style.color = 'green';
+
+        result.textContent = "사용 가능한 비밀번호입니다.";
+        result.style.color = "green";
         checkPassword = false;
-        
-        // 비밀번호가 유효해졌으므로, 비밀번호 확인 필드의 일치 여부도 다시 검사합니다.
+
         checkPasswordMatch();
-    }
-    // ------------------------------------
-    
-    // --- 생년월일 유효성 검사 함수 (새로 추가) ---
-  function validateBirthdate() {
-        const birthdateCheckResult = getElement('birthdateCheckResult'); 
+    };
+
+    // --- 비밀번호 확인 ---
+    const checkPasswordMatch = () => {
+        const result = getElement("passwordConfirmCheckResult");
+        const password = passwordInput.value;
+        const confirm = passwordConfirmInput.value;
+
+        if (!password && !confirm) {
+            result.textContent = "";
+            return;
+        }
+
+        if (!password) {
+            result.textContent = "비밀번호를 먼저 입력하세요.";
+            result.style.color = "red";
+            return;
+        }
+
+        if (password === confirm) {
+            result.textContent = "비밀번호가 일치합니다.";
+            result.style.color = "green";
+        } else {
+            result.textContent = "비밀번호가 일치하지 않습니다.";
+            result.style.color = "red";
+        }
+    };
+
+    // --- 생년월일 검사 ---
+    const validateBirthdate = () => {
+        const result = getElement("birthdateCheckResult");
         const birthdate = birthdateInput.value;
-        
-        // 1. 미입력 검사
+
         if (!birthdate) {
-            birthdateCheckResult.textContent = "생년월일을 입력해주세요.";
-            birthdateCheckResult.style.color = 'red';
+            result.textContent = "생년월일을 입력해주세요.";
+            result.style.color = "red";
             return false;
         }
 
-        // 2. 미래 날짜 검사
         const today = new Date();
         const inputDate = new Date(birthdate);
-        
-        // 시간 부분을 제거하여 날짜만 비교
-        today.setHours(0, 0, 0, 0); 
-        inputDate.setHours(0, 0, 0, 0); 
+        today.setHours(0, 0, 0, 0);
+        inputDate.setHours(0, 0, 0, 0);
 
         if (inputDate > today) {
-            birthdateCheckResult.textContent = "생년월일은 미래 날짜일 수 없습니다.";
-            birthdateCheckResult.style.color = 'red';
+            result.textContent = "미래 날짜는 입력할 수 없습니다.";
+            result.style.color = "red";
             return false;
         }
-        
-        // 3. 모든 검사 통과 (추가/수정된 부분)
-        birthdateCheckResult.textContent = "사용 가능한 생년월일입니다."; // ⭐️ 긍정 메시지 표시
-        birthdateCheckResult.style.color = 'green';
+
+        result.textContent = "사용 가능한 생년월일입니다.";
+        result.style.color = "green";
         return true;
-    }
-    // ------------------------------------
-    
-    // 이메일 중복 검사 함수
-    async function checkEmailDuplication() {
-        const emailCheckResult = getElement('emailCheckResult');
-        const email = emailInput.value;
-        
-        // 이메일 빈값 체크
+    };
+
+    // --- 이메일 중복 검사 ---
+    const checkEmailDuplication = async () => {
+        const email = emailInput.value.trim();
+        const result = getElement("emailCheckResult");
+
         if (!email) {
-            emailCheckResult.textContent = "이메일을 입력해주세요.";
-            emailCheckResult.style.color = 'red';
-            checkEmail = true; // 실패
+            result.textContent = "이메일을 입력해주세요.";
+            result.style.color = "red";
+            checkEmail = true;
             return;
         }
-        
-        
-        // 2. 이메일 형식 유효성 검사 (정규 표현식)
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        
+
+        const emailRegex =
+            /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         if (!emailRegex.test(email)) {
-            emailCheckResult.textContent = "유효하지 않은 이메일 형식입니다. (@와 도메인을 확인해 주세요)";
-            emailCheckResult.style.color = 'red';
-            checkEmail = true; // 실패
+            result.textContent = "이메일 형식이 올바르지 않습니다. (@와 도메인을 확인해 주세요)";
+            result.style.color = "red";
+            checkEmail = true;
             return;
         }
-        
+
         try {
-            const response = await fetch(`/check/email?email=${encodeURIComponent(email)}`);
-            
-            if (!response.ok) {
-                throw new Error(`API 통신 오류: ${response.status}`);
-            }
+            const res = await fetch(`/check/email?email=${encodeURIComponent(email)}`);
+            const data = await res.json();
 
-            const isDuplicated = await response.json(); 
+            const isDuplicated =
+                data?.duplicated ?? data?.isDuplicated ?? data === true;
 
-            if (isDuplicated === true) {
-                emailCheckResult.textContent = " 이미 사용 중인 이메일입니다.";
-                emailCheckResult.style.color = 'red';
-                checkEmail = true; // 중복(실패)
+            if (isDuplicated) {
+                result.textContent = "이미 사용 중인 이메일입니다.";
+                result.style.color = "red";
+                checkEmail = true;
             } else {
-                emailCheckResult.textContent = " 사용 가능한 이메일입니다.";
-                emailCheckResult.style.color = 'green';
-                checkEmail = false; // 중복 아님(성공)
+                result.textContent = "사용 가능한 이메일입니다.";
+                result.style.color = "green";
+                checkEmail = false;
             }
-        } catch (error) {
-            console.error("이메일 검사 오류:", error);
-            emailCheckResult.textContent = "이메일 검사 중 오류가 발생했습니다.";
-            emailCheckResult.style.color = 'orange';
-            checkEmail = true; // 오류 발생 시 실패 처리
+        } catch (err) {
+            console.error("이메일 검사 오류:", err);
+            result.textContent = "이메일 검사 중 오류가 발생했습니다.";
+            result.style.color = "orange";
+            checkEmail = true;
         }
-    }
-   
-  
+        return !checkEmail; // 비동기 검사 결과를 반환
+    };
 
-    
-    // 닉네임 중복 검사
-    async function checkNicknameDuplication() {
-            const nicknameCheckResult = getElement('nicknameCheckResult');
-            const nickname = nicknameInput.value;
+    // --- 닉네임 중복 검사 ---
+    const checkNicknameDuplication = async () => {
+        const nickname = nicknameInput.value.trim();
+        const result = getElement("nicknameCheckResult");
 
-            if (!nickname) {
-                nicknameCheckResult.textContent = "닉네임을 입력해주세요.";
-                nicknameCheckResult.style.color = 'red';
-                checkNickname = true; // 실패
-                return;
-            }
-
-            try {
-                const response = await fetch(`/check/nickname?nickname=${encodeURIComponent(nickname)}`);
-                
-                if (!response.ok) {
-                    throw new Error('API 통신 오류');
-                }
-                
-                const isDuplicated = await response.json();
-
-                if (isDuplicated === true) {
-                    nicknameCheckResult.textContent = " 이미 사용 중인 닉네임입니다.";
-                    nicknameCheckResult.style.color = 'red';
-	                checkNickname = true; // 중복(실패)
-                } else {
-                    nicknameCheckResult.textContent = " 사용 가능한 닉네임입니다.";
-                    nicknameCheckResult.style.color = 'green';
-                    checkNickname = false; // 중복 아님(성공)
-                }
-            } catch (error) {
-                console.error("닉네임 검사 오류:", error);
-                nicknameCheckResult.textContent = "닉네임 검사 중 오류가 발생했습니다.";
-                nicknameCheckResult.style.color = 'orange';
-                checkNickname = true; // 오류 발생 시 실패 처리
-            }
+        if (!nickname) {
+            result.textContent = "닉네임을 입력해주세요.";
+            result.style.color = "red";
+            checkNickname = true;
+            return;
         }
-        
-        
-        function checkPasswordMatch() {
-            const password = passwordInput.value;
-            const passwordConfirm = passwordConfirmInput.value;
-            const resultSpan = getElement('passwordConfirmCheckResult');
-            
-            if (password.length === 0 && passwordConfirm.length === 0) {
-                resultSpan.textContent = "";
-                resultSpan.style.color = 'black';
-                return;
-            }
-            
-            if (password.length === 0) {
-                 resultSpan.textContent = "비밀번호를 먼저 입력하세요.";
-                 resultSpan.style.color = 'red';
-            } else if (password === passwordConfirm) {
-                resultSpan.textContent = "비밀번호가 일치합니다.";
-                resultSpan.style.color = 'green';
+
+        try {
+            const res = await fetch(
+                `/check/nickname?nickname=${encodeURIComponent(nickname)}`
+            );
+            const data = await res.json();
+
+            const isDuplicated =
+                data?.duplicated ?? data?.isDuplicated ?? data === true;
+
+            if (isDuplicated) {
+                result.textContent = "이미 사용 중인 닉네임입니다.";
+                result.style.color = "red";
+                checkNickname = true;
             } else {
-                resultSpan.textContent = "비밀번호가 일치하지 않습니다.";
-                resultSpan.style.color = 'red';
+                result.textContent = "사용 가능한 닉네임입니다.";
+                result.style.color = "green";
+                checkNickname = false;
             }
+        } catch (err) {
+            console.error("닉네임 검사 오류:", err);
+            result.textContent = "닉네임 검사 중 오류가 발생했습니다.";
+            result.style.color = "orange";
+            checkNickname = true;
         }
-    
-        // --- 이벤트 리스너 등록 ---
-    
-        // 이름: 포커스를 잃었을 때 유효성 검사 실행
-        pnameInput.addEventListener('blur', validationPname);
-    
-        // 이메일: 포커스를 잃었을 때 (입력이 끝났을 때) 중복 검사
-        emailInput.addEventListener('blur', checkEmailDuplication);
+    };
+
+    // --- 이벤트 등록 ---
+    pnameInput.addEventListener("blur", validatePname);
+    emailInput.addEventListener("blur", checkEmailDuplication);
+    nicknameInput.addEventListener("blur", checkNicknameDuplication);
+    passwordInput.addEventListener("keyup", validatePassword);
+    passwordConfirmInput.addEventListener("keyup", checkPasswordMatch);
+    passwordInput.addEventListener("keyup", checkPasswordMatch);
+    birthdateInput.addEventListener("blur", validateBirthdate);
+
+    // --- 최종 제출 ---
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
         
-        // 닉네임: 포커스를 잃었을 때 중복 검사
-        nicknameInput.addEventListener('blur', checkNicknameDuplication);
-        
-        // 비밀번호: 키를 누를 때마다 유효성 검사 실행
-        passwordInput.addEventListener('keyup', validatePassword);
-        
-        // 비밀번호 확인: 키를 누를 때마다 일치 여부 확인
-        passwordConfirmInput.addEventListener('keyup', checkPasswordMatch);
-        passwordInput.addEventListener('keyup', checkPasswordMatch); 
-        
-        // ⭐️ 생년월일: 포커스를 잃었을 때 유효성 검사 실행
-        birthdateInput.addEventListener('blur', validateBirthdate);
-        
-        
-        // 최종 폼 제출 시 전체 유효성 검사
-        form.addEventListener('submit', async function(e) {   
-	    
-	    // 1. 제출 전에 모든 유효성 검사 함수를 강제 실행하여 최종 상태를 업데이트합니다.
-        validationPname();
-        validatePassword(); 
-        checkPasswordMatch();
-        // ⭐️ 생년월일 유효성 검사 실행
-        const isBirthdateValid = validateBirthdate();
-        
-        // API 호출 함수는 await으로 상태를 최종 업데이트합니다.
-        await checkEmailDuplication();
-        await checkNicknameDuplication();
-        
-        // --- 최종 검사 ---
-        
-        // 2. 이름 미입력/유효성 검사
-        if (checkPname) {
-            alert('이름을 2~10자의 한글 또는 영문으로 정확히 입력해주세요.');
-            e.preventDefault(); 
-            return;
-        }
-        
-        // 3. 비밀번호 유효성 검사
-        if (checkPassword) {
-            alert('비밀번호가 유효성 조건을 만족하지 못합니다. (8~16자, 3종류 문자 포함)');
-            e.preventDefault();
-            return;
-        }
-        
-       // 4. 비밀번호 일치 검사
-        if (passwordInput.value !== passwordConfirmInput.value || passwordConfirmInput.value === '') {
-            alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
-            e.preventDefault(); 
-            return;
-        }
-        
-        // ⭐️ 5. 생년월일 유효성 검사
-        if (!isBirthdateValid) {
-            alert('생년월일을 정확히 입력해주세요. (미래 날짜 불가)');
-            e.preventDefault(); 
-            return;
-        }
-            
-        // 6. 닉네임 중복 검사 상태 확인 (API 결과)
-			if(checkNickname) {
-				alert('이미 존재하는 닉네임 이거나 닉네임 검사에 오류가 발생했습니다.');
-				e.preventDefault();
-                return;
-			}
-			
-		// 7. 이메일 중복 검사 상태 확인 (API 결과)
-        if(checkEmail) {
-            alert('이미 존재하는 이메일 이거나 이메일 검사에 오류가 발생했습니다.');
-            e.preventDefault();
-            return;
-        }
-        
-        // 모든 검사 통과 시 폼 제출 (서버로 데이터 전송)
-        alert('모든 유효성 검사를 통과했습니다. 회원가입을 완료되었습니다.'); 
        
-        });
+        validatePname();
+        validatePassword();
+        checkPasswordMatch();
+        const birthValid = validateBirthdate();
 
+        // 🚨 요청하신 수정 부분 (최종 제출 전 이메일 미입력 체크) 시작
+        const email = emailInput.value.trim();
+        if (!email) {
+            alert("이메일을 입력하세요.");
+            emailInput.focus(); // 사용자 편의를 위해 해당 필드로 포커스 이동
+            return; // 제출 중단
+        }
+
+        // 이메일 및 닉네임 중복 검사 (비동기)
+        await Promise.all([
+            checkEmailDuplication(),
+            checkNicknameDuplication(),
+        ]);
+
+        // 이후 검사 실패 시 alert 로직 (기존 코드)
+        if (checkPname) {
+            alert("이름을 2~10자의 한글 또는 영문으로 정확히 입력해주세요.");
+            return;
+        }
+
+        if (checkPassword) {
+            alert("비밀번호 조건을 확인해주세요. (8~16자, 3종류 문자 포함)");
+            return;
+        }
+
+        if (passwordInput.value !== passwordConfirmInput.value) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+        }
+
+        if (!birthValid) {
+            alert("생년월일을 정확히 입력해주세요. (미래 날짜 불가)");
+            return;
+        }
+
+        if (checkNickname) {
+            alert("닉네임 중복 검사에서 실패했습니다. 다시 시도해주세요.");
+            return;
+        }
+
+        if (checkEmail) {
+            alert("이메일 중복 검사에서 실패했습니다. 다시 시도해주세요.");
+            return;
+        }
+
+        alert("회원가입이 완료되었습니다!");
+        
+         form.submit();
     });
+});

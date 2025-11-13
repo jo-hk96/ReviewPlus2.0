@@ -34,12 +34,14 @@
 	align-items:center;		
 	margin:0px;
 	}
+	
 	input , button{
 	width:400px;
 	height:30px;
 	margin-bottom:20px;
 	border-radius: 5px;
 	}
+	
 	textarea{
 	border-radius: 5px;
 	
@@ -52,12 +54,37 @@
 	cursor:pointer;
 	}
 	
+	#MailForwarding {
+    display: none;
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+    background-color: rgba(0,0,0,0.7); 
+   }
+   
+   .close-btn{
+   color: #aaa; 
+    float: right; 
+    font-size: 20px; 
+    font-weight: bold; 
+    line-height: 1; 
+    margin-top: -10px;
+    margin-right: -10px; 
+   }
+   
+   .close-btn:hover,.close-btn:focus{
+   	color: #000; 
+    text-decoration: none;
+    outline: none;
+    transform: scale(1.05); 
+   }
 </style>
-
 <body>
-
 <div id ="error">
-
 			<a href="/" class="logo">
 	           <img th:src="@{/images/logo.png}" style ="width:150px;" alt ="로고" >
 	        </a> 
@@ -77,16 +104,42 @@
 			<div th:if="${failMail}">
 					<p th:text= "${failMail}" style="color: red; font-weight: bold; font-size:17px;"></p>
 			</div>
-		
-	<div id = "MailForwarding">	
+	<button id = "ShowMailForwardingBtn" onClick="openMailModal()">
+		문의하기	
+	</button>
+	
+	<div id = "MailForwarding" style="display:none;">
 		<form action="/inquiry" method="post">
+			<span class = "close-btn">닫기</span>
 		    <input type="email" name="email" placeholder="답변 받을 이메일 주소"><br>
 		    <input type="text" name="subject" placeholder="문의 제목"><br>
 		    <textarea name="content" placeholder = "문의할 계정 이메일,닉네임,성함, 사유를 적어주세요" rows ="5" cols="57"></textarea><br>
 		    <button type="submit"  class="btn-join">문의하기</button>
 		</form>
-	</div>	
-		<hr style ="height:2px; background-color: red;">
+	</div>
 </div>
+<script>
+	function openMailModal(){
+		const MailModal = document.getElementById('MailForwarding');
+		if(MailModal){
+			MailModal.style.display = 'block';
+		}else{
+			console.error("모달을 찾을수 없음");
+		}
+	}
+	document.addEventListener('DOMContentLoaded', function(){
+		const MailModal = document.getElementById('MailForwarding');
+		const closeBtn = document.querySelector('.close-btn');
+		if(!MailModal || !closeBtn) return;
+		closeBtn.onclick = function(){
+			likeModal.style.display = 'none';
+		};
+		window.onclick = function(event){
+			if(event.target === MailModal){
+				likeModal.style.display = 'none';
+			}
+		};
+	})
+</script>
 </body>
 </html>

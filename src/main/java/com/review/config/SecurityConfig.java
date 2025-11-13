@@ -79,7 +79,6 @@ public class SecurityConfig {
 		    			.key(rememberMekey)
 		    			);
 		    
-		    
 		    //OAuth2로그인
 		    http
 		    	.oauth2Login(oauth2 -> oauth2

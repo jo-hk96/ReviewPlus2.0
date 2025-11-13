@@ -324,8 +324,7 @@ h3 {
 
 /* 모달 내용 컨테이너 */
 .modal-content {
-	
-	 display: flex; 
+	display: flex; 
     flex-direction: column; 
     background-color: #fefefe;
     margin: 10% auto; 
@@ -371,14 +370,13 @@ h3 {
 
 /* 좋아요 목록 모달 닫기 버튼 */
 .close-btn, .close-btn2 {
-    /* 폰트 및 크기 */
-    color: #aaa; /* 연한 회색 */
-    float: right; /* 오른쪽으로 정렬 */
-    font-size: 20px; /* 크기 조정 */
-    font-weight: bold; /* 굵게 */
-    line-height: 1; /* 높이 조정 */
-    margin-top: -10px; /* 제목과의 간격 조정 (필요에 따라) */
-    margin-right: -10px; /* 오른쪽 경계와의 간격 조정 (필요에 따라) */
+    color: #aaa; 
+    float: right; 
+    font-size: 20px; 
+    font-weight: bold; 
+    line-height: 1; 
+    margin-top: -10px; 
+    margin-right: -10px; 
 }
 
 /* 마우스 오버 및 포커스 시 스타일 */
@@ -386,42 +384,30 @@ h3 {
 .close-btn:focus,
 .close-btn2:hover,
 .close-btn2:focus {
-    color: #000; /* 검정색으로 변경 */
-    text-decoration: none; /* 밑줄 제거 */
-    cursor: pointer; /* 마우스 커서 모양 변경 */
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 /* 선택 사항: 모달 콘텐츠 내에서의 위치를 더 정확하게 제어하고 싶을 때 */
 .modal-content, .modal-content-Review {
-    position: relative; /* 자식 요소(닫기 버튼)의 절대 위치 기준 설정 */
+    position: relative; 
     padding: 20px;
 }
 
-/* 닫기 버튼을 모달 콘텐츠 오른쪽 위에 고정하고 싶을 경우 (선택 사항) */
 
-/* 수정 제안: 닫기 버튼을 더 깔끔하고 사용자 친화적으로 */
 .close-btn, .close-btn2 {
-    /* 기존 위치 유지: 모달 콘텐츠를 기준으로 우측 상단 */
     position: absolute;
-    top: 18px; /* <--- 10px에서 18px로 수정하여 아래로 내림 */
-    right: 15px; /* 우측 여백 유지 */
-    
-    /* 색상 및 폰트 조정 */
+    top: 18px;
+    right: 15px;
     color: #444; 
     font-size: 15px; 
     font-weight: 300; 
-    
-    /* 상호작용 개선 */
     cursor: pointer; 
     line-height: 1; 
-    
-    /* 애니메이션 유지 */
     transition: color 0.3s ease, transform 0.1s ease; 
     
-    /* 닫기 텍스트 대신 '×' 기호를 사용하는 경우 (추가적인 팁) */
-    /* text-decoration: none; */
 }
-/* ... (나머지 hover 스타일은 그대로 유지) ... */
 
 /* 마우스를 올렸을 때 (Hover/Focus) */
 .close-btn:hover,
@@ -429,24 +415,11 @@ h3 {
 .close-btn2:hover,
 .close-btn2:focus {
     color: #000; 
-    text-decoration: none; 
-    outline: none; 
-    transform: scale(1.05); 
+    text-decoration: none;
+    outline: none;
+    transform: scale(1.05);
 }
 
-/* 마우스를 올렸을 때 (Hover/Focus) */
-.close-btn:hover,
-.close-btn:focus,
-.close-btn2:hover,
-.close-btn2:focus {
-    color: #000; /* 호버 시 확실하게 검은색으로 변경하여 클릭 유도 */
-    text-decoration: none; /* 밑줄 제거 (일반적으로 사용하지 않음) */
-    outline: none; /* 포커스 시 나타나는 기본 테두리 제거 */
-    transform: scale(1.05); /* 살짝 커지는 효과 추가 (선택 사항) */
-}
-
-
-/* 기본 모달 스타일 */
 
 /* 두 모달에 모두 적용되는 스타일 */
 .modal {
@@ -457,7 +430,7 @@ h3 {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6); 
+    background-color: rgba(0, 0, 0, 0.6);
     display: none;
     transition: opacity 0.3s ease;
 }
