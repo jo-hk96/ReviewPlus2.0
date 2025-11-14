@@ -1,9 +1,12 @@
 package com.review.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.review.entity.userEntity;
@@ -13,6 +16,14 @@ import com.review.entity.userEntity;
 @Repository
 public interface UserRepository extends JpaRepository<userEntity, Long> {
 
+	
+	
+	
+	@Query("SELECT u FROM userEntity u WHERE u.lastActivityAt < :threshold AND u.role <> :role")
+	List<userEntity> findDormantUsers(
+			@Param("threshold") LocalDateTime dormantThreshold,
+			@Param("role") String role
+			);
 	
 	List<userEntity> findTop10ByOrderByCreatedAtDesc();
 	

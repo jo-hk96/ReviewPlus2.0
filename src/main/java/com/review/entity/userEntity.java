@@ -32,8 +32,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "MOVIE_USER") //DB테이블 이름
 @Data //class에 필요한 기본적이 java 코드 생성
 @Builder //DTO -> Entity변환시 빌드패턴으로 사용
-@NoArgsConstructor // 매개변수가 전혀 없는 기본 생성자
-@AllArgsConstructor //  모든 필드를 매개변수로 받는 생성자
+@NoArgsConstructor //매개변수가 전혀 없는 기본 생성자
+@AllArgsConstructor // 모든 필드를 매개변수로 받는 생성자
 public class userEntity implements Serializable{
 	 	private static final long serialVersionUID = 1L; 
 		@SequenceGenerator(
@@ -66,6 +66,9 @@ public class userEntity implements Serializable{
 		
 		@Column(name = "PROFILE_IMAGE_URL" ,nullable = true)
 		private String profileImageUrl; //프로필 이미지 URL
+		
+		@Column(name = "LAST_ACTIVITY_AT" , nullable = true)
+		private LocalDateTime lastActivityAt; //회원 마지막 활동시간
 		
 		//사용자가 최초로그인시 회원수정을 했는지 true false 로 확인
 		@Column(name = "IRIM",nullable = false)

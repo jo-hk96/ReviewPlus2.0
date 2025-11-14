@@ -42,9 +42,11 @@
 </script>
 
 <div class="profile-main-box">
+	
 	<div class="user-info-outer">
 		<div class="user-info-box">
 			<!-- 프로필이미지 -->
+			
 			<img
 			    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}" 
 			    alt="프로필 사진" >
@@ -56,6 +58,7 @@
 			    <button type="submit" id="uploadButton" style = "margin: 0 auto;">프로필 저장</button>
 			</form>
 			<table>
+			
 				<tr>
 					<td>이메일: <span sec:authentication="principal.username"></span></td>
 				</tr>
@@ -70,31 +73,32 @@
 				</tr>
 				<tr>
 				</tr>
+
 			</table>
+				
+	<!-- 사용자 좋아요 목록 MODAL -->
+	<button id="showLikedMoviesBtn" onclick="openLikeModal()">
+	    좋아요 목록 보기
+	</button>
+	<br>
+	<div id="likeModal" class="modal" style="display:none;">
+	
+		<div class ="modal-content">
+				<span class = "close-btn">닫기</span>
+				<h3>
+					<span sec:authentication="principal.nickname"></span>님의 좋아요 목록 
+				</h3>
+				
+				<!-- 사용자 좋아요 목록보여주는 컨테이너 -->
+				<div id="likedMoviesContainer">
+				</div>		
+				
+				<div id="emptyMessage" style="display:none;">
+					<p>아직 좋아요가 없습니다.</p>
+				</div>
 		</div>
 	</div>
-		<!-- 사용자 좋아요 목록 MODAL -->
-		<button id="showLikedMoviesBtn" onclick="openLikeModal()">
-		    좋아요 목록 보기
-		</button>
-		
-		<div id="likeModal" class="modal" style="display:none;">
-			<div class ="modal-content">
-					<span class = "close-btn">닫기</span>
-					<h3>
-						<span sec:authentication="principal.nickname"></span>님의 좋아요 목록 
-					</h3>
-					
-					<!-- 사용자 좋아요 목록보여주는 컨테이너 -->
-					<div id="likedMoviesContainer">
-					</div>		
-					
-					<div id="emptyMessage" style="display:none;">
-						<p>아직 좋아요가 없습니다.</p>
-					</div>
-			</div>
-		</div>
-		
+				
 	    <!-- 사용자 리뷰 목록 MODAL -->
 		<button id="showReviewMoviesBtn" onclick="openReviewModal()">
 		    리뷰 목록 보기
@@ -107,14 +111,13 @@
 				
 				<!-- 사용자 좋아요 목록 컨테이너 -->
 				<div id="ReviewMoviesContainer"></div>		
-			
 					<div id="emptyReviewMessage" style="display:none;">
 						<p>아직 등록된 리뷰가 없습니다.</p>
 					</div>
 			</div>
 		</div>
-	
-	
+		</div>
+	</div>
 </div>
 
 <!------------------------------------------------------------------>
@@ -133,15 +136,19 @@
 	profileImage.addEventListener('click', function(){
 		fileInput.click();
 	});
+	
 </script>
 
 
 
 <script src="js/upload.js"></script>
+		
 <!-- index/index 파일에 있는 "footer" 태그를 가져옴  -->
 <div th:insert="index/index :: footer"></div>
+
 <!-- 사용자 좋아요 목록.js-->
 <script src = "js/user_LikeListBtn.js" ></script>
+
 <!-- 리뷰 작성 목록.js -->
 <script src = "js/user_ReviewListBtn.js"></script>
 

@@ -56,7 +56,6 @@ h1{
     margin-top: 10px;
 }
 
-/* 불필요한 <br> 태그 숨기기 (CSS 레이아웃 사용 시) */
 #joinForm br {
     display: none;
 }

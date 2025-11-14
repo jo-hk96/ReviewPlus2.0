@@ -14,7 +14,6 @@
 
                     },
                 });
-
                 if(response.ok){
                     //서버응답(좋아요 상태:true/false) 받기
                     const isLiked = await response.json();

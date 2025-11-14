@@ -1,10 +1,15 @@
 package com.review.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +18,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 
 import com.review.DTO.UserDTO;
 import com.review.DTO.UserEditDTO;
 import com.review.DTO.UserReviewDTO;
 import com.review.DTO.movieDTO;
 import com.review.DTO.movieLikeDTO;
+import com.review.config.CustomUserDetails;
 import com.review.entity.userEntity;
 import com.review.entity.userReviewEntity;
 import com.review.repository.UserRepository;
@@ -43,12 +51,44 @@ public class adminController {
 	private final MovieService movieService;
 	private final MovieLikeService movieLikeService;
 	private final InquiryService inquiryService;
+	private final PasswordEncoder passwordEncoder;
+	
 	
 	//권한없는 페이지 접속페이지
 	@GetMapping("/access-error")
 	public String accessError() {
 		return "admin/access-error";
 	}
+	
+	
+	
+	//휴면계정 페이지
+	@GetMapping("/UserDormantAccess")
+	public String UserDormant() {
+		return "admin/user_dormant_access";
+		
+	}
+	
+		//휴면계정 비밀번호 검사
+		@PostMapping("/UserDormant/activate")
+		public String activateDormantUser(@RequestParam String password,@AuthenticationPrincipal CustomUserDetails cud) {
+			
+			userEntity user = cud.getUserEntity();
+					if(!passwordEncoder.matches(password,user.getPassword())) {
+						
+						return "redirect:/UserDormantAccess?error";
+					}
+				user.setRole("ROLE_USER");
+				user.setLastActivityAt(LocalDateTime.now());
+				userRepository.save(user);
+				Authentication newAuth = new UsernamePasswordAuthenticationToken(
+						cud,
+						null,
+						List.of(new SimpleGrantedAuthority("ROLE_USER"))
+						);
+				SecurityContextHolder.getContext().setAuthentication(newAuth);
+				return "redirect:/";
+		}
 	
 	
 	//관리자 홈
