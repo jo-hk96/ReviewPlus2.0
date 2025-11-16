@@ -18,9 +18,7 @@ public class DormantUserService {
 	
 	private final UserRepository userRepository;
 	
-	
-	private final long DORMANT_DURATION_MINUTES = 3;
-	
+	private final long DORMANT_DURATION_MINUTES = 5;
 	
 	//정해진 시간에 로직 실행
 	@Scheduled(cron = "0 * * * * *")

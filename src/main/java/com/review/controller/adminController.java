@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,8 @@ import com.review.service.MovieService;
 import com.review.service.UserReviewService;
 import com.review.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 
@@ -71,8 +74,10 @@ public class adminController {
 	
 		//휴면계정 비밀번호 검사
 		@PostMapping("/UserDormant/activate")
-		public String activateDormantUser(@RequestParam String password,@AuthenticationPrincipal CustomUserDetails cud) {
-			
+		public String activateDormantUser(@RequestParam String password,
+				@AuthenticationPrincipal CustomUserDetails cud,
+				HttpServletRequest request, 
+			    HttpServletResponse response) {
 			userEntity user = cud.getUserEntity();
 					if(!passwordEncoder.matches(password,user.getPassword())) {
 						
@@ -87,7 +92,11 @@ public class adminController {
 						List.of(new SimpleGrantedAuthority("ROLE_USER"))
 						);
 				SecurityContextHolder.getContext().setAuthentication(newAuth);
-				return "redirect:/";
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			    if (authentication != null) {
+			        new SecurityContextLogoutHandler().logout(request, response, authentication);
+			    }
+				return "redirect:/UserLoginForm";
 		}
 	
 	

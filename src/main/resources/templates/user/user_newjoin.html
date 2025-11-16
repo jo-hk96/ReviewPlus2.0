@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" 
                   xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>유저 회원 가입</title>
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/user_newjoin.css">
@@ -44,8 +44,12 @@
 	     
 	    <button type = "submit">회원가입</button>
 	</form>
-</div>		
+</div>
+	<!-- 푸터 -->
 	<div th:insert="index/index :: footer"></div>
+	<!-- 푸터 문의하기 -->
+    <script src="js/footer.js"></script>
+	
 <script src = "js/user_newjoin.js"></script>
 </body>
 </html>

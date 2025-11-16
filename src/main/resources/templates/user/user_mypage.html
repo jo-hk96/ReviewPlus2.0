@@ -2,15 +2,34 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" 
                   xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>유저정보</title>
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/user_mypage.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>">
 </head>
+<style>
+	#Logout{
+	background-color: #007bff;
+	border-radius: 5px;
+	width: 100px;
+	text-align: center;
+	transition: background-color 0.3s ease;
+	}
+	#Logout > a {
+	color: white;
+	text-decoration: none;
+	}
+	
+	#Logout:hover {
+	background-color: #0056b3;
+	}
+
+</style>
+
+
 <body>
 <button class="menu-btn" onclick="toggleMenu()">메뉴</button>
-
 <div id="menu-list">
 	
 	<!-- 홈 바로가기 버튼 -->
@@ -41,7 +60,6 @@
 	}
 </script>
 
-<div class="profile-main-box">
 	
 	<div class="user-info-outer">
 		<div class="user-info-box">
@@ -51,6 +69,9 @@
 			    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}" 
 			    alt="프로필 사진" >
 			<div id="resultMessage" style="text-align:center; color: green; margin-bottom:10px;"></div>
+			<button id="changeProfileButton" onclick="callFlutterToPickImage()" class="btn btn-primary">
+			    프로필 사진 변경 (Flutter 기능 호출)
+			</button>
 			<form id="profileUploadForm" action="/api/profile/upload/1" method="post" enctype="multipart/form-data">
 			    <div>
 			        <input type="file" id="profileImageInput" name="file" accept="image/*" required style = "display: none;">
@@ -116,9 +137,19 @@
 					</div>
 			</div>
 		</div>
+		<br>
+		
+		<span sec:authorize="hasRole('ROLE_ADMIN')">
+	        <b><a href="/Admin/AdminHome">사이트관리</a></b>
+	    </span>
+		
+		<br>
+		<div class ="Logout" id = "Logout" sec:authorize="isAuthenticated()">
+			<a href = "/logout"  onclick = "return confirm('로그아웃 하시겠습니까?')">로그아웃</a>
+		</div>
+		
 		</div>
 	</div>
-</div>
 
 <!------------------------------------------------------------------>
 <script th:inline="javascript">
@@ -139,13 +170,37 @@
 	
 </script>
 
+<script>
+    // ⭐️ Flutter와 통신할 핵심 JavaScript 함수 ⭐️
+    function callFlutterToPickImage() {
+        console.log('JavaScript: Flutter 갤러리 열기 요청');
+        
+        // window.flutter_inappwebview.callHandler() 대신 
+        // webview_flutter의 postMessage를 사용합니다.
+        // 채널 이름은 'ToFlutter'로 가정
+        if (window.ToFlutter && window.ToFlutter.postMessage) {
+            window.ToFlutter.postMessage('PICK_IMAGE_REQUEST');
+        } else {
+            alert('Flutter 통신 채널을 찾을 수 없습니다.');
+        }
+    }
+
+    // 서버에 업로드가 성공하면, 이 JS 함수를 Flutter가 다시 호출하여 이미지를 업데이트할 수 있음
+    function updateProfileImage(newImageUrl) {
+        document.getElementById('userProfilePicture').src = newImageUrl;
+        document.getElementById('resultMessage').innerText = '사진 업데이트 완료!';
+    }
+</script>
 
 
 <script src="js/upload.js"></script>
 		
-<!-- index/index 파일에 있는 "footer" 태그를 가져옴  -->
+<!-- 푸터 -->
 <div th:insert="index/index :: footer"></div>
 
+<!-- 푸터 문의하기 -->
+<script src="js/footer.js"></script>
+	
 <!-- 사용자 좋아요 목록.js-->
 <script src = "js/user_LikeListBtn.js" ></script>
 

@@ -277,21 +277,13 @@ h3 {
   width: 100%;
   margin-bottom: 18px;
   
-  /* 필요시 padding/min-height 추가 */
 }
-/* ---------------------------------*/
-
-
-
-
-
 
 /* 유저 정보 박스 */
 .user-info-box {
-  width: 550px;        
+  width: 100%;        
   margin: 24px auto 20px auto;
-  box-sizing: border-box; /* padding, border 포함 폭 계산 */
-
+  box-sizing: border-box; 
   border: 3px solid #4a90e2;
   padding: 16px 20px;
   border-radius: 14px;

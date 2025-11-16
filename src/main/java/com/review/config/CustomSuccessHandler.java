@@ -47,7 +47,6 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler{
 	    		response.sendRedirect("/UserDormantAccess");
 	    	} else {
 	    		response.sendRedirect("/");
-	    		
 	    	}
 	    } else {
 	    	response.sendRedirect("/");

@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" 
                   xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>리뷰플러스</title>
     <link rel="stylesheet" href="/css/movies_detail.css">
     <link rel="stylesheet" href="/css/footer.css">
@@ -132,11 +132,14 @@
         <button type="button" onclick="document.getElementById('editReviewModal').style.display='none'">취소</button>
     </div>
 </div>
-
+	
     <!-- 프로필 사진 -->
 	<script src="js/upload.js"></script>
 	<!-- 푸터 -->
 	<footer th:insert="index/index :: footer"></footer>
+	<!-- 푸터 문의하기 -->
+    <script src="js/footer.js"></script>
+	
 	<!-- 맨위로 가기 -->
 	<div th:insert ="index/index :: scroll-to-top"></div>
 	<!-- 영화 리뷰 목록 -->

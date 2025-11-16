@@ -76,23 +76,18 @@ public class UserController {
         @AuthenticationPrincipal CustomUserDetails customUserDetails, // ⭐️ 로그인된 사용자 정보
         @RequestParam("file") MultipartFile imageFile
     ) throws IOException {
-        
         if (customUserDetails == null) {
             // 로그인되지 않은 경우의 처리 (예: 401 Unathorized 반환)
             throw new IllegalStateException("로그인이 필요합니다.");
         }
-        
         // ⭐️ CustomUserDetails에서 DB 조회 없이 바로 Long 타입의 userId를 가져옴
         Long currentUserId = customUserDetails.getUserId(); 
-
         // 파일 저장 처리 (Service 호출)
         String storeFileName = fileStoreService.storeFile(imageFile);
-        
         // DB 업데이트
         if(storeFileName != null) {
             userService.updateProfilImage(currentUserId, storeFileName); 
         }
-        
         return "프로필 사진이 수정 되었습니다.";
     }
 	 

@@ -1,12 +1,14 @@
 package com.review.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.review.entity.userEntity;
 import com.review.service.CustomOAuth2UserService;
@@ -20,7 +22,12 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	
 	private final CustomOAuth2UserService customOAuth2UserService; 
-	private final CustomSuccessHandler successHandler; 
+	private final CustomSuccessHandler successHandler;
+	
+	
+	private final LastActivityUpdateFilter lastActivityUpdateFilter;
+	
+	
 	@Value("${security.rememberme.key}")
 	 private String rememberMekey;
 	
@@ -109,11 +116,22 @@ public class SecurityConfig {
 	                    .deleteCookies("JSESSIONID")
 	              );
 		    
+		    http.addFilterAfter(lastActivityUpdateFilter, UsernamePasswordAuthenticationFilter.class);
 		// http.build()를 붙여서 SecurityFilterChain 빈으로 반환
 	    return http.build();
 	  }
-
-
+	
+	
+	@Bean
+    public FilterRegistrationBean<LastActivityUpdateFilter> registration(
+        LastActivityUpdateFilter filter) {
+        FilterRegistrationBean<LastActivityUpdateFilter> registration = 
+            new FilterRegistrationBean<>(filter);
+        registration.setEnabled(false); 
+        return registration;
+    }
+	
+	
 	//BCrypt패스워드 암호화
 	  @Bean
 	  public PasswordEncoder getPasswordEncoder() {

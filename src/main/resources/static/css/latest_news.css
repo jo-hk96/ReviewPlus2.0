@@ -1,23 +1,22 @@
 .carousel-container {
-  width: 1470px;
-  margin: 40px auto;
+  width: 100%; 
+  margin: 20px auto;
   position: relative;
   overflow: hidden;
   font-family: 'Arial', sans-serif;
   background-color: transparent;   
-  border-radius: 0;       /* 모서리 둥글게 (선택사항) */
-  box-shadow: none; /* 살짝 그림자 (선택사항) */
+  border-radius: 0;      
+  box-shadow: none;
   padding : 0px;
-  height : 250px;
-  transform: translateX(10px);
+  min-height : 250px;
 }
 
+
 .news-title {
-  position: relative;
   color : #ff4d4d;
-  width:1500px;
-  margin: 0 auto 10px auto;
+  margin: 0 auto;
   padding-left: 20px;
+  
 }
 
 .carousel-wrapper {
@@ -43,32 +42,24 @@
 .news-item {
   flex: 0 0 100%;
   display: flex;
-  flex-direction: column; /* 자식 요소들을 세로 방향으로 쌓습니다. */
-  justify-content: center; /* 👈 세로 방향으로 중앙 정렬합니다. */
-  align-items: center; /* 👈 가로 방향으로 중앙 정렬합니다. */
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
   height: 100%;
   position: relative;
 }
 
 .news-item img {
-  /* width: 100%; (또는 max-width: 100% 등으로) */
-  max-width: 100%; /* 부모 너비에 맞춤 */
-  max-height: 100%; /* 부모 높이에 맞춤 */
+  width: 100%;
   height: auto; /* 비율 유지 */
-  
-  /* 기존 margin-bottom 제거 (absolute로 배치될 것이므로) */
   margin-bottom: 0; 
-  
-  /* 👈 이미지 투명도 설정 */
-  opacity: 0.5; /* 20% 투명도 (원하는 값으로 조절) */
-  
-  /* 👈 레이어 순서 조절 및 absolute 배치 */
+  opacity: 0.5; 
   position: absolute; /* .news-item을 기준으로 배치 */
   top: 0;
   left: 0;
-  width: 100%; /* 부모 요소의 전체 너비 */
-  height: 100%; /* 부모 요소의 전체 높이 */
-  z-index: 1; /* 텍스트(기본 z-index 0)보다 뒤로 보냅니다. */
+  width: 100%; 
+  height: 100%; 
+  z-index: 1; 
   object-fit: cover;
 }
 
@@ -87,38 +78,22 @@
 }
 
 .arrow-btn {
-   /* 기존 위치 설정 (position: absolute, top: 50%, transform: translateY(-50%))은 유지 */
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
     cursor: pointer;
     border: none;
-    
-    /* 🎨 원형 버튼 스타일링 핵심 */
-    
-    /* 버튼 크기를 정사각형으로 맞춰 원을 만듭니다 */
     width: 40px; 
     height: 40px;
-    
-    /* 완벽한 원을 만듭니다 */
     border-radius: 50%; 
-    
-    /* 배경색: 투명도 50%의 흰색 */
-    /* 첫 번째 사진처럼 배경이 포스터와 반반 겹치도록 자연스럽게 표현됩니다. */
     background: rgba(255, 255, 255, 0.5); 
-    
-    /* 화살표 색상 (배경이 밝으니 검은색으로) */
     color: #333; 
     font-size: 18px;
     font-weight: bold;
-    
-    /* 화살표를 버튼 중앙에 배치 (Flexbox 사용) */
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    /* 부드러운 전환 효과 */
     transition: background 0.3s, color 0.3s;
 }
 
@@ -133,12 +108,11 @@
 }
 
 .news-item p {
-  position: relative; /* 👈 z-index가 적용되도록 relative 설정 */
-  z-index: 2; /* 👈 이미지(z-index: 1)보다 위에 보이도록 */
-  text-align: center; /* 텍스트 자체 중앙 정렬 */
+  position: relative; 
+  z-index: 2; 
+  text-align: center; 
   
-  /* 필요한 경우 추가적인 스타일 (색상 등) */
-  color: #ff4d4d; /* 텍스트가 잘 보이도록 색상 조정 (선택 사항) */
+  color: #ff4d4d; 
 }
 
 .news-item .title {
@@ -151,3 +125,4 @@
   color: #ccc;
   font-size: 14px;
 }
+

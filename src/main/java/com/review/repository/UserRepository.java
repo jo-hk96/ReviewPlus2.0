@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<userEntity, Long> {
 
 	
 	
-	
+	//
 	@Query("SELECT u FROM userEntity u WHERE u.lastActivityAt < :threshold AND u.role <> :role")
 	List<userEntity> findDormantUsers(
 			@Param("threshold") LocalDateTime dormantThreshold,
