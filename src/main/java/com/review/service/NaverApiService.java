@@ -15,12 +15,6 @@ public class NaverApiService {
     // 클라이언트 ID와 Secret을 상수로 정의합니다.
     private static final String CLIENT_ID = "vVIqYbYtLr1qDwVrTOs2";
     private static final String CLIENT_SECRET = "_wBiF8HZpO";
-
-    /**
-     * 컨트롤러에서 호출되며, 네이버 뉴스 검색 API를 호출하고 JSON 문자열을 리턴합니다.
-     * @param query 검색어
-     * @return API 응답으로 받은 JSON 문자열
-     */
     public String searchNews(String query) {
         String text = null;
         try {
@@ -43,9 +37,6 @@ public class NaverApiService {
         return responseBody;
     }
 
-    /**
-     * 실제 API 호출을 수행하는 메소드
-     */
     private String get(String apiUrl, Map<String, String> requestHeaders){
         HttpURLConnection con = connect(apiUrl);
         try {
@@ -67,9 +58,6 @@ public class NaverApiService {
         }
     }
 
-    /**
-     * URL 연결을 설정하는 메소드
-     */
     private HttpURLConnection connect(String apiUrl){
         try {
             URL url = new URL(apiUrl);
@@ -80,10 +68,6 @@ public class NaverApiService {
             throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
         }
     }
-
-    /**
-     * API 응답 스트림을 읽어 문자열로 변환하는 메소드
-     */
     private String readBody(InputStream body){
         InputStreamReader streamReader = new InputStreamReader(body);
 

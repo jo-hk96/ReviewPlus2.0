@@ -167,7 +167,7 @@
 		const BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w1280"; 
 
 		const backdrops = data.stillCut.backdrops || []; 
-		const limitedStills = backdrops.slice(0, 5); 
+		const limitedStills = backdrops.slice(0, 10); 
 		
 		const stillCutItemsHtml = limitedStills.map(backdrop => {
 		    const imageUrl = BASE_IMAGE_URL + backdrop.file_path;
@@ -180,7 +180,7 @@
 		}).join(''); 
 		
 		const imageGalleryHTML = `
-		    <h2 style="color:white; margin-top: 40px; padding: 0 15px;">영화 스틸컷 (5장)</h2>
+		    <h2 style="color:white; margin-top: 40px; padding: 0 15px;">스틸컷</h2>
 		    <div class="stillcut-gallery-wrapper" style="display: flex; gap: 10px; overflow-x: auto; padding: 15px;">
 		        ${stillCutItemsHtml}
 		    </div>
@@ -205,9 +205,9 @@
 	            </header>
 	        </div>
 	
-	        <section style="display: flex; gap: 30px; margin-top: 20px; padding: 15px; color:grey;">
-	            <img src="${basePosterUrl}${data.poster_path}" alt="${data.title} 포스터" style="width: 400px; border-radius: 8px;">
-	            <div style="flex-grow: 1;">
+	        <section class = "movie-info-section">
+	            <img id="MoviePosterMain" src="${basePosterUrl}${data.poster_path}" alt="${data.title} 포스터">
+	            <div class = "info-details">
 	                <h2 style = "color:white;">줄거리</h2>
 	                <p>${data.overview || '줄거리 정보 없음'}</p>
 	                <h3 style="color: white;">기본 정보</h3>
@@ -223,8 +223,8 @@
 	            </div>
 	        </section>
 	        
-	        ${imageGalleryHTML}
 	        ${trailerHTML}
+	        ${imageGalleryHTML}
 	        
 	        <hr style="margin: 40px 0;">
 	        <h2 style="color:white">감독 / 주요배우</h2>

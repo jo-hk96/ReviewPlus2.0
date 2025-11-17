@@ -2,11 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ⚠️ 경고: 최상단에 중복된 DOMContentLoaded 리스너는 삭제해야 합니다!
     
     const newsListContainer = document.getElementById('naver-news-list');
-    const apiUrl = '/api/naver/news?query=영화&display=10';
+    const apiUrl = '/api/naver/news?query=%EC%98%81%ED%99%94%7C%EA%B0%9C%EB%B4%89%7C%EA%B0%9C%EB%B4%89%EC%98%88%EC%A0%95%7C%EB%B0%95%EC%8A%A4%EC%98%A4%ED%94%BC%EC%8A%A4&display=10&sort=sim';
 
-    // -----------------------------------------------------
     // 1. AJAX 데이터 로딩 로직
-    // -----------------------------------------------------
     fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
@@ -26,18 +24,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     const cleanTitle = removeHtmlTags(item.title);
                     const formattedDate = formatDate(item.pubDate);
 
-                    const itemHtml = `
-                        <a href="${item.link}" target="_blank">
-                            <img src="${imageUrl}" alt="${cleanTitle} 뉴스 이미지">
-                        </a>
+                    const itemContent = `
+                        <img src="${imageUrl}" alt="${cleanTitle} 뉴스 이미지">
                         <p class="title">${cleanTitle}</p>
                         <p class="date">${formattedDate}</p>
                     `;
 
-                    const newsItemDiv = document.createElement('div');
-                    newsItemDiv.className = 'news-item';
-                    newsItemDiv.innerHTML = itemHtml;
-                    newsListContainer.appendChild(newsItemDiv);
+                    // 👇 newsItemLink (<a> 태그)를 생성하여 .news-item 역할과 링크 역할을 동시에 수행하게 합니다.
+                    const newsItemLink = document.createElement('a');
+                    newsItemLink.href = item.link;         // 기사 URL 설정
+                    newsItemLink.target = '_blank';        // 새 탭에서 열기
+                    newsItemLink.className = 'news-item';  // 기존 CSS 스타일을 적용하기 위해 클래스 유지
+                    
+                    newsItemLink.innerHTML = itemContent;
+                    newsListContainer.appendChild(newsItemLink);
                 });
 
                 // 데이터 로드 후 캐러셀 초기화

@@ -1,20 +1,34 @@
+
+.main-carousel-wrapper {
+    /* 캐러셀 컨테이너와 동일한 최대 너비를 사용 */
+    max-width: 1470px; 
+    width: 100%;
+    /* 래퍼 자체를 중앙 정렬 */
+    margin: 20px auto; 
+}
+
 .carousel-container {
-  width: 100%; 
+  width: 100%;             
+  max-width: 1500px; 
   margin: 20px auto;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   font-family: 'Arial', sans-serif;
-  background-color: transparent;   
+  background-color: #192839;   
   border-radius: 0;      
   box-shadow: none;
-  padding : 0px;
   min-height : 250px;
+  border-radius: 10px;
+  height: 250px;
 }
 
 
 .news-title {
   color : #ff4d4d;
-  margin: 0 auto;
+  margin-top: 0; 
+    margin-bottom: 10px; 
+    margin-left: -20px; /* 래퍼의 왼쪽 경계에 맞추기 위해 0으로 설정 */
+    margin-right: 0;
   padding-left: 20px;
   
 }
@@ -31,6 +45,9 @@
   overflow: hidden;
   width: 100%;
   height:100%;
+  display: flex;
+  justify-content: center; /* 가로 중앙 */
+  align-items: center;
 }
 
 .news-list {
@@ -46,6 +63,7 @@
   justify-content: center; 
   align-items: center; 
   height: 100%;
+  width: 100%;
   position: relative;
 }
 
@@ -122,7 +140,7 @@
 }
 
 .news-item .date {
-  color: #ccc;
+  color: white;
   font-size: 14px;
 }
 

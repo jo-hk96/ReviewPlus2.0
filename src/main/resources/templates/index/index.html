@@ -96,8 +96,10 @@
 	 	 <div id="loading-indicator2">영화 리스트 불러오는중...</div>
 	 	 
 	 	 <!-- 영화 매거진 슬라이더 -->
+         <div class="main-carousel-wrapper">
+	 	 <h2 class="news-title">최신 기사</h2>
         <div class="carousel-container">
-		 	<h2 class="news-title">최신 기사</h2>
+        
             <div class="carousel-wrapper">
                 <button class="arrow-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
 
@@ -110,6 +112,7 @@
                 <button class="arrow-btn next-btn"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
+		</div>
 
 	 	 
 		  <!--최고평점-->
@@ -167,9 +170,9 @@
 	        </a> 
 			<form action="/inquiry" method="post" id = "MailForm">
 				<span class = "MailCloseBtn">닫기</span>
-			    <input type="email" name="email" placeholder="답변 받을 이메일 주소"><br>
-			    <input type="text" name="subject" placeholder="문의 제목"><br>
-			    <textarea name="content" placeholder = "문의할 계정 이메일,닉네임,성함, 사유를 적어주세요" rows ="5" cols="57"></textarea><br>
+			    <input type="email" name="email" placeholder="답변 받을 이메일 주소">
+			    <input type="text" name="subject" placeholder="문의 제목">
+			    <textarea name="content" placeholder = "문의할 계정 이메일,닉네임,성함, 사유를 적어주세요" rows ="5" cols="57"></textarea>
 			    <button type="submit"  class="btn-join">문의보내기</button>
 			</form>
 			<div th:if="${sucMail}">

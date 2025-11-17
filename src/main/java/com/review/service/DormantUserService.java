@@ -1,6 +1,7 @@
 package com.review.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.scheduling.annotation.Scheduled;
@@ -24,21 +25,22 @@ public class DormantUserService {
 	@Scheduled(cron = "0 * * * * *")
 	@Transactional
 	public void convertToDormantUsers() {
-		//LocalDateTime dormantThreshold = LocalDateTime.now().minusDays(DORMANT_DURATION_DAYS);
-		
-		LocalDateTime dormantThreshold = LocalDateTime.now().minusMinutes(DORMANT_DURATION_MINUTES);
-		
-		//일정 시간 동안 활동이 없고 현제 ROLE_DORMANT 가 아닌 사용자들 조회
-		List<userEntity> usersToDormant = userRepository.findDormantUsers(dormantThreshold,"ROLE_DORMANT");
-		
+			//LocalDateTime dormantThreshold = LocalDateTime.now().minusDays(DORMANT_DURATION_DAYS);
+			
+			LocalDateTime dormantThreshold = LocalDateTime.now().minusMinutes(DORMANT_DURATION_MINUTES);
+			//일정 시간 동안 활동이 없고 현제 ROLE_DORMANT 가 아닌 사용자들 조회
+			List<userEntity> usersToDormant = userRepository.findDormantUsers(dormantThreshold,"ROLE_DORMANT");
+		List<userEntity> userToSave = new ArrayList<>();
 		for(userEntity user : usersToDormant) {
-			//ROLE_DORMANT 로 변경
-			user.setRole("ROLE_DORMANT");
+			if("ROLE_ADMIN".equals(user.getRole())){
+			continue;
 		}
-		userRepository.saveAll(usersToDormant);
-		System.out.println("휴면 계정" + usersToDormant.size() +  "건 전환 완료.");
+			user.setRole("ROLE_DORMANT");
+		userRepository.saveAll(userToSave);
+		}
+		System.out.println("휴면 계정" + userToSave.size() +  "건 전환 완료.");
 		
-	}
+		}
 	
 	
 }

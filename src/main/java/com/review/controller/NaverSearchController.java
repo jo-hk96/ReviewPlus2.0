@@ -23,7 +23,7 @@ public class NaverSearchController {
 
     @GetMapping("/api/naver/news") 
     // public String searchNews(@RequestParam(defaultValue = "영화") String query, Model model) {
-    public List<Item> searchNews(@RequestParam(defaultValue = "Movie") String query) {
+    public List<Item> searchNews(@RequestParam(defaultValue = "영화추천") String query) {
 
         // 1. Service 호출: JSON 문자열 받기
         String jsonResult = naverApiService.searchNews(query);
