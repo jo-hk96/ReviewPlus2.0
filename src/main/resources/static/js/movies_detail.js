@@ -148,22 +148,21 @@
 					<h2 style="color:white; margin-top: 40px;">예고편</h2>
 	                <div style="margin: 20px 0;
 	                	 width:100%;
-	                	 max-width: 800px;">
+	                	 max-width: 700px;
+	                	 ">
 	                    <iframe 
-	                        width="100%" 
-	                        height="500" 
-	                        src="${youtubeEmbedUrl}" 
+	                        width="100%"
+	                        height="500px";
+	                        src="${youtubeEmbedUrl}"
 	                        frameborder="0" 
 	                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 	                        allowfullscreen 
-	                        style="border-radius: 10px;">
+	                        style="border-radius: 10px; max-height:500px;">
 	                    </iframe>
 	                </div>
 				`;
-				
 			}
 		}
-		
 		const BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w1280"; 
 
 		const backdrops = data.stillCut.backdrops || []; 
@@ -192,12 +191,16 @@
 	    // ----------------------------------------------------
 	   const detailHtml = `
 	         <div class="backdrop-header" 
-	             style="background-image: url('${backdropImage}'); 
-	                    height: 600px; 
+	             style="background-image: url('${backdropImage}');
+	             		height:100%;
+	                    min-height:500px;
 	                    background-size: cover; 
 	                    background-position: center;
-	                    display: flex; align-items: flex-end; padding: 20px; 
-	                    color: white; text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+	                    display: flex; 
+	                    align-items: flex-end; 
+	                    padding: 20px;
+	                    color: white;
+	                    text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
 	                    ${backdropImage}">
 	            <header>
 	                <h1>${data.title}</h1>

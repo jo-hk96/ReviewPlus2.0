@@ -242,7 +242,7 @@ function createReviewHtml(review) {
 				</div>
 				    
 				    
-                    <img class="profile-image" src="${profileSrc}" alt="${review.nickname}님의 프로필">
+                   <img class="profile-image" src="${profileSrc}" alt="${review.nickname}님의 프로필">
                    <div class="profile-info-text">
                        <table>
                             <tr>

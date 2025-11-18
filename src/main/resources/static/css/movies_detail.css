@@ -6,21 +6,21 @@
 	
 	
 	
-/* 1. 기본 스타일: 넓은 화면에서는 가로로 배치 */
-.movie-info-section {
-    display: flex;
-    gap: 30px;
-    margin-top: 20px;
-    padding: 15px;
-    color: grey;
-}
+	/* 1. 기본 스타일: 넓은 화면에서는 가로로 배치 */
+	.movie-info-section {
+	    display: flex;
+	    gap: 30px;
+	    margin-top: 20px;
+	    padding: 15px;
+	    color: grey;
+	}
 
 	
 	/* 영화 메인 스틸컷 */
 	.stillcut-image{
-	max-width:800px;
-	max-height:800px;
-	}
+	max-width:600px;
+	max-height:600px;
+	}	
 	
 	
 	/* 영화 상세 메인 포스터 */
@@ -29,8 +29,7 @@
 	height: 100%; 
 	border-radius: 8px;
 	max-width:500px;
-	}
-	
+	}	
 	
 	#editReviewModal {
 	display: none; 
@@ -46,8 +45,8 @@
 	
 	/* 리뷰 프로필 디자인 */
 	.review-profile-area .profile-image {
-	    width: 75px; 
-	    height: 75px; 
+	    width: 50px; 
+	    height: 50px; 
 	    border-radius: 50%;
 	    object-fit: cover; 
 	    border: 2px solid #EEE;
