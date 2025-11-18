@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor //final 필드들을 주입(DI)하기 위한 Lombok 어노테이션
 public class UserReviewService{
 	private final UserReviewRepository userReviewRepository;
-    private final UserRepository userRepository; 
     private final TmdbApiService tmdbApiService;
     
     
@@ -65,7 +64,6 @@ public class UserReviewService{
     }
     
     
-    
     //메인리뷰 최신순으로 5개 불러오기
     public List<UserReviewDTO> getRecentReviews(){
     	List<userReviewEntity> recentReview = userReviewRepository.findTop5ByOrderByRegDateDesc();
@@ -91,6 +89,12 @@ public class UserReviewService{
     			.map(UserReviewDTO::fromEntity)
     			.collect(Collectors.toList());
     }
+    
+  //전체 리뷰 갯수
+    public long getTotalReviewCount() {
+    	return userReviewRepository.count();
+    }
+    
     
     //회원 전체 유저 리뷰 검색
     public List<UserReviewDTO> getAllReviewsSearch(String RUS){

@@ -29,26 +29,7 @@
 
 
 <body>
-<button class="menu-btn" onclick="toggleMenu()">메뉴</button>
-<div id="menu-list">
-	
-	<!-- 홈 바로가기 버튼 -->
-	<form action="/" method="get" style="margin-bottom:10px;">
-	  <button type="submit" class="home-btn">홈 바로가기</button>
-	</form>
-	
-	  <!-- 내 정보 수정 -->
-	  <form action="/UserEditForm" method="Get" style="margin-bottom:10px;">
-	  	<button type="submit">내 정보 수정</button>
-	  </form>
-	   <!-- 탈퇴 버튼 -->
-	  <form th:action="@{/UserDelete}" method="post">
-	    <button type="submit" onclick="return confirm('정말 탈퇴 하시겠습니까?')"
-	    	style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer;"
-	    	    onmouseover="this.style.backgroundColor='red'"
-	    	    onmouseout="this.style.backgroundColor='#d34c4c'">회원 탈퇴</button>
-	  </form>
-</div>
+
 <script>
 	function toggleMenu() {
 	  const menu = document.getElementById("menu-list");
@@ -63,11 +44,34 @@
 	
 	<div class="user-info-outer">
 		<div class="user-info-box">
-			<!-- 프로필이미지 -->
 			
-			<img
-			    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}" 
-			    alt="프로필 사진" >
+			
+			
+			
+			<!-- 프로필이미지 -->
+<div class="profile-top">
+        <img id="userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}" alt="프로필 사진">
+
+        <button class="menu-btn" onclick="toggleMenu()">메뉴</button>
+        <div id="menu-list">
+            <!-- 홈 바로가기 -->
+            <form action="/" method="get" style="margin-bottom:10px;">
+                <button type="submit" class="home-btn">홈 바로가기</button>
+            </form>
+
+            <!-- 내 정보 수정 -->
+            <form action="/UserEditForm" method="Get" style="margin-bottom:10px;">
+                <button type="submit">내 정보 수정</button>
+            </form>
+
+            <!-- 탈퇴 -->
+            <form th:action="@{/UserDelete}" method="post">
+                <button type="submit"
+                        onclick="return confirm('정말 탈퇴 하시겠습니까?')"
+                        style="background-color: red; color: white;">회원 탈퇴</button>
+            </form>
+               </div>
+    </div>
 			<div id="resultMessage" style="text-align:center; color: green; margin-bottom:10px;"></div>
 			<button id="changeProfileButton" onclick="callFlutterToPickImage()" class="btn btn-primary">
 			    프로필 사진 변경 (Flutter 기능 호출)
@@ -76,6 +80,8 @@
 			    <div>
 			        <input type="file" id="profileImageInput" name="file" accept="image/*" required style = "display: none;">
 			    </div>
+			    
+			
 			    <button type="submit" id="uploadButton" style = "margin: 0 auto;">프로필 저장</button>
 			</form>
 			<table>
@@ -147,6 +153,8 @@
 		<div class ="Logout" id = "Logout" sec:authorize="isAuthenticated()">
 			<a href = "/logout"  onclick = "return confirm('로그아웃 하시겠습니까?')">로그아웃</a>
 		</div>
+	
+	
 		
 		</div>
 	</div>

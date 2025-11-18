@@ -95,11 +95,14 @@
 						</tr>
 					</table>
 					<div class="btn-detail-container">
-						<button th:href="@{/Admin/deleteReview(reviewId=${urd.reviewId})}" 
-							  onclick="return confirm('리뷰를 삭제합니다.');"
-							  class="btn-detail">
-							   삭제
-						</button>
+						<form th:action="@{/Admin/deleteReview}" method="post" style="display:inline;">
+						    <input type="hidden" name="reviewId" th:value="${urd.reviewId}" />
+						    <button type="submit" 
+						            onclick="return confirm('리뷰를 삭제합니다.');"
+						            class="btn-detail">
+						        삭제
+						    </button>
+						</form>
 						<button type="button" class="btn-detail" onclick="openModal('editUserReviewModal')">수정</button>
 					</div>
 				</div>

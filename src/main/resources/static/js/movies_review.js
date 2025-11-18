@@ -19,7 +19,7 @@ const movieApiId = apiIdInput ? apiIdInput.value : null;
 
             if (comment.trim() === '' || rating === '0') {
                 alert('리뷰 내용과 별점을 모두 입력해 주세요.');
-                return;	
+                return;   
             }
 
             const reviewData = {
@@ -57,7 +57,7 @@ const movieApiId = apiIdInput ? apiIdInput.value : null;
 //==================리뷰 별점 Rating===============
 const ratingStars = document.querySelectorAll('.rating-area .star');
 if(ratingStars.length > 0){
-	ratingStars.forEach(star => {
+   ratingStars.forEach(star => {
     // 클릭 이벤트: 숨겨진 input의 value를 업데이트하고 'on' 클래스 적용
     star.addEventListener('click', function() {
         const rating = this.getAttribute('data-rating');
@@ -76,21 +76,21 @@ if(ratingStars.length > 0){
     
    //--- 마우스 over 이벤트 
    star.addEventListener('mouseover',function(){
-	const allStars = this.parentElement.querySelectorAll('.star');
+   const allStars = this.parentElement.querySelectorAll('.star');
     allStars.forEach(s => s.classList.remove('hover')); // hover 초기화
-	
-	let currentStar = this;
-	while (currentStar){
-		currentStar.classList.add('hover');
-		currentStar = currentStar.previousElementSibling;
-		}
+   
+   let currentStar = this;
+   while (currentStar){
+      currentStar.classList.add('hover');
+      currentStar = currentStar.previousElementSibling;
+      }
    });
     
 
     // 마우스 leave 이벤트: 선택된 별점까지 색상을 유지하도록 처리
     star.parentElement.addEventListener('mouseleave', function() {
-		 const allStars = this.parentElement.querySelectorAll('.star');
-		 allStars.forEach(s => s.classList.remove('hover'));
+       const allStars = this.parentElement.querySelectorAll('.star');
+       allStars.forEach(s => s.classList.remove('hover'));
         const selectedRating = parseInt(document.getElementById('selected-rating').value);
         
         document.querySelectorAll('.rating-area .star')
@@ -100,10 +100,10 @@ if(ratingStars.length > 0){
                 s.classList.add('on');
             } else {
                 s.classList.remove('on');
-	            }
-	        });
-	    });
-	});
+               }
+           });
+       });
+   });
 }
     
 });
@@ -117,7 +117,7 @@ function generateStars(rating) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-	const userIdInput = document.getElementById('loggedInUserId');
+   const userIdInput = document.getElementById('loggedInUserId');
     if (userIdInput && userIdInput.value) {
         loggedInUserId = Number(userIdInput.value); 
     }
@@ -187,46 +187,81 @@ function createReviewHtml(review) {
     
     //댓글(N)개 버튼
     const replyButtonHtml = `
-    	<span class="reply-toggleButton" id="reply-toggle-${review.reviewId}" onclick="replyReview(${review.reviewId}); toggleReplies(${review.reviewId})">
+       <span class="reply-toggleButton" id="reply-toggle-${review.reviewId}" onclick="replyReview(${review.reviewId}); toggleReplies(${review.reviewId})">
         댓글 <span id="reply-count-${review.reviewId}">0</span> 개
     </span>
     `;
+   
+   // 리뷰 좋아요 버튼 
+      const likeButtonHtml = `
+        <button type="button" class="like-btn" 
+        data-review-id="${review.reviewId}"
+        onclick="toggleLike(this)"
+        style="background: none; border: none;
+        cursor: pointer;
+        font-size: 1.2em;
+        margin-right: 15px;">
+        ❤ 0</button>
+      `;
     
     actionButtonsHtml = `
-    	<div class="review-actions">
-    		${restrictedButtonsHtml}
-    		${replyButtonHtml}
-    	</div>
+       <div class="review-actions">
+          ${restrictedButtonsHtml}
+       </div>
     `;
 
     const replySectionHtml = `
         <div id="reply-list-${review.reviewId}" class="reply-container reply-hidden"
-        		style = "color:white">
+              style = "color:white">
         </div>
     `;
 
      return `
          <div class = "review-box" id="review-${review.reviewId}" data-review-id="${review.reviewId}" 
-         					style=" box-shadow:0 5px 8px rgba(0,0,0,0.2);  margin-bottom: 10px; padding: 10px;
-         					color: white; border-radius: 15px;">
-         					
-         	   <div class="review-profile-area" style="margin-right: 15px;">
+                        style=" box-shadow:0 5px 8px rgba(0,0,0,0.2);  margin-bottom: 10px; padding: 10px;
+                        color: white; border-radius: 15px;">
+
+                        
+               <div class="review-profile-area" style="margin-right: 15px;">
+				    <span onclick="toggleActionButtons(this)" 
+				    style = "cursor:pointer; margin-left: 10px; margin-right:10px; font-size: 25px; color:gray;
+				    	border: 1px; width:20px;">
+				    	⁞
+				    </span>
+				    
+                    <div id="actionButtonsContainer" 
+				     style="display: none; 
+				            top: 100%; /* 부모 요소 아래에 위치시키기 위해 100% 사용 */
+				            left: 0;
+				            background: white; 
+				            border: 1px solid #ccc; 
+				            padding: 15px; 
+				            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+				            z-index: 100;">
+				    ${actionButtonsHtml}
+				</div>
+				    
+				    
                     <img class="profile-image" src="${profileSrc}" alt="${review.nickname}님의 프로필">
                    <div class="profile-info-text">
-                    	<table>
+                       <table>
                             <tr>
-                            	<td><span>${review.nickname}</span></td>
-                            	<td id="reviewsRating"><span>${starHtml}</span></td>
+                               <td><span>${review.nickname}</span></td>
+                               <td id="reviewsRating"><span>${starHtml}</span></td>
                             </tr>
                             <tr><td><span style = "color:gray">${review.regDate}</span></td></tr>
-                		</table>
-                	</div>
-        	  </div>
-	            <table>
-	                <tr><td><p>${review.comment}</p></td></tr>
-	            </table>
-	            ${actionButtonsHtml}
-           
+                      </table>
+                   </div>
+             </div>
+               <table>
+                   <tr><td><p>${review.comment}</p></td></tr>
+               </table>
+               
+               <div class="review-actions">
+               	  ${likeButtonHtml} 
+		          ${replyButtonHtml}
+		       </div>
+
          <div id="reply-form-for-${review.reviewId}" class="reply-form-container reply-form-hidden">
              <span style="
                  font-size: 1.5em;
@@ -238,78 +273,94 @@ function createReviewHtml(review) {
                  vertical-align: top;
              ">└</span>
              <textarea class="ReplyComment" id="reply-comment-${review.reviewId}" placeholder="댓글을 작성해주세요.400자 제한"
-             																		maxlength="400"></textarea>
+                                                                   maxlength="400"></textarea>
              <button onclick="registerReply(${review.reviewId},'${review.nickname}')">등록</button>
          </div>
          ${replySectionHtml}
-	`;
+   `;
 }
+
+function toggleActionButtons(buttonElement) {
+        const reviewArea = buttonElement.closest('.review-profile-area');
+        const container = reviewArea.querySelector('#actionButtonsContainer');
+
+        if (!container) {
+            console.error("액션 버튼 컨테이너를 찾을 수 없습니다.");
+            return;
+        }
+
+        if (container.style.display === 'none') {
+            container.style.display = 'block'; 
+        } else {
+            container.style.display = 'none';
+        }
+    }
 
 
 function toggleReplies(reviewId){
-	const replyListContainer = document.getElementById(`reply-list-${reviewId}`);
-	
-	if (!replyListContainer) {
+   const replyListContainer = document.getElementById(`reply-list-${reviewId}`);
+   
+   if (!replyListContainer) {
         console.error(`Error: 댓글 목록 컨테이너(reply-list-${reviewId})를 찾을 수 없습니다.`);
         return;
     }
     
     if(replyListContainer.style.display === 'none' || replyListContainer.classList.contains('reply-hidden')){
-		//style = disply: none; 이거나 class가 reply hidden 일경우
-	replyListContainer.style.display = 'block';
-	replyListContainer.classList.remove('reply-hidden');
+      //style = disply: none; 이거나 class가 reply hidden 일경우
+   replyListContainer.style.display = 'block';
+   replyListContainer.classList.remove('reply-hidden');
 }else{
-	replyListContainer.style.display = 'none';
-	replyListContainer.classList.add('reply-hidden');
-	
-	}
+   replyListContainer.style.display = 'none';
+   replyListContainer.classList.add('reply-hidden');
+   
+   }
 }
 
 //====================대댓글 등록 로직=======================
 function registerReply(reviewId,nickname){
-	const textarea = document.getElementById(`reply-comment-${reviewId}`);
-	const comment = textarea.value.trim();
-	
-	if(!comment){
-		alert('댓글 내용을 입력해주세요.');
-		return;
-	}
-	
-	const replyData = {
-		reviewId: reviewId,
-		comment: comment,
-		nickname: nickname
-	};
-	
-	fetch('/api/replies',{
-		method: 'POST',
-		headers:{
-			'Content-Type': 'application/json' 
-		},
-		body: JSON.stringify(replyData)
-	})
-	.then(response =>{
-		if(response.ok){
-			return response.json();
-		}
-		throw new Error('댓글 등록 실패:' + response.statusText);
-	})
-	.then(newReply => {
-		textarea.value = '';
-		const replyListContainer = document.getElementById(`reply-list-${reviewId}`);
-		const newReplyHtml = createReplyHtml(newReply);
-		replyListContainer.insertAdjacentHTML('afterbegin',newReplyHtml);
-		alert('댓글이 등록 되었습니다.');
-	})
-	.catch(error => {
-		console.error('댓글 등록 중 오류:', error);
-		alert('댓글 등록에 실패했습니다.');
-	})
+   const textarea = document.getElementById(`reply-comment-${reviewId}`);
+   const comment = textarea.value.trim();
+   
+   if(!comment){
+      alert('댓글 내용을 입력해주세요.');
+      return;
+   }
+   
+   const replyData = {
+      reviewId: reviewId,
+      comment: comment,
+      nickname: nickname
+   };
+   
+   fetch('/api/replies',{
+      method: 'POST',
+      headers:{
+         'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify(replyData)
+   })
+   .then(response =>{
+      if(response.ok){
+         return response.json();
+      }
+      throw new Error('댓글 등록 실패:' + response.statusText);
+   })
+   .then(newReply => {
+      textarea.value = '';
+      const replyListContainer = document.getElementById(`reply-list-${reviewId}`);
+      const newReplyHtml = createReplyHtml(newReply);
+      replyListContainer.insertAdjacentHTML('afterbegin',newReplyHtml);
+      alert('댓글이 등록 되었습니다.');
+   })
+   .catch(error => {
+      console.error('댓글 등록 중 오류:', error);
+      alert('댓글 등록에 실패했습니다.');
+   })
 }
 
 //-----------------대댓글 목록조회------------------
 document.addEventListener('DOMContentLoaded', () =>{
-	const reviewElements = document.querySelectorAll('.individual-review');
+   const reviewElements = document.querySelectorAll('.individual-review');
     
     reviewElements.forEach(reviewDiv => {
         const reviewId = reviewDiv.getAttribute('data-review-id'); 
@@ -321,22 +372,22 @@ document.addEventListener('DOMContentLoaded', () =>{
 });
 
 function fetchReplies(reviewId){
-	const apiUrl = `/api/reviews/${reviewId}/replies`;
-	
-	fetch(apiUrl)
-	.then(response =>{
-		if(!response.ok){
-			throw new Error('댓글 목록을 불러오는데 실패했습니다.');
-		}
-		return response.json();
-	})
-	.then(replies =>{
-		// 1. 고유 ID로 컨테이너 찾기
-		const replyListContainer = document.getElementById(`reply-list-${reviewId}`);
-		const replyCountElement = document.getElementById(`reply-count-${reviewId}`);
+   const apiUrl = `/api/reviews/${reviewId}/replies`;
+   
+   fetch(apiUrl)
+   .then(response =>{
+      if(!response.ok){
+         throw new Error('댓글 목록을 불러오는데 실패했습니다.');
+      }
+      return response.json();
+   })
+   .then(replies =>{
+      // 1. 고유 ID로 컨테이너 찾기
+      const replyListContainer = document.getElementById(`reply-list-${reviewId}`);
+      const replyCountElement = document.getElementById(`reply-count-${reviewId}`);
 
-		// 2. 요소가 존재하는지 확인 후 처리 (null 에러 방지)
-		if (replyListContainer) {
+      // 2. 요소가 존재하는지 확인 후 처리 (null 에러 방지)
+      if (replyListContainer) {
             replyListContainer.innerHTML = ''; 
             
             replies.forEach(reply =>{
@@ -348,62 +399,62 @@ function fetchReplies(reviewId){
             if (replyCountElement) {
                 replyCountElement.textContent = replies.length;
             }
-		}
-	})
-	.catch(error =>{
-		console.error(`댓글 조회 중 오류 (Review ID: ${reviewId}):`, error);
+      }
+   })
+   .catch(error =>{
+      console.error(`댓글 조회 중 오류 (Review ID: ${reviewId}):`, error);
         // 에러 메시지 표시 로직은 고유 ID를 사용하도록 수정 필요
-		const errorContainer = document.getElementById(`reply-list-${reviewId}`);
+      const errorContainer = document.getElementById(`reply-list-${reviewId}`);
         if(errorContainer) {
             errorContainer.innerHTML =
-			    `<p style="color:red;">댓글 목록을 불러올 수 없습니다.(${error.message})</p>`;
+             `<p style="color:red;">댓글 목록을 불러올 수 없습니다.(${error.message})</p>`;
         }
-	});
+   });
 }
 
 
 //===================대댓글 삭제======================
 function deleteReviewReply(replyId){
-	 if (!confirm('댓글를 삭제하시겠습니까?')) {
+    if (!confirm('댓글를 삭제하시겠습니까?')) {
         return;
     }
-	fetch(`/api/userReviewReply/${replyId}`,{
-		method: 'DELETE'
-	})
-	.then(response => {
-		if(response.status === 204){
-			const replyElement = document.querySelector(`.reply-item[data-reply-id="${replyId}"]`);
-			
-			if(replyElement){
-				replyElement.remove();
-				alert('댓글이 삭제되었습니다.');
-			}
-			
-		}else if(response.status === 403){
-			alert('삭제 권한이 없습니다.');
-			
-		}else{
-			alert('대댓글 삭제에 실패했습니다.');
-		}
-	})	
-	.catch(error => {
-		console.error('삭제 요청 오류 발생:', error);
-		alert('서버와의 통신에 문제가 발생했습니다.');
-	});	
+   fetch(`/api/userReviewReply/${replyId}`,{
+      method: 'DELETE'
+   })
+   .then(response => {
+      if(response.status === 204){
+         const replyElement = document.querySelector(`.reply-item[data-reply-id="${replyId}"]`);
+         
+         if(replyElement){
+            replyElement.remove();
+            alert('댓글이 삭제되었습니다.');
+         }
+         
+      }else if(response.status === 403){
+         alert('삭제 권한이 없습니다.');
+         
+      }else{
+         alert('대댓글 삭제에 실패했습니다.');
+      }
+   })   
+   .catch(error => {
+      console.error('삭제 요청 오류 발생:', error);
+      alert('서버와의 통신에 문제가 발생했습니다.');
+   });   
 }
 
 //==================대댓글 목록 화면 HTML====================
 function createReplyHtml(replyData){
-	let replyDeleteButtonHTML = '';
+   let replyDeleteButtonHTML = '';
     const formattedDate = new Date(replyData.regDate).toLocaleString();
     const currentReplyUserId = (typeof loggedInUserId !== 'undefined' && loggedInUserId !== null) 
                           ? Number(loggedInUserId) 
                           : null;
     const replyAuthorId = Number(replyData.userId);
-		if(currentReplyUserId && currentReplyUserId === replyAuthorId){
-		replyDeleteButtonHTML =	`
-				<button type="button" class="deleteReply-btn" onclick="deleteReviewReply(${replyData.replyId})">삭제</button>
-			`;
+      if(currentReplyUserId && currentReplyUserId === replyAuthorId){
+      replyDeleteButtonHTML =   `
+            <button type="button" class="deleteReply-btn" onclick="deleteReviewReply(${replyData.replyId})">삭제</button>
+         `;
     }
     return `
         <div class="reply-item" data-reply-id="${replyData.replyId}">
@@ -414,7 +465,7 @@ function createReplyHtml(replyData){
             </div>
             <div class="reply-comment">
                 <p>${replyData.comment}</p>
-            </div>		
+            </div>      
         </div>
     `;
 }
@@ -422,11 +473,11 @@ function createReplyHtml(replyData){
 
 //댓글달기 토글
 function replyReview(reviewId){
-	const formId = `reply-form-for-${reviewId}`;
-	const replyForm = document.getElementById(formId);
-	if(replyForm){
-		replyForm.classList.toggle('reply-form-hidden');
-	}
+   const formId = `reply-form-for-${reviewId}`;
+   const replyForm = document.getElementById(formId);
+   if(replyForm){
+      replyForm.classList.toggle('reply-form-hidden');
+   }
 }
 
 

@@ -29,6 +29,11 @@ public class UserReviewReplyService{
 	private final UserReviewRepository userReviewRepository;
 	
 	
+	//전체 대댓글 갯수
+	public long getTotlaReplyCount() {
+		return userReviewReplyRepository.count();
+		
+	}
 	
 	//대댓글 등록 서비스
 	public ReplyResponseDTO registerReply(UserReviewReplyDTO replyDTO, Long loggedInUserId) {

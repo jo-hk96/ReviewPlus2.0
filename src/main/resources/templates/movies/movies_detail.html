@@ -67,7 +67,11 @@
 				<h2 style = "color:white;">리뷰쓰기</h2>
 				<form id="review-form">
 					<p>
-						<b>닉네임:</b> <span sec:authentication="principal.nickname" id="nickname"></span>
+					<img
+				    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}" 
+				    alt="프로필 사진" style = "width:30px; height:30px;">
+				    
+				    <span sec:authentication="principal.nickname" id="nickname"></span>
 					</p>
 					
 					<div class="form-group">

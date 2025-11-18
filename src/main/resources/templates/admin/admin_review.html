@@ -65,11 +65,11 @@
 			<div class="dashboard-container">
 				<div class="dashboard-table">
 					<!-- 유저리뷰삭제완료 -->
-					<div th:if="${sucReviewDelete}" class="alert alert-success">
+					<div th:if="${sucReviewDelete}" class="alert alert-success" style = "width: 250px;">
 					    <p th:text="${sucReviewDelete}"></p>
 					</div>
 					<!-- 유저리뷰삭제오류 -->
-					<div th:if="${userReviewdelError}" class="alert alert-success">
+					<div th:if="${userReviewdelError}" class="alert alert-success" style = "width: 250px;">
 					    <p th:text="${userReviewdelError}"></p>
 					</div>
 					<form action="/Admin/AdminReview" method ="get">			

@@ -37,6 +37,7 @@ import com.review.service.MovieLikeService;
 import com.review.service.MovieService;
 import com.review.service.UserReviewService;
 import com.review.service.UserService;
+import com.review.service.UserReviewReplyService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -55,7 +56,7 @@ public class adminController {
 	private final MovieLikeService movieLikeService;
 	private final InquiryService inquiryService;
 	private final PasswordEncoder passwordEncoder;
-	
+	private final UserReviewReplyService userReviewReplyService;
 	
 	//권한없는 페이지 접속페이지
 	@GetMapping("/access-error")
@@ -108,9 +109,26 @@ public class adminController {
 		List<UserDTO> allUserList = UserList.stream()
 											.map(UserDTO::new)
 											.collect(Collectors.toList());
-		
 		//유저 최근 리뷰 10개
 		List<UserReviewDTO> allUserReviewList = userReviewService.getAllUserReviews();
+		
+		//전체 리뷰 갯수
+		long ReviewCount = userReviewService.getTotalReviewCount();
+		
+		//전체 가입자 수
+		long JoinCount = userService.getTotalJoinCount();
+		
+		//전체 대댓글 수
+		long ReplyCount = userReviewReplyService.getTotlaReplyCount();
+		
+		//countByRole_dormant
+		long TotalDormantUser = userService.getDormantUserCount();
+		
+		
+		model.addAttribute("TotalDormantUser" , TotalDormantUser);
+		model.addAttribute("ReplyCount" , ReplyCount);
+		model.addAttribute("JoinCount" , JoinCount);
+		model.addAttribute("ReviewCount" , ReviewCount);
 		model.addAttribute("allUserReview" , allUserReviewList);
 		model.addAttribute("allUserList" , allUserList);
 		return "admin/admin";
@@ -256,20 +274,19 @@ public class adminController {
 			}
 			
 			//회원 리뷰 삭제
-			@GetMapping("/Admin/deleteReview{reviewId}")
+			@PostMapping("/Admin/deleteReview{reviewId}")
 			public String userReviewDelete(@ModelAttribute UserReviewDTO urd , RedirectAttributes re) {
 				Long reviewId = urd.getReviewId();				
 				try {
 				userReviewService.userReviewDelete(urd);
-					re.addFlashAttribute("sucReviewDelete" , "회원 리뷰 번호 :" + reviewId  +"번 삭제완료");
+					re.addFlashAttribute("sucReviewDelete" , "회원 리뷰 번호 :" + reviewId  + "번 삭제완료");
 				
 				}catch(IllegalArgumentException e){
-					re.addFlashAttribute("userReviewdelError", "회원삭제 오류발생"+e.getMessage());
+					re.addFlashAttribute("userReviewdelError", "회원삭제 오류발생" + e.getMessage());
 				}
 				return "redirect:/Admin/AdminReview";
 			}
 			
-	
 	//휴면계정이메일 문의		
 	@PostMapping("/inquiry")
 	public String handleInquiry(@RequestParam("email")String email,

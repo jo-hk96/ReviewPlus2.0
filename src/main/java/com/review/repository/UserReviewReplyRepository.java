@@ -15,6 +15,8 @@ public interface UserReviewReplyRepository extends JpaRepository<userReviewReply
 	
 	
 	
+	
+	
 	//reviewId에 해당하는 모든 대댓글 목록을 조회
 	// Entity(userReviewReplyEntity) -> reviewEntity -> reviewId
 	List<userReviewReplyEntity> findAllByReviewEntity_ReviewIdOrderByRegDateDesc(Long reviewId);	

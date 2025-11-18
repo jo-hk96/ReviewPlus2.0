@@ -25,6 +25,15 @@ public class UserService implements UserDetailsService {
 	private final PasswordEncoder passwordEncoder;
 	private final UserRepository userRepository;
 	
+	//전체 가입자 수
+	public long getTotalJoinCount() {
+		return userRepository.count();
+	}
+	
+	//전체 휴면계정 수
+	public long getDormantUserCount() {
+		return userRepository.countByRole("ROLE_DORMANT");
+	}
 	
 	//회원 프로필 사진 조회
 	@Transactional(readOnly = true)

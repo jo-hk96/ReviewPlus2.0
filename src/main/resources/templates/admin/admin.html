@@ -67,26 +67,26 @@
 				<div class="main-cards">
 					<div class="card">
 						<div class="card-content">
-							<h6 class="title">최근 리뷰 수</h6>
-							<h6 class="amount">20000</h6>
+							<h6 class="title">전체 댓글 수</h6>
+							<h6 class="amount" th:text="${ReplyCount}"></h6>
 						</div>
 					</div>
 					<div class="card">
 						<div class="card-content">
-							<h6 class="title">최근 가입자 수</h6>
-							<h6 class="amount">20000</h6>
+							<h6 class="title">휴면 회원 수</h6>
+							<h6 class="amount" th:text ="${TotalDormantUser}"></h6>
 						</div>
 					</div>
 					<div class="card">
 						<div class="card-content">
 							<h6 class="title">전체 리뷰 수</h6>
-							<h6 class="amount">20000</h6>
+							<h6 class="amount" th:text="${ReviewCount}" ></h6>
 						</div>
 					</div>
 					<div class="card">
 						<div class="card-content">
 							<h6 class="title">전체 가입자 수</h6>
-							<h6 class="amount">20000</h6>
+							<h6 class="amount" th:text="${JoinCount}"></h6>
 						</div>
 					</div>
 				</div>

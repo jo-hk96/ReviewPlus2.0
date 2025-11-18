@@ -18,7 +18,9 @@ public interface UserRepository extends JpaRepository<userEntity, Long> {
 
 	
 	
-	//
+	//전체 회원 권한 조회 (갯수)
+	long countByRole(String role);
+	
 	@Query("SELECT u FROM userEntity u WHERE u.lastActivityAt < :threshold AND u.role <> :role")
 	List<userEntity> findDormantUsers(
 			@Param("threshold") LocalDateTime dormantThreshold,
