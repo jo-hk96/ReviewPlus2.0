@@ -2,6 +2,8 @@ package com.review.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,6 +39,7 @@ public class UserController {
 	private final UserRepository userRepository;
 	private final UserService userService;
 	private final FileStoreService fileStoreService;
+	private final String profileImageBaseUrl = "/images/profile/";
 	
 	
 	//회원가입
@@ -72,25 +75,55 @@ public class UserController {
     //프로필 사진 업로드
     @PostMapping("/api/profile/upload")
     @ResponseBody
-    public String uploadProfileImage(
-        @AuthenticationPrincipal CustomUserDetails customUserDetails, // ⭐️ 로그인된 사용자 정보
+    public Map<String, Object> uploadProfileImage(
+        @AuthenticationPrincipal CustomUserDetails customUserDetails, 
         @RequestParam("file") MultipartFile imageFile
     ) throws IOException {
+        
+        Map<String, Object> response = new HashMap<>();
+
         if (customUserDetails == null) {
-            // 로그인되지 않은 경우의 처리 (예: 401 Unathorized 반환)
-            throw new IllegalStateException("로그인이 필요합니다.");
+            // 로그인되지 않은 경우의 처리 (401 Unauthorized 대신, 예외 처리를 통해 HTTP 상태 코드를 반환하는 것이 더 좋음)
+            response.put("success", false);
+            response.put("message", "로그인이 필요합니다.");
+            // 💡 실제로는 Exception Handler를 통해 401 상태 코드를 반환해야 함
+            return response; 
         }
-        // ⭐️ CustomUserDetails에서 DB 조회 없이 바로 Long 타입의 userId를 가져옴
-        Long currentUserId = customUserDetails.getUserId(); 
-        // 파일 저장 처리 (Service 호출)
-        String storeFileName = fileStoreService.storeFile(imageFile);
-        // DB 업데이트
-        if(storeFileName != null) {
-            userService.updateProfilImage(currentUserId, storeFileName); 
+
+        try {
+            Long currentUserId = customUserDetails.getUserId(); 
+            
+            // 1. 파일 저장 처리 (Service 호출)
+            String storeFileName = fileStoreService.storeFile(imageFile);
+            
+            if (storeFileName != null) {
+                // 2. DB 업데이트
+                userService.updateProfilImage(currentUserId, storeFileName); 
+                
+                // 3. 성공 응답 생성
+                // ⭐️ Flutter가 웹뷰 JS 함수에 전달할 수 있도록 전체 URL을 생성하여 반환
+                String newImageUrl = profileImageBaseUrl + storeFileName;
+                
+                response.put("success", true);
+                response.put("message", "프로필 사진이 성공적으로 수정되었습니다.");
+                response.put("newImageUrl", newImageUrl); 
+                
+            } else {
+                response.put("success", false);
+                response.put("message", "파일 저장에 실패했습니다.");
+            }
+            
+        } catch (Exception e) {
+            // 파일 저장, DB 업데이트 등 예외 처리
+            response.put("success", false);
+            response.put("message", "처리 중 오류가 발생했습니다: " + e.getMessage());
+            e.printStackTrace();
         }
-        return "프로필 사진이 수정 되었습니다.";
+
+        return response;
     }
-	 
+    
+    
 	 //회원 프로필 사진 조회
 	 @GetMapping("/api/profile/image/{userId}")
 	 @ResponseBody

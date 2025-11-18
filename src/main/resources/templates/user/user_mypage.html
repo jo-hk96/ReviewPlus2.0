@@ -73,15 +73,11 @@
                </div>
     </div>
 			<div id="resultMessage" style="text-align:center; color: green; margin-bottom:10px;"></div>
-			<button id="changeProfileButton" onclick="callFlutterToPickImage()" class="btn btn-primary">
-			    프로필 사진 변경 (Flutter 기능 호출)
-			</button>
 			<form id="profileUploadForm" action="/api/profile/upload/1" method="post" enctype="multipart/form-data">
 			    <div>
 			        <input type="file" id="profileImageInput" name="file" accept="image/*" required style = "display: none;">
 			    </div>
 			    
-			
 			    <button type="submit" id="uploadButton" style = "margin: 0 auto;">프로필 저장</button>
 			</form>
 			<table>
@@ -179,25 +175,29 @@
 </script>
 
 <script>
-    // ⭐️ Flutter와 통신할 핵심 JavaScript 함수 ⭐️
-    function callFlutterToPickImage() {
-        console.log('JavaScript: Flutter 갤러리 열기 요청');
-        
-        // window.flutter_inappwebview.callHandler() 대신 
-        // webview_flutter의 postMessage를 사용합니다.
-        // 채널 이름은 'ToFlutter'로 가정
-        if (window.ToFlutter && window.ToFlutter.postMessage) {
-            window.ToFlutter.postMessage('PICK_IMAGE_REQUEST');
-        } else {
-            alert('Flutter 통신 채널을 찾을 수 없습니다.');
-        }
-    }
+document.getElementById('profileUploadForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // 폼의 기본 전송 동작을 막는다!
+    console.log('JavaScript: 폼 전송 막음. Flutter에 업로드 요청 보냄');
+    
+    // 프로필 사진 선택/업로드를 위해 Flutter 호출
+    callFlutterToPickImage();
+});
 
-    // 서버에 업로드가 성공하면, 이 JS 함수를 Flutter가 다시 호출하여 이미지를 업데이트할 수 있음
-    function updateProfileImage(newImageUrl) {
-        document.getElementById('userProfilePicture').src = newImageUrl;
-        document.getElementById('resultMessage').innerText = '사진 업데이트 완료!';
+// ⭐️ Flutter와 통신할 핵심 JavaScript 함수 (이름은 그대로 유지) ⭐️
+function callFlutterToPickImage() {
+    if (window.ToFlutter && window.ToFlutter.postMessage) {
+        // 이 메시지를 받으면 Flutter가 갤러리를 열고 업로드까지 모두 처리합니다.
+        window.ToFlutter.postMessage('START_UPLOAD_FLOW'); 
+    } else {
+        alert('Flutter 통신 채널을 찾을 수 없습니다.');
     }
+}
+
+// 서버에 업로드가 성공하면, 이 JS 함수를 Flutter가 다시 호출하여 이미지를 업데이트합니다.
+function updateProfileImage(newImageUrl) {
+    document.getElementById('userProfilePicture').src = newImageUrl;
+    document.getElementById('resultMessage').innerText = '사진 업데이트 완료!';
+}
 </script>
 
 
