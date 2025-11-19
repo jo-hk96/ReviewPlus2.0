@@ -231,7 +231,7 @@ function createReviewHtml(review) {
 				    
                     <div id="actionButtonsContainer" 
 				     style="display: none; 
-				            top: 100%; /* 부모 요소 아래에 위치시키기 위해 100% 사용 */
+				            top: 100%; 
 				            left: 0;
 				            background: white; 
 				            border: 1px solid #ccc; 

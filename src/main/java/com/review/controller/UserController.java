@@ -41,6 +41,13 @@ public class UserController {
 	private final FileStoreService fileStoreService;
 	private final String profileImageBaseUrl = "/images/profile/";
 	
+	//휴면 계정 페이지 이동
+		@GetMapping("/UserDormant")
+		public String userDormant() {
+		    return "user/UserDormant";  // templates/user/user_dormant.html
+		}
+		
+	
 	
 	//회원가입
 	@PostMapping("/UserJoin")

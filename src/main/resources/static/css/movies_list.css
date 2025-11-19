@@ -27,6 +27,8 @@ body {
     transition: transform 0.2s;
 }
 
+
+/* 영화 카드 호버시 */
 .movie-ListCard:hover {
     transform: translateY(-5px); 
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
@@ -76,10 +78,18 @@ body {
     color: #888;
 }
 
+@media (max-width: 1000px) {
+    #movie-list2 {
+        grid-template-columns: repeat(3, 2fr); 
+        gap: 20px 10px; 
+        padding: 0 10px;
+    }
+}
+
 
 @media (max-width: 700px) {
     #movie-list2 {
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(3, 2fr); 
         gap: 20px 10px; 
         padding: 0 10px;
     }
@@ -87,10 +97,6 @@ body {
 
 @media (max-width: 480px) {
     #movie-list2 {
-        grid-template-columns: 1fr; 
-    }
-}
-
-.movie-ListCard {
-    width: 100%;
+	grid-template-columns: repeat(3, 2fr);     
+ 	}
 }

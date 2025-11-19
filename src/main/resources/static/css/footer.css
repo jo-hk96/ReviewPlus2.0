@@ -1,4 +1,3 @@
-
  /* 푸터  */
 #footer{
   width: 100%;  
@@ -10,11 +9,11 @@
 }
   
  /* 푸터 메일 문의 모달 */
-	#MailForwarding {
+   #MailForwarding {
     position: fixed;
     z-index: 1000; 
     width: 700px;
-    height: 500px;
+    height: 650px;
     background-color: rgba(0,0,0,0.7); 
     top: 50%;
     left: 50%;
@@ -38,6 +37,9 @@
     margin-bottom: 10px;    /* 요소 간 간격 통일 */
     text-align: left;       /* placeholder + 입력 텍스트 왼쪽 정렬 */
     font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    background-color: #333;
+    color:white;
 }
 
 /* textarea 높이만 별도로 */
@@ -55,12 +57,12 @@
 }  
    
    
-  /* 메일 문의 모달닫기 버튼 */ 
+  /* 문의하기 모달 닫기 버튼 스타일 */ 
 .MailCloseBtn {
     position: fixed;
     top: 20px;     /* 원하는 만큼 아래로 내리기 */
     right: 20px;   /* 오른쪽 간격 */
-    font-size: 26px;
+    font-size: 18px;
     font-weight: bold;
     color: #ffffff;
     cursor: pointer;
@@ -71,11 +73,4 @@
     color: #cccccc;
     transform: scale(1.1);
 }
-  
-
-
-
-
-  
-
-
+ 

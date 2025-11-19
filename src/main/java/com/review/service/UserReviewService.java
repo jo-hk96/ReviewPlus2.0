@@ -64,16 +64,16 @@ public class UserReviewService{
     }
     
     
-    //메인리뷰 최신순으로 5개 불러오기
+    //전체 리뷰 최신순으로 불러오기(메인 홈)
     public List<UserReviewDTO> getRecentReviews(){
-    	List<userReviewEntity> recentReview = userReviewRepository.findTop5ByOrderByRegDateDesc();
+    	List<userReviewEntity> recentReview = userReviewRepository.findAllByOrderByRegDateDesc();
     	return recentReview.stream()
     			.map(UserReviewDTO::fromEntity)
     			.collect(Collectors.toList());
     }
     
     
-    //메인리뷰 최신순으로 10개 불러오기
+    //메인리뷰 최신순으로 10개 불러오기(관리자 홈)
     public List<UserReviewDTO> getAllUserReviews(){
     	List<userReviewEntity> recentReview = userReviewRepository.findTop10ByOrderByRegDateDesc();
     	return recentReview.stream()
