@@ -75,7 +75,7 @@
 			    <div>
 				    <form action="/MoviesList" method="get" class="search-form-container"> 
 					        <input type="text" id="movieSearch" name="movieSearch" 
-					               placeholder="영화 제목을 입력해주세요. ex)반지,반지의,반지의 제왕,The Lord ,Lord of">
+					               placeholder="영화 제목을 입력해주세요.">
 					        
 					        <button type="submit" class="search-icon-btn">
 					            <i class="fa-solid fa-magnifying-glass" style ="color:gray;"></i>
@@ -188,38 +188,6 @@
 <button id="scrollToTopBtn" style="display: none;" th:fragment ="scroll-to-top">
     <i class="fas fa-arrow-up fa-lg"></i>
 </button>
-<script>
-	document.addEventListener('DOMContentLoaded', function(){
-		const inputElement = document.getElemenById('movieSearch');
-		
-		const mediaQuery = window.matchMedia('(max-width: 780px)');
-		
-		const defaultPlaceholder = "영화 제목을 입력해주세요. ex)반지,반지의,반지의 제왕,The Lord ,Lord of";
-	    
-	    const mobilePlaceholder = "영화 제목을 입력하세요.";
-		
-	    function handlePlaceholderChange(e){
-	    	if(e.matches){
-	    		inputElement.placeholder = mobilePlaceholder;
-	    		
-	    	}else{
-	    		inputElement.placeholder = defaultPlaceholder;
-	    	}
-	    }
-	    
-	    //크기가 바뀌면 함수 실행
-	    mediaQuery.addListener(handlePlaceholderChange);
-	    
-		
-	    //초기 로드시 한 번 실행
-	    handlePlaceholderChange(mediaQuery);
-	});
-	
-
-
-</script>
-
-
 
 <!--프로필 사진  -->
 <script src="js/upload.js"></script>

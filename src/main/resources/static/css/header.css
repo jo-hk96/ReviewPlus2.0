@@ -106,7 +106,6 @@ a{
 /* 헤더 검색바 */
 #movieSearch{
 	width:100%;
-	min-width:475px;
 	height:45px;
 	border-radius:15px;
 	background-color: #191932;
