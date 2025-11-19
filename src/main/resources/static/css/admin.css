@@ -40,7 +40,7 @@ li {
 	height: 30px;
 	color: #FFF;
 	border-radius: 0.425rem;
-	font-size: 18px;
+	font-size: 1.125rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -143,10 +143,15 @@ form {
 
 /* ======= 목록 테이블 부분 ======== */
 .dashboard-table {
-	width: 100%;
 	overflow-x: auto;
 }
+
+h2 {
+	padding: 1rem;
+}
+
 .table {
+	width: 100%;
 	border: 1px solid #cccccc;
 	border-collapse: collapse;
 	margin-top: 20px;
@@ -156,14 +161,15 @@ form {
 }
 .table th {
 	background-color: #e0e0e0;
-	font-size: 15px;
-	
+	font-size: 0.938rem;
 }
+
 .table td, th {
 	font-family: 'AstaSans', sans-serif;
 	border: 1px solid #cccccc;
-	padding: 13px 30px;
+	padding: 0.8rem 1.5rem;
 	text-align: center;
+	min-width: 100px;
 }
 .table td {
 	max-width: 300px;
@@ -237,14 +243,14 @@ form {
 	border-collapse: collapse;
 }
 .detail-table td {
-	padding: 10px;
+	padding: 1rem;
 	border: 1px solid #e0e0e0;
 }
 .detail-table .label-td {
 	background-color: #ebebeb;
 }
 .detail-table .inputbar {
-	padding: 8px;
+	padding: 0.5rem;
 	border: none;
 	background-color: #e0e0e0;
 }
@@ -253,8 +259,8 @@ form {
 	width: 300px;
 	background-color: #e0e0e0;
 	border: none;
-	padding: 8px;
-	font-size: 16px;
+	padding: 0.5rem;
+	font-size: 1rem;
 }
 .detail-table .labelname, .inputbar, .textarea {
 	font-family: 'AstaSans', sans-serif;
@@ -274,7 +280,7 @@ form {
   color: #fff;
   cursor: pointer;
   font-family: "AstaSans", sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1.5;
   margin: 15px;
@@ -283,7 +289,7 @@ form {
   min-width: 100px;
   outline: none;
   overflow: hidden;
-  padding: 6px;
+  padding: 0.3rem;
   position: relative;
   text-align: center;
   text-transform: none;
@@ -321,19 +327,6 @@ footer .dashboard-container {
 
 .copyright-text a {
 	color: #000;
-}
-
-
-/* ====== 반응형 ======= */
-@media (min-width: 768px) {
-    .content .dashboard-container {
-        flex-wrap: nowrap;
-    }
-    .main-cards {
-        width: 75% !important;
-        grid-template-rows: unset;
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 
 /* ===== 모달 창 ===== */
@@ -407,7 +400,7 @@ footer .dashboard-container {
 .close-button {
     color: #aaa;
     float: right;
-    font-size: 23px;
+    font-size: 1.438rem;
     font-weight: bold;
 }
 .close-button:hover,
@@ -460,4 +453,16 @@ footer .dashboard-container {
 /* JavaScript가 이 클래스를 추가/제거해서 보여줌 */
 .UserStatus.show {
     display: block;
+}
+
+/* ====== 반응형 ======= */
+@media (min-width: 768px) {
+    .content .dashboard-container {
+        flex-wrap: nowrap;
+    }
+    .main-cards {
+        width: 75% !important;
+        grid-template-rows: unset;
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

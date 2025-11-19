@@ -3,6 +3,7 @@
                   xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/admin.css">
     <link rel="stylesheet" href="/css/common.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -67,7 +68,6 @@
 					<div th:if="${sucReviewUpdate}">
 					    <p th:text="${sucReviewUpdate}"></p>
 					</div>
-
 					<table class="detail-table">
 						<tr>
 							<td class="label-td"><label class="labelname">리뷰 번호</label></td>
@@ -108,6 +108,14 @@
 				</div>
 			</div>
 		</div>
+		<!-- 푸터 -->
+		<footer class="footer">
+			<div class="dashboard-container">
+				<div class="copyright-text">
+					<a href="/">©Copyright 2025 by ReviewPlus</a>
+				</div>
+			</div>
+		</footer>
 	</div><!-- 사이드바 옆 메인 끝 -->
 	
 		<!-- 회원 리뷰 수정 모달  -->
