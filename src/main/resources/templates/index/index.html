@@ -136,7 +136,7 @@
 								  	<b>[[${review.title}]]</b><br>
 								    <b id = "comment">"[[${review.comment}]]"</b><br>
 								    <span class="rating">
-							            <sp:an th:text="${#strings.repeat('⭐', #numbers.formatInteger(review.rating, 0))}"></span>
+							            <span th:text="${#strings.repeat('⭐', #numbers.formatInteger(review.rating, 0))}"></span>
 						        	</span>
 								    <span id = "regdate">[[${review.regDate}]]</span>
 						</a>
