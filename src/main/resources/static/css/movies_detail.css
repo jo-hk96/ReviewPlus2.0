@@ -313,6 +313,7 @@ h2 {
     border-radius: 6px;
     box-sizing: border-box;
     background-color: #333;
+    color:white;
     font-size: 15px;
     transition: border-color 0.3s, box-shadow 0.3s;
 }

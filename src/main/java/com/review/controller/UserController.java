@@ -80,7 +80,7 @@ public class UserController {
 	    }
 		
     //프로필 사진 업로드
-    @PostMapping("/api/profile/upload")
+    @PostMapping("/api/profile/upload/{userId}")
     @ResponseBody
     public Map<String, Object> uploadProfileImage(
         @AuthenticationPrincipal CustomUserDetails customUserDetails, 
@@ -93,7 +93,6 @@ public class UserController {
             // 로그인되지 않은 경우의 처리 (401 Unauthorized 대신, 예외 처리를 통해 HTTP 상태 코드를 반환하는 것이 더 좋음)
             response.put("success", false);
             response.put("message", "로그인이 필요합니다.");
-            // 💡 실제로는 Exception Handler를 통해 401 상태 코드를 반환해야 함
             return response; 
         }
 
@@ -107,8 +106,6 @@ public class UserController {
                 // 2. DB 업데이트
                 userService.updateProfilImage(currentUserId, storeFileName); 
                 
-                // 3. 성공 응답 생성
-                // ⭐️ Flutter가 웹뷰 JS 함수에 전달할 수 있도록 전체 URL을 생성하여 반환
                 String newImageUrl = profileImageBaseUrl + storeFileName;
                 
                 response.put("success", true);

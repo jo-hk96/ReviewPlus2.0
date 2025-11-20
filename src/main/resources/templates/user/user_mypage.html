@@ -51,7 +51,6 @@
 			
 			<!-- 프로필이미지 -->
 <div class="profile-top">
-        <img id="userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}" alt="프로필 사진">
 
         <button class="menu-btn" onclick="toggleMenu()">메뉴</button>
         <div id="menu-list">
@@ -74,12 +73,11 @@
                </div>
     </div>
 			<div id="resultMessage" style="text-align:center; color: green; margin-bottom:10px;"></div>
+			<img id="userProfilePicture" onclick="startUpload()" th:src="@{'/images/profile/' + ${profileFileName}}" alt="프로필 사진">
 			<form id="profileUploadForm" action="/api/profile/upload/1" method="post" enctype="multipart/form-data">
 			    <div>
 			        <input type="file" id="profileImageInput" name="file" accept="image/*" required style = "display: none;">
 			    </div>
-			    
-			    <button type="submit" id="uploadButton" style = "margin: 0 auto;">프로필 저장</button>
 			</form>
 			<table>
 			
@@ -165,43 +163,46 @@
         loadProfileImage(LOGGED_IN_USER_ID); 
     }
 </script>
-
 <script>
-	const profileImage = document.getElementById('userProfilePicture');
-	const fileInput = document.getElementById('profileImageInput');
-
-	profileImage.addEventListener('click', function(){
-		fileInput.click();
+function startUpload() {
+	    if (typeof ProfileChannel !== 'undefined') {
+	        // ⭐️ 1. Flutter 웹뷰 환경: Flutter 로직 호출
+	        ProfileChannel.postMessage('upload_start'); 
+	    } else {
+	        // ⭐️ 2. 일반 웹 환경: 숨겨진 파일 선택창을 클릭
+	        const fileInput = document.getElementById('profileImageInput');
+	        fileInput.click();
+	        
+	        console.log('일반 웹 환경: 파일 선택창을 엽니다.');
+	    }
+	}
+	
+	document.addEventListener('DOMContentLoaded', () => {
+	    const fileInput = document.getElementById('profileImageInput');
+	    const form = document.getElementById('profileUploadForm');
+	    
+	    if (fileInput && form && typeof ProfileChannel === 'undefined') {
+	        fileInput.addEventListener('change', () => {
+	            if (fileInput.files.length > 0) {
+	                form.submit();
+	            }
+	        });
+	    }
 	});
 	
-</script>
+	function updateProfileImage(newUrl) {
+        const imgElement = document.getElementById('userProfilePicture'); // 👈 HTML의 img ID
+        const resultDiv = document.getElementById('resultMessage'); // 👈 결과 메시지 표시용
 
-<script>
-document.getElementById('profileUploadForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // 폼의 기본 전송 동작을 막는다!
-    console.log('JavaScript: 폼 전송 막음. Flutter에 업로드 요청 보냄');
-    
-    // 프로필 사진 선택/업로드를 위해 Flutter 호출
-    callFlutterToPickImage();
-});
-
-// ⭐️ Flutter와 통신할 핵심 JavaScript 함수 (이름은 그대로 유지) ⭐️
-function callFlutterToPickImage() {
-    if (window.ToFlutter && window.ToFlutter.postMessage) {
-        // 이 메시지를 받으면 Flutter가 갤러리를 열고 업로드까지 모두 처리합니다.
-        window.ToFlutter.postMessage('START_UPLOAD_FLOW'); 
-    } else {
-        alert('Flutter 통신 채널을 찾을 수 없습니다.');
+        if (imgElement) {
+            imgElement.src = newUrl;
+            if (resultDiv) {
+                resultDiv.innerText = "✅ 프로필 사진이 성공적으로 변경되었습니다.";
+                resultDiv.style.color = 'green';
+            }
+        }
     }
-}
-
-// 서버에 업로드가 성공하면, 이 JS 함수를 Flutter가 다시 호출하여 이미지를 업데이트합니다.
-function updateProfileImage(newImageUrl) {
-    document.getElementById('userProfilePicture').src = newImageUrl;
-    document.getElementById('resultMessage').innerText = '사진 업데이트 완료!';
-}
 </script>
-
 
 <script src="js/upload.js"></script>
 		
