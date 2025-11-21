@@ -19,7 +19,4 @@ public interface UserReviewLikeRepository extends JpaRepository<userReviewLikeEn
 			);
 	
 	
-	//좋아요 갯수 조회
-	
-	
 }

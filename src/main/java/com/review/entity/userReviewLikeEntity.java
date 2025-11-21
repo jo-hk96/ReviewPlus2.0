@@ -51,11 +51,13 @@ public class userReviewLikeEntity {
 		this.regDate = LocalDateTime.now();
 	}
 	
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
 	@EqualsAndHashCode
 	public static class UserReviewLikeId implements Serializable{
 		private static final long serialVersionUID = 1L;
 		private Long userEntity;
 		private Long reviewEntity;
 	}
-	
 }

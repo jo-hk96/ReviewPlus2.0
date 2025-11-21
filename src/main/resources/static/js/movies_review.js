@@ -177,7 +177,7 @@ function createReviewHtml(review) {
                           ? Number(loggedInUserId) 
                           : null;
     const reviewAuthorId = Number(review.userId);
-    if (currentUserId && currentUserId === reviewAuthorId) { 2
+    if (currentUserId && currentUserId === reviewAuthorId) {
         restrictedButtonsHtml = `
                 <button type="button" class="edit-btn" onclick="openEditModal(${review.reviewId})">수정</button>
                 <button type="button" class="delete-btn" onclick="deleteReview(${review.reviewId})">삭제</button>
@@ -198,17 +198,15 @@ function createReviewHtml(review) {
 	
 	
 	const likeButtonHtml = `
-	  <button type="button" class="like-btn" 
-	      data-review-id="${review.reviewId}"
-	      onclick="toggleLike(this)"
-	      style="background: none; border: none;
-	      cursor: pointer;
-	      font-size: 1.2em;
-	      margin-right: 15px;
-	      color: ${isLiked ? 'red' : 'black'};" > 
-	      ${heartSymbol} ${likeCount}
-	  </button>
-	`;
+	    <button type="button" class="like-btn" 
+	        data-review-id="${review.reviewId}"
+	        onclick="ReviewtoggleLike(this)"
+	        style="background: none; border: none;
+	        cursor: pointer;
+	        font-size: 1.2em;
+	    	margin-right: 15px;
+            color: ${isLiked ? 'red' : 'black'};"> ${heartSymbol} ${likeCount} </button>
+	 `;
     
     
     actionButtonsHtml = `
@@ -288,12 +286,16 @@ function createReviewHtml(review) {
 }
 
 
-function toggleLike(buttonEl){
+
+function ReviewtoggleLike(buttonEl){
 	//리뷰 Id 가져오기
 	const reviewId = buttonEl.getAttribute('data-review-id');
 	const url = `/api/reviews/${reviewId}/likes`;
 	
-	//백엔드 API 호출(POST요청)
+	
+	//로딩 중임을 표시
+	buttonEl.disabled = true;
+	
 	fetch(url,{
 		method: 'POST',
 		header: {
@@ -308,21 +310,22 @@ function toggleLike(buttonEl){
 	})
 	.then(data => {
 		const { isLiked, likeCount } = data;
-		
 		//버튼 텍스트 (하트 모양 및 개수) 업데이트
 		const heartSymbol = isLiked ? '❤' : '🤍';
 		buttonEl.innerHTML = `${heartSymbol} ${likeCount}`;
-		
 		//버튼 스타일(색상) 업데이트
 		buttonEl.style.color = isLiked ? 'red' : 'black';
 		
+		buttonEl.disabled = false;
+		
+		//로그
 		console.log(`좋아요 상태: ${isLiked}, 총 개수: ${likeCount}`);
 	})
 	.catch(error => {
 		console.error('좋아요 토글 중 에러 발생:', error);
-		alert('좋아요 처리에 실패했습니다.')
+		alert('좋아요 처리에 실패했습니다.');
+		buttonEl.disabled = false;// 에러 발생 시 버튼 활성화
 	})
-	
 }
 
 //==========================================================
