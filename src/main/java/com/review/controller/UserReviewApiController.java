@@ -2,7 +2,6 @@ package com.review.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,22 +12,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.review.DTO.ReplyResponseDTO;
+import com.review.DTO.ReviewLikeResponse;
 import com.review.DTO.UserReviewDTO;
 import com.review.DTO.UserReviewReplyDTO;
 import com.review.DTO.movieDTO;
 import com.review.config.CustomUserDetails;
 import com.review.entity.userEntity;
 import com.review.entity.userReviewEntity;
-import com.review.service.MovieLikeService;
+import com.review.repository.UserReviewRepository;
 import com.review.service.MovieService;
-import com.review.service.TmdbApiService;
+import com.review.service.ReviewLikeService;
 import com.review.service.UserReviewReplyService;
 import com.review.service.UserReviewService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -39,6 +39,8 @@ public class UserReviewApiController {
 	private final UserReviewService userReviewService;
 	private final MovieService movieService;
 	private final UserReviewReplyService userReviewReplyService;
+	private final ReviewLikeService reviewLikeService;
+	private final UserReviewRepository reviewRepository;
 	
 	//사용자 내정보 좋아요 목록
 	@GetMapping("/api/user/likedMovies")
@@ -137,9 +139,26 @@ public class UserReviewApiController {
 	public ResponseEntity<Void> deleteReviewReply(@PathVariable Long replyId, @AuthenticationPrincipal CustomUserDetails cud){
 		userReviewReplyService.deleteReviewReply(replyId, cud.getUserId());
 		return ResponseEntity.noContent().build();
-		
-		
 	}
 	
 	
+	//리뷰 좋아요
+	@PostMapping("/api/reviews/{reviewId}/likes")
+	public ResponseEntity<ReviewLikeResponse> toggleLike(
+			@PathVariable Long reviewId,
+			@AuthenticationPrincipal CustomUserDetails cud
+			){
+		//현재 로그인 된 사용자 ID 가져오기
+		Long currentUserId = cud.getUserEntity().getUserId();
+		
+		//좋아요 상태 토글
+		boolean isLiked = reviewLikeService.toggleReviewLike(reviewId, currentUserId);
+		
+		//리뷰 엔티티를 조회해서 likeCount를 가져옴
+		userReviewEntity updatedReview = reviewRepository.findById(reviewId)
+				.orElseThrow(() -> new EntityNotFoundException("리뷰 없음"));
+		
+		ReviewLikeResponse response = new ReviewLikeResponse(isLiked, updatedReview.getLikeCount());
+		return ResponseEntity.ok(response);
+	}
 }

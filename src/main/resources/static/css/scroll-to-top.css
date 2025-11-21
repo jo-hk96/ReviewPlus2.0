@@ -1,29 +1,48 @@
 #scrollToTopBtn {
-   /* 화면 오른쪽 아래에 고정 */
+    /* 화면 오른쪽 아래에 고정 */
     position: fixed; 
-    bottom: 50px; 
-    right: 50px; 
+    bottom: 30px; /* 아래에서 30px로 약간 위로 조정 */
+    right: 30px;  /* 오른쪽에서 30px로 약간 왼쪽으로 조정 */
     
-   
-   /* 버튼 모양 */
+    /* 버튼 모양 */
     z-index: 99;
-    width:80px;
-    height:80px;
+    width: 55px; /* 크기 약간 키움 */
+    height: 55px; /* 크기 약간 키움 */
     border: none; 
     outline: none; 
-    color: white;
+    color: white; /* 아이콘 색상 */
     cursor: pointer; 
-    padding: 15px; 
-    border-radius: 50px; 
-    background-color:gray;
-    font-size: 18px;
-    opacity: 1.0; 
-    transition: opacity 0.2s;
-     
+    padding: 0; /* 아이콘 중앙 정렬을 위해 패딩 제거 */
+    border-radius: 50%; /* 완전한 원형 (50%로 설정) */
+    
+    /* 멋진 배경 그라데이션 */
+    background: linear-gradient(45deg, #6c5ce7, #a29bfe); /* 보라색 계열 그라데이션 */
+    
+    /* 부드러운 그림자 효과 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* 그림자 추가 */
+    
+    /* 아이콘 중앙 정렬 및 크기 */
+    display: flex; /* Flexbox 사용하여 아이콘 중앙 정렬 */
+    justify-content: center;
+    align-items: center;
+    font-size: 24px; /* 아이콘 크기 */
+
+    opacity: 0.9; /* 살짝 투명하게 시작 */
+    transition: all 0.3s ease; /* 모든 변화에 0.3초 애니메이션 적용 */
 }
 
-/* 마우스 올리면 더 진하게 */
+/* 마우스 올리면 효과 */
 #scrollToTopBtn:hover {
-    opacity: 2;
-    background-color: black;
-}		
+    opacity: 1; /* 완전히 불투명하게 */
+    /* 더 진한 배경색 또는 다른 그라데이션 */
+    background: linear-gradient(45deg, #5345d1, #7a71e2); 
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); /* 그림자 더 선명하게 */
+    transform: translateY(-3px); /* 위로 살짝 떠오르는 효과 */
+}
+
+/* 버튼 활성화(클릭) 시 효과 */
+#scrollToTopBtn:active {
+    transform: translateY(0px); /* 다시 눌리는 듯한 효과 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0.8;
+}

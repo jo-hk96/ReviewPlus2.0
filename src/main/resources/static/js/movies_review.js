@@ -50,7 +50,7 @@ const movieApiId = apiIdInput ? apiIdInput.value : null;
         .catch(err => {
             console.error('리뷰 등록 중 오류 발생:', err);
             alert('리뷰 등록 실패');
-        });
+        });``
     });
 }
 
@@ -192,17 +192,24 @@ function createReviewHtml(review) {
     </span>
     `;
    
-   // 리뷰 좋아요 버튼 
-      const likeButtonHtml = `
-        <button type="button" class="like-btn" 
-        data-review-id="${review.reviewId}"
-        onclick="toggleLike(this)"
-        style="background: none; border: none;
-        cursor: pointer;
-        font-size: 1.2em;
-        margin-right: 15px;">
-        ❤ 0</button>
-      `;
+	const isLiked = review.isUserLiked; //좋아요 상태
+	const likeCount = review.likeCount || 0; //초기 좋아요 개수
+	const heartSymbol = isLiked ? '❤' : '🤍'; // 상태에 따라 하트 색상 결정
+	
+	
+	const likeButtonHtml = `
+	  <button type="button" class="like-btn" 
+	      data-review-id="${review.reviewId}"
+	      onclick="toggleLike(this)"
+	      style="background: none; border: none;
+	      cursor: pointer;
+	      font-size: 1.2em;
+	      margin-right: 15px;
+	      color: ${isLiked ? 'red' : 'black'};" > 
+	      ${heartSymbol} ${likeCount}
+	  </button>
+	`;
+    
     
     actionButtonsHtml = `
        <div class="review-actions">
@@ -280,6 +287,45 @@ function createReviewHtml(review) {
    `;
 }
 
+
+function toggleLike(buttonEl){
+	//리뷰 Id 가져오기
+	const reviewId = buttonEl.getAttribute('data-review-id');
+	const url = `/api/reviews/${reviewId}/likes`;
+	
+	//백엔드 API 호출(POST요청)
+	fetch(url,{
+		method: 'POST',
+		header: {
+			'Content-Type' : 'application/json',
+		},
+	})
+	.then(response => {
+		if(!response.ok){
+			throw new Error(`HTTP 오류 발생: ${response.status}`);
+		}
+		return response.json();
+	})
+	.then(data => {
+		const { isLiked, likeCount } = data;
+		
+		//버튼 텍스트 (하트 모양 및 개수) 업데이트
+		const heartSymbol = isLiked ? '❤' : '🤍';
+		buttonEl.innerHTML = `${heartSymbol} ${likeCount}`;
+		
+		//버튼 스타일(색상) 업데이트
+		buttonEl.style.color = isLiked ? 'red' : 'black';
+		
+		console.log(`좋아요 상태: ${isLiked}, 총 개수: ${likeCount}`);
+	})
+	.catch(error => {
+		console.error('좋아요 토글 중 에러 발생:', error);
+		alert('좋아요 처리에 실패했습니다.')
+	})
+	
+}
+
+//==========================================================
 function toggleActionButtons(buttonElement) {
         const reviewArea = buttonElement.closest('.review-profile-area');
         const container = reviewArea.querySelector('#actionButtonsContainer');

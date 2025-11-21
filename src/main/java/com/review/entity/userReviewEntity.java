@@ -40,6 +40,7 @@ public class userReviewEntity {
 		    sequenceName = "REVIEW_SEQ",   
 		    allocationSize = 1
 		)
+		
 		@Id
 		@GeneratedValue(
 		    strategy = GenerationType.SEQUENCE, 
@@ -61,6 +62,22 @@ public class userReviewEntity {
 		@Column(name = "MOVIE_TITLE" , nullable = false)
 		private String title; //영화 제목
 	
+		
+		@Column(name = "LIKE_COUNT", nullable = false)
+		@Builder.Default // 기본값 0으로 설정
+		private int likeCount = 0;
+			
+		
+			//좋아요 증감 메서드
+			public void increaseLikeCount() {
+				this.likeCount++;
+			}
+			
+			public void decreaseLikeCount() {
+				if(this.likeCount > 0) {
+				   this.likeCount--;
+				}
+			}
 		
 		//리뷰는 여러개 회원은 하나 [다대일]
 	    @ManyToOne(fetch = FetchType.LAZY)

@@ -1,10 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
     // ⚠️ 경고: 최상단에 중복된 DOMContentLoaded 리스너는 삭제해야 합니다!
     
+    // 👇 이미지 목록 정의와 인덱스 추적 변수를 여기에 추가하세요!
+    const backgroundImages = [
+        "/images/newsimg1.png", 
+        "/images/newsimg2.png",
+        "/images/newsimg3.png",
+        "/images/newsimg4.png",
+        "/images/newsimg5.png"
+    ];
+    let imageIndex = 0; // 이 변수를 전역(DOMContentLoaded 내부)에서 관리해야 합니다.
+    
     const newsListContainer = document.getElementById('naver-news-list');
     const apiUrl = '/api/naver/news?query=%EC%98%81%ED%99%94%7C%EA%B0%9C%EB%B4%89%7C%EA%B0%9C%EB%B4%89%EC%98%88%EC%A0%95%7C%EB%B0%95%EC%8A%A4%EC%98%A4%ED%94%BC%EC%8A%A4&display=10&sort=sim';
 
+    // -----------------------------------------------------
     // 1. AJAX 데이터 로딩 로직
+    // -----------------------------------------------------
     fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
@@ -19,25 +31,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (newsItems.length > 0) {
                 newsItems.forEach(item => {
-                    const imageUrl = "https://via.placeholder.com/300x180?text=Movie+News";
+                   // 👇 1. 이미지 URL 변수 선언 부분을 순환 로직으로 대체합니다.
+                    const imageUrl = backgroundImages[imageIndex]; 
 
                     const cleanTitle = removeHtmlTags(item.title);
                     const formattedDate = formatDate(item.pubDate);
 
                     const itemContent = `
-                        <img src="${imageUrl}" alt="${cleanTitle} 뉴스 이미지">
+                        <img src="${imageUrl}" alt="${cleanTitle} 뉴스 이미지";>
                         <p class="title">${cleanTitle}</p>
                         <p class="date">${formattedDate}</p>
                     `;
 
-                    // 👇 newsItemLink (<a> 태그)를 생성하여 .news-item 역할과 링크 역할을 동시에 수행하게 합니다.
+                    // ... (newsItemLink 생성 및 추가 로직) ...
                     const newsItemLink = document.createElement('a');
-                    newsItemLink.href = item.link;         // 기사 URL 설정
-                    newsItemLink.target = '_blank';        // 새 탭에서 열기
-                    newsItemLink.className = 'news-item';  // 기존 CSS 스타일을 적용하기 위해 클래스 유지
-                    
+                    newsItemLink.href = item.link;         
+                    newsItemLink.target = '_blank';        
+                    newsItemLink.className = 'news-item';  
                     newsItemLink.innerHTML = itemContent;
                     newsListContainer.appendChild(newsItemLink);
+                    
+                    // 👇 2. 다음 항목을 위해 인덱스를 순환 증가시킵니다.
+                    imageIndex = (imageIndex + 1) % backgroundImages.length;
                 });
 
                 // 데이터 로드 후 캐러셀 초기화

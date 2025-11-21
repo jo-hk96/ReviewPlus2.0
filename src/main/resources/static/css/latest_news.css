@@ -1,15 +1,12 @@
-
-.main-carousel-wrapper {
-    /* 캐러셀 컨테이너와 동일한 최대 너비를 사용 */
-    max-width: 1470px; 
+.main-carousel-wrapper {    
     width: 100%;
-    /* 래퍼 자체를 중앙 정렬 */
-    margin: 20px auto; 
+    max-width: 1470px; 
+    margin: 20px auto;     
 }
 
 .carousel-container {
   width: 100%;             
-  max-width: 1500px; 
+  max-width: 1470px; 
   margin: 20px auto;
   position: relative;
   overflow: visible;
@@ -26,11 +23,12 @@
 .news-title {
   color : #ff4d4d;
   margin-top: 0; 
-    margin-bottom: 10px; 
-    margin-left: -20px; /* 래퍼의 왼쪽 경계에 맞추기 위해 0으로 설정 */
-    margin-right: 0;
-  padding-left: 20px;
-  
+  margin-bottom: 10px; 
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0px;
+   max-width: 1470px; 
+  width: 100%;   
 }
 
 .carousel-wrapper {
@@ -39,21 +37,22 @@
   position: relative;
   height:100%;
   gap: 0;
+  max-width:1470px;
+  width:100%;
 }
 
 .news-list-container {
-  overflow: hidden;
-  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width:1470px;
+  width:100%;
   height:100%;
   display: flex;
-  justify-content: center; /* 가로 중앙 */
+  justify-content: center; 
   align-items: center;
-}
-
-.news-list {
-  display: flex;
-  transition: transform 0.5s ease;
-  height:100%;
+  padding: 0;
+  border: 0;
+  scroll-snap-type: x mandatory;
 }
 
 .news-item {
@@ -63,28 +62,56 @@
   justify-content: center; 
   align-items: center; 
   height: 100%;
+  max-width:1470px;
   width: 100%;
   position: relative;
+  margin: 0;
+  padding-left: 0;
+  border: 0;
+  scroll-snap-align: start;
+}
+
+.news-list {
+  display: flex;
+  height: 100%;
+  width:100%;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  transition: transform 0.5s ease;
+  max-width:1470px;
+}
+
+.news-item a {
+  position: absolute;
+  width: 100%;
+  max-width:1470px;
+  height: 100%;
+  margin-bottom: 0; 
+  opacity: 0.3; 
+  top: 0;
+  left: 0; 
+  z-index: 1; 
+  object-fit: fill;
 }
 
 .news-item img {
+  position: absolute;
   width: 100%;
-  height: auto; /* 비율 유지 */
+  max-width:1470px;
+  height: 100%;
   margin-bottom: 0; 
-  opacity: 0.5; 
-  position: absolute; /* .news-item을 기준으로 배치 */
+  opacity: 0.3; 
   top: 0;
-  left: 0;
-  width: 100%; 
-  height: 100%; 
+  left: 0; 
   z-index: 1; 
-  object-fit: cover;
+  object-fit: fill;
 }
 
 .news-item .title {
   font-weight: bold;
   font-size: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 5px; 
   color: white;
   text-align: center;
 }
@@ -117,12 +144,12 @@
 
 .prev-btn {
   position: absolute;
-  left: 10px;
+  left: 5px;
 }
 
 .next-btn {
   position: absolute;
-  right: 10px;
+  right: 5px;
 }
 
 .news-item p {
@@ -144,3 +171,16 @@
   font-size: 14px;
 }
 
+.news-list-container::-webkit-scrollbar {
+	width: 0px;
+    height: 0px;
+    display: none;
+}
+
+.news-list-container {
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
+
+
+	
