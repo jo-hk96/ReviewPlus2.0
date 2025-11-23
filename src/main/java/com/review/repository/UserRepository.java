@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.review.entity.userEntity;
+import com.review.entity.userReviewEntity;
 
 
 //사용자 정보 레포지토리
@@ -49,5 +50,8 @@ public interface UserRepository extends JpaRepository<userEntity, Long> {
     
     //회원 검색
     List<userEntity> findByEmailContaining(String email);
+
+    @Query("SELECT u.profileImageUrl FROM userEntity u WHERE u.userId = :userId")
+    Optional<String> findProfileImageUrlByUserId(@Param("userId") Long userId);
 	
 }

@@ -11,6 +11,13 @@
         "ordering": true,
         "searching": false,
         "lengthChange": false,
+        
+        "columnDefs": [
+            { 
+                "targets": '_all', // ⭐️ 모든 컬럼에 적용 ⭐️
+                "className": "dt-center" // DataTables 내장 중앙 정렬 클래스
+            }
+        ],
     	"language": {
             "search": "",
             "searchPlaceholder": "회원 정보를 입력하세요.",
@@ -33,6 +40,13 @@
         "ordering": true,
         "searching": false,
         "lengthChange": false,
+        
+        "columnDefs": [
+            { 
+                "targets": '_all', // ⭐️ 모든 컬럼에 적용 ⭐️
+                "className": "dt-center" // DataTables 내장 중앙 정렬 클래스
+            }
+        ],
     	"language": {
             "searchPlaceholder": "정보를 입력하세요.",
            	"emptyTable": "리뷰목록이 없습니다."
@@ -55,6 +69,13 @@
         "ordering": true,
         "searching": false,
         "lengthChange": false,
+        
+        "columnDefs": [
+            { 
+                "targets": '_all', // ⭐️ 모든 컬럼에 적용 ⭐️
+                "className": "dt-center" // DataTables 내장 중앙 정렬 클래스
+            }
+        ],
     	"language": {
             "searchPlaceholder": "정보를 입력하세요.",
            	"emptyTable": "영화 좋아요 목록이 없습니다."
@@ -74,6 +95,12 @@
     $('#UserDetailDataTable').DataTable({
 		"info":false,
 		"lengthChange": false,
+		"columnDefs": [
+            { 
+                "targets": '_all', // ⭐️ 모든 컬럼에 적용 ⭐️
+                "className": "dt-center" // DataTables 내장 중앙 정렬 클래스
+            }
+        ],
     	"language": {
             "search": "",
             "searchPlaceholder": "회원 정보를 입력하세요.",

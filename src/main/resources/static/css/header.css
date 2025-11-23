@@ -159,7 +159,6 @@ a{
     #header{
      overflow: hidden;
     }
-    .headerLeft a,
 	.headerLeft span,
 	.headerLeft input { 
 	 display:none;

@@ -3,6 +3,8 @@ package com.review.repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.review.entity.userEntity;
 import com.review.entity.userReviewEntity;
@@ -18,5 +20,6 @@ public interface UserReviewLikeRepository extends JpaRepository<userReviewLikeEn
 			userEntity userEntity
 			);
 	
-	
+	@Query(value = "SELECT COUNT(*) FROM USER_REVIEW_LIKE WHERE USER_ID = :userId AND REVIEWID = :reviewId", nativeQuery = true)
+	int countByReviewIdAndUserId(@Param("reviewId") Long reviewId, @Param("userId") Long userId);
 }

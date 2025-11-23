@@ -1,3 +1,4 @@
+  		
   		// toggleLike 함수
         async function toggleLike(buttonElement){
             const apiId = buttonElement.getAttribute('data-api-id');
@@ -22,7 +23,7 @@
                 }else if(response.status === 401){
                     //비로그인 사용자 처리
                     alert("로그인 후 이용가능합니다.");
-                    window.location.href = '/login' //로그인 페이지로 리다이렉트
+                    window.location.href = '/login'
                 }else {
                     alert("오류발생");
                     console.error("좋아요 API 오류:" , response.status);

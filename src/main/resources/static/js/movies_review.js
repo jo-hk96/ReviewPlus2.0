@@ -169,9 +169,12 @@ function createReviewHtml(review) {
     let restrictedButtonsHtml = '';
     
     const storedFileName = review.profileImageUrl || 'default.png'; 
-    const profileSrc = `/images/profile/${storedFileName}`;
+    let profileSrc = `/images/profile/${storedFileName}`;
     
-    
+    const isReviewLiked = review.reviewLiked; //좋아요 상태
+	const likeCount = review.likeCount || 0; //초기 좋아요 개수
+	const heartSymbol = isReviewLiked ? '❤' : '🤍';
+	
     // 로그인한 사용자 ID (전역 변수 loggedInUserId를 사용한다고 가정)
     const currentUserId = (typeof loggedInUserId !== 'undefined' && loggedInUserId !== null) 
                           ? Number(loggedInUserId) 
@@ -192,20 +195,23 @@ function createReviewHtml(review) {
     </span>
     `;
    
-	const isLiked = review.isUserLiked; //좋아요 상태
-	const likeCount = review.likeCount || 0; //초기 좋아요 개수
-	const heartSymbol = isLiked ? '❤' : '🤍'; // 상태에 따라 하트 색상 결정
-	
 	
 	const likeButtonHtml = `
-	    <button type="button" class="like-btn" 
+	    <button type="button" class="Reviewlike-btn" 
 	        data-review-id="${review.reviewId}"
 	        onclick="ReviewtoggleLike(this)"
-	        style="background: none; border: none;
+	        style="background: none; 
+	        border: none;
 	        cursor: pointer;
 	        font-size: 1.2em;
-	    	margin-right: 15px;
-            color: ${isLiked ? 'red' : 'black'};"> ${heartSymbol} ${likeCount} </button>
+	    	margin-right: 15px;">
+	            <span class="heart-symbol" style="color: ${isReviewLiked ? 'red' : 'black'};">
+		            ${heartSymbol}
+		        </span>
+	             <span class="like-count" style="color: white; margin-left: 5px;"> 
+		            ${likeCount}
+		        </span>
+	        </button>
 	 `;
     
     
@@ -224,7 +230,7 @@ function createReviewHtml(review) {
      return `
          <div class = "review-box" id="review-${review.reviewId}" data-review-id="${review.reviewId}" 
                         style=" box-shadow:0 5px 8px rgba(0,0,0,0.2);  margin-bottom: 10px; padding: 10px;
-                        color: white; border-radius: 15px;">
+                        color: white; border-radius: 15px; ">
 
                         
                <div class="review-profile-area" style="margin-right: 15px;">
@@ -247,7 +253,7 @@ function createReviewHtml(review) {
 				</div>
 				    
 				    
-                   <img class="profile-image" src="${profileSrc}" alt="${review.nickname}님의 프로필">
+                   <img id = "reviewUserProfile" class="profile-image" src="${profileSrc}" alt="${review.nickname}님의 프로필">
                    <div class="profile-info-text">
                        <table>
                             <tr>
@@ -259,24 +265,17 @@ function createReviewHtml(review) {
                    </div>
              </div>
                <table>
-                   <tr><td><p>${review.comment}</p></td></tr>
+                   <tr><td><p 
+                   style="overflow-wrap: break-word; 
+ 						  word-break: break-all;">${review.comment}</p></td></tr>
                </table>
                
                <div class="review-actions">
                	  ${likeButtonHtml} 
 		          ${replyButtonHtml}
 		       </div>
-
          <div id="reply-form-for-${review.reviewId}" class="reply-form-container reply-form-hidden">
-             <span style="
-                 font-size: 1.5em;
-                 color: #CCC; 
-                 margin-top:30px;
-                 margin-right: 24px; 
-                 display: inline-block; 
-                 transform: rotate(360deg) scaleY(2.5) scaleX(2.5); 
-                 vertical-align: top;
-             ">└</span>
+         	<hr style="border:0.5px solid #565656;">
              <textarea class="ReplyComment" id="reply-comment-${review.reviewId}" placeholder="댓글을 작성해주세요.400자 제한"
                                                                    maxlength="400"></textarea>
              <button onclick="registerReply(${review.reviewId},'${review.nickname}')">등록</button>
@@ -298,7 +297,7 @@ function ReviewtoggleLike(buttonEl){
 	
 	fetch(url,{
 		method: 'POST',
-		header: {
+		headers: {
 			'Content-Type' : 'application/json',
 		},
 	})
@@ -309,17 +308,21 @@ function ReviewtoggleLike(buttonEl){
 		return response.json();
 	})
 	.then(data => {
-		const { isLiked, likeCount } = data;
+		const { isReviewLiked, likeCount } = data;
 		//버튼 텍스트 (하트 모양 및 개수) 업데이트
-		const heartSymbol = isLiked ? '❤' : '🤍';
-		buttonEl.innerHTML = `${heartSymbol} ${likeCount}`;
-		//버튼 스타일(색상) 업데이트
-		buttonEl.style.color = isLiked ? 'red' : 'black';
-		
+		const heartSymbol = isReviewLiked ? '❤' : '🤍';
+		buttonEl.innerHTML = `
+        <span class="heart-symbol" style="color: ${isReviewLiked ? 'red' : 'black'};">
+            ${heartSymbol}
+        </span>
+        <span class="like-count" style="color: white; margin-left: 5px;"> 
+            ${likeCount}
+        </span>
+    `;
 		buttonEl.disabled = false;
 		
 		//로그
-		console.log(`좋아요 상태: ${isLiked}, 총 개수: ${likeCount}`);
+		console.log(`좋아요 상태: ${isReviewLiked}, 총 개수: ${likeCount}`);
 	})
 	.catch(error => {
 		console.error('좋아요 토글 중 에러 발생:', error);

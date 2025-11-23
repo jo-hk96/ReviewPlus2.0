@@ -24,7 +24,8 @@ public class UserReviewDTO {
 		private String regDate;     
 		private Long userId;
 		private String profileImageUrl; //프로필 사진 주소
-
+		private boolean isReviewLiked;
+		private int likeCount;
 		
 		
 		

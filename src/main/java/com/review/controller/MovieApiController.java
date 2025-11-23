@@ -32,7 +32,6 @@ public class MovieApiController {
 		private final TmdbApiService tmdbApiService;
 		private final UserReviewService userReviewService;
 		
-		
 		//영화정보 좋아요 비동기API
 		@PostMapping("/api/MovieLike/{apiId}")
 		public ResponseEntity<Boolean> toggleLike(@PathVariable Long apiId,
@@ -61,16 +60,13 @@ public class MovieApiController {
 	        List<movieDTO> tmdbMovies = tmdbResponse.getResults(); 
 	        List<movieDTO> moviesWithRatings = userReviewService.applyUserRatings(tmdbMovies); 
 	        tmdbResponse.setResults(moviesWithRatings);
-	        return tmdbResponse; 
+	        return tmdbResponse;
 	    }
-	    
-	    
-	    
 	    
 	    
 	    @GetMapping("/api/detail/{apiId}")
 	    public ResponseEntity<Map<String, Object>> getMovieDetailData(@PathVariable("apiId") Long id) { // userDetails도 제거
-	        // 1. 필요한 평균 평점 데이터만 가져옵니다.
+	        //영화 사이트내 평균 평점 가져오기
 	        double averageRating = userReviewService.getAverageRatingByApiId(id);
 	        // 2. 데이터를 Map에 담아 JSON으로 반환
 	        Map<String, Object> data = new HashMap<>();

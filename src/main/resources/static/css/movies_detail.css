@@ -1,9 +1,10 @@
 	body{
 	padding:0;
 	margin:0;
-	
+    color: #333;
+    align-items: center;
+    background-color: #040F16;
 	}
-	
 	
 	
 	/* 1. 기본 스타일: 넓은 화면에서는 가로로 배치 */
@@ -31,16 +32,7 @@
 	max-width:500px;
 	}	
 	
-	#editReviewModal {
-	display: none; 
-	position: fixed; 
-	top: 0; 
-	left: 0; 
-	width: 100%; 
-	height: 100%; 
-	background-color: rgba(0,0,0,0.5); 
-	z-index: 100;
-	}
+	
 	
 	
 	/* 리뷰 프로필 디자인 */
@@ -104,20 +96,15 @@
 	color: gold;
 	}
 	
-	body {
-    background-color: white;
-    color: #333;
-    align-items: center;
-}
 	
 	.ReplyComment{
+		width:90%;
 		border-radius:15px;
 		padding:10px;
-		width: 50%;
 		background-color: #191932;
 		color:white;
 		font-size:14px;
-		width: 400px; 
+		max-width: 350px; 
 	    height: 100px;
 	    resize: none;
 	    margin-top:20px;
@@ -234,7 +221,7 @@
 
 /* [수정된] 영화 상세 정보 컨테이너 스타일 */
 #movie-detail-container {
-	background-color: #191932;
+	background-color: #040F16;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
     margin-top: 85px;
@@ -296,7 +283,7 @@ h2 {
 
 /* 내 리뷰 작성 컨테이너 스타일 */
 .review-form-container {
-    background-color: #191932;
+    background-color: #040F16;
     padding: 30px; 
     color : white;
     border-bottom: 1px solid gray;
@@ -357,7 +344,7 @@ h2 {
 }
 
 .review-list-container {
-	background-color: #191932;
+	background-color: #040F16;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);

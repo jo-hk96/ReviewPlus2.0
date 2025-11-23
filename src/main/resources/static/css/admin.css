@@ -181,6 +181,18 @@ h2 {
 	color: black;
 }
 
+/* ======= 데이터테이블 테이블 정렬 ======== */
+#UserDataTable th.dt-center,
+#UserReviewDataTable th.dt-center,
+#UserMovieLikeDataTable th.dt-center {
+    text-align: center !important;
+}
+
+#UserDataTable td.dt-center,
+#UserReviewDataTable td.dt-center,
+#UserMovieLikeDataTable td.dt-center {
+    text-align: center !important;
+}
 
 /* ==== 검색 바 ====*/
 form {
@@ -335,6 +347,7 @@ footer .dashboard-container {
 	cursor:pointer;
 		
 }
+
 #UserReviewsList:hover{
 	background-color: #f0f0f0;
 	transition: background-color 0.2s ease;

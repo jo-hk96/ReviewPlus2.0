@@ -345,23 +345,23 @@ h3 {
 .modal-content {
 	
 	 display: flex; 
-    flex-direction: column; 
-    background-color: #fefefe;
-    margin: 10% auto; 
-    padding: 20px;
-    border: 1px solid #888;
-    width: 600px; 
-    max-width: 600px;
-    max-height: 70vh;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+	flex-direction: column; 
+	background-color: black;
+	margin: 10% auto; 
+	padding: 20px;
+	border: 1px solid #888;
+	width: 600px; 
+	max-width: 600px;
+	max-height: 70vh;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .modal-content-Review{
 	
 	display: flex; 
     flex-direction: column; 
-    background-color: #fefefe;
+    background-color: black;
     margin: 10% auto; /* 상하 10%, 좌우 자동(중앙) */
     padding: 20px;
     border: 1px solid #888;
@@ -371,6 +371,7 @@ h3 {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
+
 
 #ReviewMoviesContainer{
 	flex-grow: 1;
@@ -387,17 +388,19 @@ h3 {
 	margin-top: 5px; 
 	
 }
-
 /* 좋아요 목록 모달 닫기 버튼 */
 .close-btn, .close-btn2 {
-    /* 폰트 및 크기 */
-    color: #aaa; /* 연한 회색 */
-    float: right; /* 오른쪽으로 정렬 */
-    font-size: 20px; /* 크기 조정 */
-    font-weight: bold; /* 굵게 */
-    line-height: 1; /* 높이 조정 */
-    margin-top: -10px; /* 제목과의 간격 조정 (필요에 따라) */
-    margin-right: -10px; /* 오른쪽 경계와의 간격 조정 (필요에 따라) */
+    position: absolute;
+    top: 18px; 
+    right: 15px;
+    color: #EEEEEE;
+    font-size: 20px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    line-height: 1; 
+    /* 애니메이션 유지 */
+    transition: color 0.3s ease, transform 0.1s ease; 
+    
 }
 
 /* 마우스 오버 및 포커스 시 스타일 */
@@ -405,9 +408,10 @@ h3 {
 .close-btn:focus,
 .close-btn2:hover,
 .close-btn2:focus {
-    color: #000; /* 검정색으로 변경 */
-    text-decoration: none; /* 밑줄 제거 */
-    cursor: pointer; /* 마우스 커서 모양 변경 */
+      color: #DDDDDD;
+	  text-decoration: none; 
+	  outline: none; 
+	  transform: scale(1.05); 
 }
 
 /* 선택 사항: 모달 콘텐츠 내에서의 위치를 더 정확하게 제어하고 싶을 때 */
@@ -469,29 +473,30 @@ h3 {
 
 /* 두 모달에 모두 적용되는 스타일 */
 .modal {
-    position: fixed;
-    z-index: 1000; 
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6); 
-    display: none;
-    transition: opacity 0.3s ease;
+      position: fixed;
+	  z-index: 1000; 
+	  left: 0;
+	  top: 0;
+	  width: 100%;
+	  height: 100%;
+	  overflow: auto;
+	  background-color: rgba(0, 0, 0, 0.6); 
+	  display: none;
+	  transition: opacity 0.3s ease;
 }
 
 /* 모달 내부 콘텐츠 컨테이너 스타일 */
 .modal-content, .modal-content-Review {
-    background-color: #fefefe; 
-    margin: 10% auto; 
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; 
-    max-width: 600px; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
-    animation: slideDown 0.4s; 
+      background-color: rgba(0, 0, 0, 0.7);
+	  margin: 10% auto; 
+	  padding: 20px;
+	  border: 1px solid #888;
+	  color: white;
+	  width: 80%; 
+	  max-width: 600px; 
+	  border-radius: 8px; 
+	  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+	  animation: slideDown 0.4s; 
 }
 
 /* 모달 열림 애니메이션 키프레임 */
@@ -511,7 +516,7 @@ h3 {
     border-bottom: 2px solid #eee; 
     padding-bottom: 10px;
     margin-top: 0;
-    color: #333; 
+    color: white; 
 }
 
 

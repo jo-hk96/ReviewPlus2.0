@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,6 +43,7 @@ public class SecurityConfig {
 		        //인가 설정
 		        .authorizeHttpRequests(authorizeRequests ->
 		            authorizeRequests
+		            	.requestMatchers(HttpMethod.POST, "/api/profile/upload").authenticated()
 		            	//관리자
 			            .requestMatchers("/Admin/**").hasAnyRole("ADMIN")
 			            //로그인시 이용 경로(일반,관리자)
@@ -50,7 +52,7 @@ public class SecurityConfig {
 		                .requestMatchers("/",
 		                		"/css/**","/js/**","images/**",
 		                		"/detail/**",
-				                "/UserJoinForm","/UserLoginMain",
+				                "/UserJoinForm","/UserLoginMain","/api/profile/image/**",
 		                        "/UserJoin","/MoviesList","/TopRate","/api/**","/check/nickname","/check/email"
 				                ).permitAll()
 		                .anyRequest().authenticated()

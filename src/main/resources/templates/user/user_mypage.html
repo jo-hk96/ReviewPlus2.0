@@ -5,6 +5,7 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>유저정보</title>
     <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/MailForwarding.css">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/user_mypage.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>">
@@ -49,7 +50,7 @@
 			
 			
 			
-			<!-- 프로필이미지 -->
+<!-- 프로필이미지 -->
 <div class="profile-top">
 
         <button class="menu-btn" onclick="toggleMenu()">메뉴</button>
@@ -74,7 +75,7 @@
     </div>
 			<div id="resultMessage" style="text-align:center; color: green; margin-bottom:10px;"></div>
 			<img id="userProfilePicture" onclick="startUpload()" th:src="@{'/images/profile/' + ${profileFileName}}" alt="프로필 사진">
-			<form id="profileUploadForm" action="/api/profile/upload/1" method="post" enctype="multipart/form-data">
+			<form id="profileUploadForm" method="post" enctype="multipart/form-data">
 			    <div>
 			        <input type="file" id="profileImageInput" name="file" accept="image/*" required style = "display: none;">
 			    </div>
@@ -163,54 +164,12 @@
         loadProfileImage(LOGGED_IN_USER_ID); 
     }
 </script>
-<script>
-function startUpload() {
-	    if (typeof ProfileChannel !== 'undefined') {
-	        // ⭐️ 1. Flutter 웹뷰 환경: Flutter 로직 호출
-	        ProfileChannel.postMessage('upload_start'); 
-	    } else {
-	        // ⭐️ 2. 일반 웹 환경: 숨겨진 파일 선택창을 클릭
-	        const fileInput = document.getElementById('profileImageInput');
-	        fileInput.click();
-	        
-	        console.log('일반 웹 환경: 파일 선택창을 엽니다.');
-	    }
-	}
-	
-	document.addEventListener('DOMContentLoaded', () => {
-	    const fileInput = document.getElementById('profileImageInput');
-	    const form = document.getElementById('profileUploadForm');
-	    
-	    if (fileInput && form && typeof ProfileChannel === 'undefined') {
-	        fileInput.addEventListener('change', () => {
-	            if (fileInput.files.length > 0) {
-	                form.submit();
-	            }
-	        });
-	    }
-	});
-	
-	function updateProfileImage(newUrl) {
-        const imgElement = document.getElementById('userProfilePicture'); // 👈 HTML의 img ID
-        const resultDiv = document.getElementById('resultMessage'); // 👈 결과 메시지 표시용
-
-        if (imgElement) {
-            imgElement.src = newUrl;
-            if (resultDiv) {
-                resultDiv.innerText = "✅ 프로필 사진이 성공적으로 변경되었습니다.";
-                resultDiv.style.color = 'green';
-            }
-        }
-    }
-</script>
-
 <script src="js/upload.js"></script>
 		
 <!-- 푸터 -->
 <div th:insert="index/index :: footer"></div>
-
-<!-- 푸터 문의하기 -->
 <script src="js/footer.js"></script>
+
 	
 <!-- 사용자 좋아요 목록.js-->
 <script src = "js/user_LikeListBtn.js" ></script>

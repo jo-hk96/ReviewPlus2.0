@@ -80,7 +80,7 @@ public class UserController {
 	    }
 		
     //프로필 사진 업로드
-    @PostMapping("/api/profile/upload/{userId}")
+    @PostMapping("/api/profile/upload")
     @ResponseBody
     public Map<String, Object> uploadProfileImage(
         @AuthenticationPrincipal CustomUserDetails customUserDetails, 
@@ -109,7 +109,6 @@ public class UserController {
                 String newImageUrl = profileImageBaseUrl + storeFileName;
                 
                 response.put("success", true);
-                response.put("message", "프로필 사진이 성공적으로 수정되었습니다.");
                 response.put("newImageUrl", newImageUrl); 
                 
             } else {
@@ -149,7 +148,7 @@ public class UserController {
 	}
 	
 	//마이페이지
-	@GetMapping("/UserMypage")
+	@GetMapping("/UserMypage") 
 	public String userMypage() {
 		return "user/user_mypage";
 	}

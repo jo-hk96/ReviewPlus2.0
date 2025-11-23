@@ -1,0 +1,166 @@
+
+
+
+/* -----------------문의하기 모달 스타일 ---------------------- */
+
+#ShowMailForwardingBtn {
+    /* 푸터 문의하기 버튼 스타일 */
+    background-color: #191932; /* 리뷰플러스 사이트 컬러 */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.3s ease; /* 호버 효과를 위한 전환 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#ShowMailForwardingBtn:hover {
+    background-color: #45a049; /* 호버 시 약간 어두운 색 */
+}
+
+
+/* 모달 컨테이너 (배경) 스타일 */
+#MailForwarding {
+    /* 모달이 활성화되었을 때의 배경 오버레이 */
+    position: fixed; /* 뷰포트에 고정 */
+    z-index: 1000; /* 다른 요소 위에 표시 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* 내용이 넘칠 경우 스크롤 가능 */
+    background-color: rgba(0, 0, 0, 0.4); /* 반투명한 검은색 배경 */
+    /* display: none; 은 HTML 인라인 스타일로 제어되므로 CSS에서 별도 설정 불필요 */
+    display: flex; /* 내용을 중앙에 배치하기 위해 flexbox 사용 */
+    justify-content: center;
+    align-items: center;
+}
+
+/* --------------------------------------------------------------------- */
+/* 모달 내용(폼) 스타일 */
+#MailForm {
+    background-color: rgba(0,0,0,0.7); 
+    padding: 30px;
+    border-radius: 10px;
+    font-size: 9px;
+    width: 80%; /* 모바일 대응 */
+    max-width: 350px; /* 최대 너비 제한 */
+    position: relative; /* 닫기 버튼 배치를 위해 */
+    display: flex;
+    flex-direction: column; /* 요소들을 세로로 정렬 */
+    gap: 15px; /* 입력 필드 사이 간격 */
+    margin: 0 auto;
+}
+
+/* 로고 스타일 */
+.MailModalLogo {
+    display: block; /* 블록 요소로 만들어 마진 적용 용이하게 */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.MailModalLogo img {
+    /* 로고 이미지 크기 및 스타일 */
+    width: 150px;
+    height: auto;
+}
+
+/* 닫기 버튼 스타일 */
+.MailCloseBtn {
+    color: #aaa;
+    float: right;
+    font-weight: bold;
+    position: absolute; /* 폼의 오른쪽 상단에 배치 */
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+    font-size: 13px;
+}
+
+.MailCloseBtn:hover,
+.MailCloseBtn:focus {
+    color: #333;
+    text-decoration: none;
+}
+
+/* 입력 필드 및 텍스트 영역 스타일 */
+#MailForm input[type="email"],
+#MailForm input[type="text"],
+#MailForm textarea {
+    width: 100%; /* 부모 너비 전체 사용 */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+    font-size: 15px;
+    resize: vertical; /* textarea는 세로로만 크기 조절 허용 */
+}
+
+#MailForm textarea {
+    min-height: 100px; /* 최소 높이 설정 */
+}
+
+#MailForm input:focus,
+#MailForm textarea:focus {
+    border-color: #4CAF50; /* 포커스 시 강조 색상 */
+    outline: none; /* 기본 아웃라인 제거 */
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* 제출 버튼 스타일 */
+#MailForm .btn-join {
+    background-color: #2196F3; /* 세련된 파란색 */
+    text-align: center;
+    justify-content: center;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+#MailForm .btn-join:hover {
+    background-color: #0b7dda; /* 호버 시 약간 어두운 색 */
+}
+
+
+.MailModalLogo {
+   margin-top: 100px; 
+   display: block; 
+  }
+   
+  /* 메일 문의 폼 내부 통일 정렬 */
+#MailForm input,
+#MailForm textarea,
+#MailForm button {
+    width: 100%;            /* textarea와 완전 동일한 폭 */
+    padding: 12px 14px;     /* 좌우 여백 통일 → 줄 맞음 */
+    box-sizing: border-box; 
+    display: block;         /* inline-block 때문에 가운데 몰리는 문제 제거 */
+    margin-bottom: 10px;    /* 요소 간 간격 통일 */
+    text-align: left;       /* placeholder + 입력 텍스트 왼쪽 정렬 */
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    background-color: #333;
+    color:white;
+}
+
+/* textarea 높이만 별도로 */
+#MailForm textarea {
+    height: 120px;
+    resize: none;
+}
+   
+.MailCloseBtn:hover {
+    color: #cccccc;
+    transform: scale(1.1);
+}
+ 

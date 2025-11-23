@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" 
                   xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-                  
- 
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/top_rate.css">
@@ -11,10 +9,13 @@
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/scroll-to-top.css">
+    <link rel="stylesheet" href="/css/MailForwarding.css">
     <link rel="stylesheet" href= "/css/latest_news.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    
     <title>리뷰플러스</title>
 </head>
 <style>
@@ -89,38 +90,26 @@
 	  	 <!-- 개봉중인 영화  -->
 		 <div class="slider-container2">
 	  		 	<h2><a id = "MainMovieListName" href ="/MoviesList?category=now_playing">현재상영중</a></h2>
-			    <button id="prev-btn2" class="nav-btn2">&lt;</button> 
+			    <button id="prev-btn2" class="nav-btn2"><i class="fas fa-chevron-left"></i></button> 
 			  	  <div id="movie-list2"></div>
-			    <button id="next-btn2" class="nav-btn2">&gt;</button> 
+			    <button id="next-btn2" class="nav-btn2"><i class="fas fa-chevron-right"></i></button> 
 		 </div>
 	 	 <div id="loading-indicator2">영화 리스트 불러오는중...</div>
 	 	 
 	 	 <!-- 영화 매거진 슬라이더 -->
          <div class="main-carousel-wrapper">
-	 	 <h2 class="news-title">최신 기사</h2>
-        <div class="carousel-container">
-        
-            <div class="carousel-wrapper">
-                <button class="arrow-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
-
-                <div class="news-list-container">
-                    <div class="news-list" id="naver-news-list">
-                        <p>뉴스 데이터를 불러오는 중...</p>
-                    </div>
-                </div>
-
-                <button class="arrow-btn next-btn"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
+		    <div class="carousel-container" id="naver-news-list">
+		    <button class="arrow-btn prev-btn-news"><i class="fas fa-chevron-left"></i></button>
+		        <p>뉴스 데이터를 불러오는 중...</p>
+		    <button class="arrow-btn next-btn-news"><i class="fas fa-chevron-right"></i></button>
+		    </div>
 		</div>
-
-	 	 
 		  <!--최고평점-->
 		  <div class="slider-container">
 		  		<h2><a id= "MainMovieListName" href ="/MoviesList?category=top_rated">최고평점</a></h2>
-			    <button id="prev-btn" class="nav-btn">&lt;</button> 
+			    <button id="prev-btn" class="nav-btn"><i class="fas fa-chevron-left"></i></button> 
 			    	<div id="movie-list"></div>
-			    <button id="next-btn" class="nav-btn">&gt;</button> 
+			    <button id="next-btn" class="nav-btn"><i class="fas fa-chevron-right"></i></button> 
 		  </div>
 		  <div id="loading-indicator">영화 리스트 불러오는중...</div>
 	</div>
@@ -146,7 +135,6 @@
 		
 	<!-- -----------------------푸터--------------------------- -->
 	
-	<div>
 	    <div id = "footer" th:fragment = "footer" style="color:white;">
 	    	<a href="/" class="FooterLogo">
 	           <img th:src="@{/images/logo.png}" style ="width:100px;" alt ="로고" >
@@ -162,7 +150,6 @@
 	    <button id = "ShowMailForwardingBtn" onClick="openMailModal()">
 			문의하기	
 		</button>
-	</div>
     <!-- --------------------------------------------------------------------- -->
 		<div id = "MailForwarding" style="display:none;">
 			<a href="/" class="MailModalLogo">
@@ -175,19 +162,17 @@
 			    <textarea name="content" placeholder = "문의할 계정 이메일,닉네임,성함, 사유를 적어주세요" rows ="5" cols="57"></textarea>
 			    <button type="submit"  class="btn-join">문의보내기</button>
 			</form>
-			<div th:if="${sucMail}">
+			<!-- <div th:if="${sucMail}">
 					<p th:text= "${sucMail}" style="color: #e84545; font-weight: bold; font-size:17px;"></p>
 			</div>
 			<div th:if="${failMail}">
 					<p th:text= "${failMail}" style="color: red; font-weight: bold; font-size:17px;"></p>
-			</div>
+			</div> -->
 		</div>
-    </div>
-
+	</div>
 
 <button id="scrollToTopBtn" title="맨 위로" th:fragment ="scroll-to-top">
     <i class="fas fa-arrow-up"></i> </button>
-
 
 <!--프로필 사진  -->
 <script src="js/upload.js"></script>
@@ -207,5 +192,8 @@
  
  <!-- 뉴스 슬라이드 효과 -->
  <script src="/js/latest_news.js" defer></script>
+ 
+ 
+ <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 </body>
 </html>

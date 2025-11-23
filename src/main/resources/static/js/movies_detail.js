@@ -220,7 +220,7 @@
 	                <p><b>장르:</b> ${genres}</p>
 	                <p><b>기획/제작:</b> ${production_companies}</p>
 	                <p><b>태그라인:</b> <em>${data.tagline || '태그 정보 없음'}</em></p>
-	                <p><b>외부평점:⭐</b>  ${data.vote_average.toFixed(1)} / 10</p>
+	                <p><b>TMDB평점:⭐</b>  ${data.vote_average.toFixed(1)} / 10</p>
 	                <p id="average-rating-display"></p>
 	                <div id="like-button-placeholder"></div>
 	            </div>

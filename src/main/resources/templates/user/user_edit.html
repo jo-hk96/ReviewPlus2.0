@@ -5,6 +5,7 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>유저 정보 수정</title>
     <link rel="stylesheet" href="/css/user_mypage.css">
+    <link rel="stylesheet" href="/css/MailForwarding.css">
     <link rel="stylesheet" href="/css/footer.css">
    	<link rel="stylesheet" href="/css/user_edit.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,11 +40,6 @@
 <body>
     <div class="user-edit-container">
         <h1>내 정보 수정</h1>
-        
-        <!-- 예외 메시지 출력 영역 -->
-        <!-- 프로필이미지 넣기 -->
-        
-        
         <form action="/UserEdit" method="post" class="user-edit-form">
             <div class="form-group">
                 <label for="email">이메일</label>
@@ -75,7 +71,7 @@
         </form>
     </div>
     <div th:insert="index/index :: footer"></div>
-    
+    <script src ="js/footer.js"></script>
     <script>
 		function toggleMenu() {
 		    const menu = document.getElementById('menu-list');
@@ -119,6 +115,7 @@
 
 <script th:inline="javascript">
     const LOGGED_IN_USER_ID = [[${currentUserId}]];
+    //로그
     console.log("주입된 userId:", LOGGED_IN_USER_ID);
     if (LOGGED_IN_USER_ID) {
         loadProfileImage(LOGGED_IN_USER_ID); 

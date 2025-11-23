@@ -13,6 +13,7 @@ import com.review.DTO.movieDTO;
 import com.review.entity.userEntity;
 import com.review.entity.userReviewEntity;
 import com.review.repository.UserRepository;
+import com.review.repository.UserReviewLikeRepository;
 import com.review.repository.UserReviewRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,8 @@ import lombok.RequiredArgsConstructor;
 public class UserReviewService{
 	private final UserReviewRepository userReviewRepository;
     private final TmdbApiService tmdbApiService;
-    
+    private final UserRepository userRepository;
+    private final UserReviewLikeRepository userReviewLikeRepository;
     
     
     @Transactional
@@ -116,13 +118,27 @@ public class UserReviewService{
     
     
     
-    //영화 유저 리뷰 목록
-    public List<UserReviewDTO> getReviewsByMovieApiId(Long apiId) {
+    //영화 유저 리뷰 정보 불러오기
+    public List<UserReviewDTO> getReviewsByMovieApiId(Long apiId , Long currentUserId) {
         
         List<userReviewEntity> reviewEntities = userReviewRepository.findAllByApiIdWithUser(apiId);
         return reviewEntities.stream()
                 .map(entity -> {
                     UserReviewDTO dto = UserReviewDTO.fromEntity(entity); 
+                    dto.setLikeCount(entity.getLikeCount());
+                    boolean isUserLiked = false;
+                    
+                    if (currentUserId != null) {
+                        // ⭐⭐ 변경된 로직: ID 기반의 @Query 메서드를 호출합니다. ⭐⭐
+                       int likeCountResult = userReviewLikeRepository.countByReviewIdAndUserId(
+                                entity.getReviewId(), // 리뷰 ID
+                                currentUserId         // 현재 로그인 사용자 ID
+                            ); 
+                       isUserLiked = likeCountResult > 0;
+                    }
+                    
+                    dto.setReviewLiked(isUserLiked);
+                    
                     
                     String profileUrl = null;
                     if (entity.getUserEntity() != null) {

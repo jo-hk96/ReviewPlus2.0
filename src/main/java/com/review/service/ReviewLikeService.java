@@ -53,7 +53,6 @@ public class ReviewLikeService {
 					.build();
 			userReviewLikeRepository.save(newLike);
 			
-			
 			//엔티티, 좋아요 증가
 			review.increaseLikeCount();
 			return true;
