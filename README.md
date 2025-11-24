@@ -20,8 +20,8 @@
 
 ## 🛠 기술 스택
 ### IDE
-**Spring Tool Suite 4**,
-**Android Studio**
+![Spring Tool Suite](https://img.shields.io/badge/Spring%20Tool%20Suite%204-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
+![Android Studio](https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white)
 
 ### 언어
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
@@ -37,6 +37,9 @@
 ### 라이브러리
 ![JQuery](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)
 [**DataTables.js**](https://datatables.net/)
+
+
+
 
 ### DB
 ![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=black)
@@ -78,3 +81,163 @@
 | 회원 관리 | 영화 관리 | 리뷰 관리
 |------------|------------|------------|
 | ![userlist png](./img/userlist.png) | ![movielist png](./img/movielist.png) | ![reviewlist png](./img/reviewlist.png)
+
+
+## 디렉토리 구조
+```bash
+📦bin
+ ┣ 📂main
+ ┃ ┣ 📂com
+ ┃ ┃ ┗ 📂review
+ ┃ ┃ ┃ ┣ 📂config
+ ┃ ┃ ┃ ┃ ┣ 📜CustomSuccessHandler.class
+ ┃ ┃ ┃ ┃ ┣ 📜CustomUserDetails.class
+ ┃ ┃ ┃ ┃ ┣ 📜LastActivityUpdateFilter.class
+ ┃ ┃ ┃ ┃ ┣ 📜SecurityConfig.class
+ ┃ ┃ ┃ ┃ ┗ 📜WebConfig.class
+ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┣ 📜adminController.class
+ ┃ ┃ ┃ ┃ ┣ 📜GlobalControllerAdvice.class
+ ┃ ┃ ┃ ┃ ┣ 📜MovieApiController.class
+ ┃ ┃ ┃ ┃ ┣ 📜MovieController.class
+ ┃ ┃ ┃ ┃ ┣ 📜NaverSearchController.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserController.class
+ ┃ ┃ ┃ ┃ ┗ 📜UserReviewApiController.class
+ ┃ ┃ ┃ ┣ 📂DTO
+ ┃ ┃ ┃ ┃ ┣ 📜movieDTO$movieDTOBuilder.class
+ ┃ ┃ ┃ ┃ ┣ 📜movieDTO.class
+ ┃ ┃ ┃ ┃ ┣ 📜movieLikeDTO$movieLikeDTOBuilder.class
+ ┃ ┃ ┃ ┃ ┣ 📜movieLikeDTO.class
+ ┃ ┃ ┃ ┃ ┣ 📜OAuth2Attributes$OAuth2AttributesBuilder.class
+ ┃ ┃ ┃ ┃ ┣ 📜OAuth2Attributes.class
+ ┃ ┃ ┃ ┃ ┣ 📜ReplyResponseDTO.class
+ ┃ ┃ ┃ ┃ ┣ 📜ReviewLikeResponse.class
+ ┃ ┃ ┃ ┃ ┣ 📜SearchResponseDTO.class
+ ┃ ┃ ┃ ┃ ┣ 📜TmdbResponseDTO$TmdbResponseDTOBuilder.class
+ ┃ ┃ ┃ ┃ ┣ 📜TmdbResponseDTO.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserDTO$UserDTOBuilder.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserDTO.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserEditDTO.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserReviewDTO$UserReviewDTOBuilder.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserReviewDTO.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserReviewReplyDTO$UserReviewReplyDTOBuilder.class
+ ┃ ┃ ┃ ┃ ┗ 📜UserReviewReplyDTO.class
+ ┃ ┃ ┃ ┣ 📂entity
+ ┃ ┃ ┃ ┃ ┣ 📜movieEntity$movieEntityBuilder.class
+ ┃ ┃ ┃ ┃ ┣ 📜movieEntity.class
+ ┃ ┃ ┃ ┃ ┣ 📜MovieLike.class
+ ┃ ┃ ┃ ┃ ┣ 📜MovieLikeId.class
+ ┃ ┃ ┃ ┃ ┣ 📜userEntity$userEntityBuilder.class
+ ┃ ┃ ┃ ┃ ┣ 📜userEntity.class
+ ┃ ┃ ┃ ┃ ┣ 📜userReviewEntity$userReviewEntityBuilder.class
+ ┃ ┃ ┃ ┃ ┣ 📜userReviewEntity.class
+ ┃ ┃ ┃ ┃ ┣ 📜userReviewLikeEntity$userReviewLikeEntityBuilder.class
+ ┃ ┃ ┃ ┃ ┣ 📜userReviewLikeEntity$UserReviewLikeId.class
+ ┃ ┃ ┃ ┃ ┣ 📜userReviewLikeEntity.class
+ ┃ ┃ ┃ ┃ ┣ 📜userReviewReplyEntity$userReviewReplyEntityBuilder.class
+ ┃ ┃ ┃ ┃ ┗ 📜userReviewReplyEntity.class
+ ┃ ┃ ┃ ┣ 📂Enum
+ ┃ ┃ ┃ ┃ ┗ 📜SocialType.class
+ ┃ ┃ ┃ ┣ 📂model
+ ┃ ┃ ┃ ┃ ┣ 📜Item.class
+ ┃ ┃ ┃ ┃ ┗ 📜NaverResponse.class
+ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┣ 📜MovieLikeRepository.class
+ ┃ ┃ ┃ ┃ ┣ 📜MovieRepository.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserRepository.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserReviewLikeRepository.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserReviewReplyRepository.class
+ ┃ ┃ ┃ ┃ ┗ 📜UserReviewRepository.class
+ ┃ ┃ ┃ ┣ 📂service
+ ┃ ┃ ┃ ┃ ┣ 📜CustomOAuth2UserService.class
+ ┃ ┃ ┃ ┃ ┣ 📜DormantUserService.class
+ ┃ ┃ ┃ ┃ ┣ 📜FileStoreService.class
+ ┃ ┃ ┃ ┃ ┣ 📜InquiryService.class
+ ┃ ┃ ┃ ┃ ┣ 📜MovieLikeService.class
+ ┃ ┃ ┃ ┃ ┣ 📜MovieService.class
+ ┃ ┃ ┃ ┃ ┣ 📜NaverApiService.class
+ ┃ ┃ ┃ ┃ ┣ 📜ReviewLikeService.class
+ ┃ ┃ ┃ ┃ ┣ 📜TmdbApiService.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserReviewReplyService.class
+ ┃ ┃ ┃ ┃ ┣ 📜UserReviewService.class
+ ┃ ┃ ┃ ┃ ┗ 📜UserService.class
+ ┃ ┃ ┃ ┗ 📜ReviewPlusApplication.class
+ ┃ ┣ 📂META-INF
+ ┃ ┃ ┗ 📜additional-spring-configuration-metadata.json
+ ┃ ┣ 📂static
+ ┃ ┃ ┣ 📂css
+ ┃ ┃ ┃ ┣ 📜admin.css
+ ┃ ┃ ┃ ┣ 📜common.css
+ ┃ ┃ ┃ ┣ 📜footer.css
+ ┃ ┃ ┃ ┣ 📜header.css
+ ┃ ┃ ┃ ┣ 📜index.css
+ ┃ ┃ ┃ ┣ 📜latest_news.css
+ ┃ ┃ ┃ ┣ 📜MailForwarding.css
+ ┃ ┃ ┃ ┣ 📜movies_detail.css
+ ┃ ┃ ┃ ┣ 📜movies_list.css
+ ┃ ┃ ┃ ┣ 📜now_playing.css
+ ┃ ┃ ┃ ┣ 📜scroll-to-top.css
+ ┃ ┃ ┃ ┣ 📜top_rate.css
+ ┃ ┃ ┃ ┣ 📜user_edit.css
+ ┃ ┃ ┃ ┣ 📜user_login.css
+ ┃ ┃ ┃ ┣ 📜user_mypage.css
+ ┃ ┃ ┃ ┗ 📜user_newjoin.css
+ ┃ ┃ ┣ 📂images
+ ┃ ┃ ┃ ┣ 📜.svg
+ ┃ ┃ ┃ ┣ 📜example.png
+ ┃ ┃ ┃ ┣ 📜google.png
+ ┃ ┃ ┃ ┣ 📜Jake_the_Dog_character.png
+ ┃ ┃ ┃ ┣ 📜kakao.png
+ ┃ ┃ ┃ ┣ 📜logo.png
+ ┃ ┃ ┃ ┣ 📜naver.png
+ ┃ ┃ ┃ ┗ 📜newsimg1.svg
+ ┃ ┃ ┗ 📂js
+ ┃ ┃ ┃ ┣ 📜admin.js
+ ┃ ┃ ┃ ┣ 📜adminDataTables.js
+ ┃ ┃ ┃ ┣ 📜footer.js
+ ┃ ┃ ┃ ┣ 📜latest_news.js
+ ┃ ┃ ┃ ┣ 📜movies_detail.js
+ ┃ ┃ ┃ ┣ 📜movies_list.js
+ ┃ ┃ ┃ ┣ 📜movies_review.js
+ ┃ ┃ ┃ ┣ 📜movie_LikeBtn.js
+ ┃ ┃ ┃ ┣ 📜movie_search.js
+ ┃ ┃ ┃ ┣ 📜now_playing.js
+ ┃ ┃ ┃ ┣ 📜scroll-to-top.js
+ ┃ ┃ ┃ ┣ 📜top_rate.js
+ ┃ ┃ ┃ ┣ 📜upload.js
+ ┃ ┃ ┃ ┣ 📜user_LikeListBtn.js
+ ┃ ┃ ┃ ┣ 📜user_login.js
+ ┃ ┃ ┃ ┣ 📜user_newjoin.js
+ ┃ ┃ ┃ ┗ 📜user_ReviewListBtn.js
+ ┃ ┣ 📂templates
+ ┃ ┃ ┣ 📂admin
+ ┃ ┃ ┃ ┣ 📜access-error.html
+ ┃ ┃ ┃ ┣ 📜admin.html
+ ┃ ┃ ┃ ┣ 📜admin_movie.html
+ ┃ ┃ ┃ ┣ 📜admin_movie_detail.html
+ ┃ ┃ ┃ ┣ 📜admin_review.html
+ ┃ ┃ ┃ ┣ 📜admin_review_detail.html
+ ┃ ┃ ┃ ┣ 📜admin_user.html
+ ┃ ┃ ┃ ┣ 📜admin_user_detail.html
+ ┃ ┃ ┃ ┗ 📜user_dormant_access.html
+ ┃ ┃ ┣ 📂index
+ ┃ ┃ ┃ ┗ 📜index.html
+ ┃ ┃ ┣ 📂movies
+ ┃ ┃ ┃ ┣ 📜movies_detail.html
+ ┃ ┃ ┃ ┗ 📜movies_list.html
+ ┃ ┃ ┗ 📂user
+ ┃ ┃ ┃ ┣ 📜UserDormant.html
+ ┃ ┃ ┃ ┣ 📜user_edit.html
+ ┃ ┃ ┃ ┣ 📜user_login.html
+ ┃ ┃ ┃ ┣ 📜user_loginMain.html
+ ┃ ┃ ┃ ┣ 📜user_mypage.html
+ ┃ ┃ ┃ ┣ 📜user_newjoin.html
+ ┃ ┃ ┃ ┗ 📜user_socialEdit.html
+ ┃ ┣ 📜application.properties
+ ┃ ┣ 📜application.yml
+ ┃ ┗ 📜schema-oracle.sql
+ ┗ 📂test
+ ┃ ┗ 📂com
+ ┃ ┃ ┗ 📂review
+ ┃ ┃ ┃ ┗ 📜ReviewPlusApplicationTests.class
+```
