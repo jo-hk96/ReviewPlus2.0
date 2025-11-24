@@ -1,7 +1,7 @@
 // ==================== 전역 변수 ====================
 let currentPage = 1;
 let isLoading = false;
-let totalPages = 500; // 기본 카테고리
+let totalPages = 500;
 let movieListContainer;
 let loadingIndicator;
 let currentCategory; 
@@ -47,7 +47,7 @@ function renderMovies(newMovies) {
           const detailUrl = `/detail/${movieId}`; 
              const posterUrl = movie.poster_path
             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-            : '/images/Jake_the_Dog_character.png'; //이미지가 없을경우 대체
+            : '/images/Jake_the_Dog_character.png'; //이미지가 없을경우 
 
         // 평점을 별 아이콘과 포맷된 텍스트로 준비
         const userStars = generateOurStars(ourRating);
@@ -128,19 +128,19 @@ function handleInfiniteScroll() {
     }
 }
 
-//3. 카테고리 변경 함수 (전역 - HTML onclick 이벤트용)
+//카테고리 변경 함수
 function changeCategory(newCategory) {
     console.log(`카테고리 변경: ${currentCategory} -> ${newCategory}`);
     
-    // 1) 상태 초기화 및 업데이트
+    //상태 초기화 및 업데이트
     currentCategory = newCategory;
     currentPage = 1;
     totalPages = 1; 
     
-    // 2) 기존 목록 비우기
+    //기존 목록 비우기
     if (movieListContainer) movieListContainer.innerHTML = ''; 
     
-    // 3) 새 목록 로드 시작
+    //새 목록 로드 시작
     loadMovies(currentPage); 
 }
 
@@ -148,7 +148,6 @@ function changeCategory(newCategory) {
 // ==================== 카테고리 변경 ====================
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. 필요한 DOM 요소들을 찾아서 전역 변수에 할당합니다.
     movieListContainer = document.getElementById('movie-list2'); 
     loadingIndicator = document.getElementById('loading-indicator2');
 

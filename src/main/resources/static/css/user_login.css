@@ -75,7 +75,7 @@
             justify-content:center;
             font-weight: bold;
             transition: background-color 0.2s;
-            width: 100px;
+            width: 120px;
         }
 
         .btn-join:hover {

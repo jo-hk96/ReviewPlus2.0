@@ -14,7 +14,7 @@
         
         "columnDefs": [
             { 
-                "targets": '_all', // ⭐️ 모든 컬럼에 적용 ⭐️
+                "targets": '_all', // 모든 컬럼에 적용
                 "className": "dt-center" // DataTables 내장 중앙 정렬 클래스
             }
         ],

@@ -258,8 +258,8 @@ function createReviewHtml(review) {
                        <table>
                             <tr>
                                <td><span>${review.nickname}</span></td>
-                               <td id="reviewsRating"><span>${starHtml}</span></td>
                             </tr>
+                               <tr><td><span>${starHtml}</span></td></tr>
                             <tr><td><span style = "color:gray">${review.regDate}</span></td></tr>
                       </table>
                    </div>

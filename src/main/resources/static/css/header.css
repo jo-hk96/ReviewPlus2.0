@@ -5,9 +5,9 @@
     height: 80px;
     align-items: center; 
     position: fixed;
-    top: 0;      
-    left: 0;        
-    width: 100%;       
+    top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
     padding: 15px;
     box-sizing: border-box;
@@ -37,7 +37,6 @@ a{
 .headerRight a,
 .headerRight span,
 .headerRight input {
-  margin-right: 5px; 
   margin-left: 6px;
 }
 
@@ -115,7 +114,6 @@ a{
 }
 
 
-
 .search-form-container {
     position: relative; 
     display: flex;
@@ -125,7 +123,7 @@ a{
 /* 2. 입력창 스타일 */
 .search-form-container input[type="text"] {
 	width:100%;
-    height: 40px;
+    height:40px;
     padding-right: 40px; 
     box-sizing: border-box; 
 }
@@ -155,7 +153,6 @@ a{
 	
 	
 	@media (max-width: 780px) {
-	
     #header{
      overflow: hidden;
     }
@@ -163,7 +160,8 @@ a{
 	.headerLeft input { 
 	 display:none;
 	}
-    
+	
+	
 }
 	
 	@media (max-width: 1024px) {

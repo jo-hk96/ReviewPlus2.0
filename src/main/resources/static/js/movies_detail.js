@@ -147,17 +147,17 @@
 				trailerHTML = `
 					<h2 style="color:white; margin-top: 40px;">예고편</h2>
 	                <div style="margin: 20px 0;
-	                	 width:100%;
-	                	 max-width: 700px;
+	                	 width:92%;
+	                	 max-width: 650px;
+	                	 padding:15px;
 	                	 ">
-	                    <iframe 
+	                    <iframe
 	                        width="100%"
-	                        height="500px";
 	                        src="${youtubeEmbedUrl}"
 	                        frameborder="0" 
 	                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 	                        allowfullscreen 
-	                        style="border-radius: 10px; max-height:500px;">
+	                        style="border-radius: 10px; height:100%; min-height:450px;">
 	                    </iframe>
 	                </div>
 				`;
