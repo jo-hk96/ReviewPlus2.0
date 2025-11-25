@@ -27,6 +27,7 @@ import com.review.DTO.UserEditDTO;
 import com.review.DTO.UserReviewDTO;
 import com.review.DTO.movieDTO;
 import com.review.DTO.movieLikeDTO;
+import com.review.Enum.SocialType;
 import com.review.config.CustomUserDetails;
 import com.review.entity.userEntity;
 import com.review.entity.userReviewEntity;
@@ -66,40 +67,79 @@ public class adminController {
 	
 	
 	
-	//휴면계정 페이지
+	//로컬 휴면계정 페이지
 	@GetMapping("/UserDormantAccess")
 	public String UserDormant() {
 		return "admin/user_dormant_access";
 		
 	}
 	
+	//소셜 휴면계정 페이지
+	@GetMapping("/SocialUserDormantAccess")
+	public String notLocalUserDormant() {
+		return "admin/Social_user_dormant_access";
+		
+	}
+	
 		//휴면계정 비밀번호 검사
 		@PostMapping("/UserDormant/activate")
-		public String activateDormantUser(@RequestParam String password,
+		public String activateDormantUser(
+				@RequestParam(required = false) String password,
+				@RequestParam(required = false) String email,
 				@AuthenticationPrincipal CustomUserDetails cud,
 				HttpServletRequest request, 
 			    HttpServletResponse response) {
 			userEntity user = cud.getUserEntity();
-					if(!passwordEncoder.matches(password,user.getPassword())) {
-						
-						return "redirect:/UserDormantAccess?error";
-					}
-				user.setRole("ROLE_USER");
-				user.setLastActivityAt(LocalDateTime.now());
-				userRepository.save(user);
-				Authentication newAuth = new UsernamePasswordAuthenticationToken(
-						cud,
-						null,
-						List.of(new SimpleGrantedAuthority("ROLE_USER"))
-						);
-				SecurityContextHolder.getContext().setAuthentication(newAuth);
-				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			    if (authentication != null) {
-			        new SecurityContextLogoutHandler().logout(request, response, authentication);
-			    }
-				return "redirect:/UserLoginForm";
+			
+			boolean isAuthenticated = false;
+			
+			boolean isSocialUser;
+			if (user.getSocialType() == null) {
+			    isSocialUser = false;
+			} 
+			// 2. 값이 있으면, LOCAL이 아닌지 비교
+			else {
+			    isSocialUser = !user.getSocialType().equals(SocialType.LOCAL);
+			}
+
+		    if (isSocialUser) {
+		        //소셜 로그인 계정
+		        
+		        // 1. 사용자가 입력한 이메일과 DB에 저장된 이메일을 비교
+		        if (email != null && user.getEmail() != null && user.getEmail().equals(email)) {
+		            isAuthenticated = true;
+		        } else {
+		            return "redirect:/SocialUserDormantAccess?error=email_mismatch";
+		        }
+		        
+		    } else {
+		        // 기존 비밀번호로 검증
+		        
+		        // 1. 비밀번호 일치 확인
+		        if (password != null && user.getPassword() != null && passwordEncoder.matches(password, user.getPassword())) {
+		            isAuthenticated = true;
+		        } else {
+		            return "redirect:/UserDormantAccess?error=password_mismatch";
+		        }
+		    }
+		    
+		    // --- 2. 인증 성공 시 휴면 해제 공통 로직 실행 ---
+		    if (isAuthenticated) {
+		        user.setRole("ROLE_USER");
+		        user.setLastActivityAt(LocalDateTime.now());
+		        userRepository.save(user);
+
+		        // Security Context 초기화 및 로그아웃 처리
+		        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		        if (authentication != null) {
+		            new SecurityContextLogoutHandler().logout(request, response, authentication);
+		        }
+		        
+		        return "redirect:/UserLoginForm";
+		    }
+		    
+		    return "redirect:/UserDormantAccess?error=unknown";
 		}
-	
 	
 	//관리자 홈
 	@GetMapping("/Admin/AdminHome")

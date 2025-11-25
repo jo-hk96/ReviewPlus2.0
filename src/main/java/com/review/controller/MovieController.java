@@ -80,11 +80,4 @@ public class MovieController {
 		return "movies/movies_detail";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -72,7 +72,6 @@ public class SecurityConfig {
 		          .loginProcessingUrl("/UserLogin") //로그인 데이터 처리할 경로
 		          .usernameParameter("email")
 		          .passwordParameter("password")
-		          .successHandler(successHandler) //회원 상태에 따라 페이지 이동 (관리자,일반,휴면)
 		          .failureUrl("/UserLoginForm?error=true") // 로그인 실패시
 		          .permitAll()
 		        );
@@ -90,24 +89,12 @@ public class SecurityConfig {
 		    
 		    //OAuth2로그인
 		    http
-		    	.oauth2Login(oauth2 -> oauth2
-		    			.loginPage("/UserLoginForm")
-		    			.userInfoEndpoint(userInfo -> userInfo
-		    			.userService(customOAuth2UserService)) //DB저장등 후처리 서비스 담당
-		    			
-		    			.successHandler((request , response , authentication) ->{
-		    			    Object principal = authentication.getPrincipal();
-		    			    if(principal instanceof CustomUserDetails) {
-		    			        CustomUserDetails CustomUser = (CustomUserDetails) principal;
-		    			        userEntity user = CustomUser.getUserEntity();
-		    			        if(user.isRequiredInfoMissing()) {
-		    			            response.sendRedirect("/SocialUserEditForm"); 
-		    			            return;
-		    			        }
-		    			    }
-		    			     response.sendRedirect("/"); // 정보가 모두 있다면 홈으로 이동
-		    			})
-		    		);
+		    .oauth2Login(oauth2 -> oauth2
+		        .loginPage("/UserLoginForm")
+		        .userInfoEndpoint(userInfo -> userInfo
+		            .userService(customOAuth2UserService)) //DB저장등 후처리 서비스 담당
+		        .successHandler(successHandler) // ⭐ 오직 이 핸들러 하나만 사용! ⭐
+		    );
 		    
 		    //로그아웃 처리
 		    http

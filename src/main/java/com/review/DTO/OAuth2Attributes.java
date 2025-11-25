@@ -146,7 +146,7 @@ public class OAuth2Attributes {
 	        return OAuth2Attributes.builder()
 	                .name(name)
 	                .email(email)
-	                .nameAttributeKey("id") 
+	                .nameAttributeKey("id")
 	                .attributes(attributes)
 	                .birthdate(rawBirthdate)
 	                .picture(picture)

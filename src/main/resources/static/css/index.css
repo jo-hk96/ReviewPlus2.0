@@ -12,6 +12,7 @@ body{
 	padding:0;
 	background-color: #040F16;
 	font-family: 'GMarketSans', sans-serif;
+	font-size:12px;
 }
 
 
@@ -48,7 +49,7 @@ color:white;
   padding: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
   transition: transform 0.2s;
-  height: 200px;          
+  height: 150px;          
   position: relative;
   background-color:  #061123;
   overflow: hidden;

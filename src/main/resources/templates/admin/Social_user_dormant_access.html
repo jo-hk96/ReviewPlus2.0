@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+                  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 정보 수정</title>
+    <link rel="stylesheet" href="/css/user_mypage.css">
+    <link rel="stylesheet" href="/css/footer.css">
+   	<link rel="stylesheet" href="/css/user_edit.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="user-edit-container">
+        <h1>휴면 계정</h1>
+        <!-- 예외 메시지 출력 영역 -->
+        <!-- 프로필이미지 넣기 -->
+        <form action="/UserDormant/activate" method="post" class="user-edit-form">
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <button type="submit" class="submit-button" style = "margin: 0 auto;">휴면계정해제</button>
+        </form>
+    </div>
+    <div th:insert="index/index :: footer"></div>
+    
+    <script>
+    function validatePassword() {
+        const UserEmail = document.getElementById('email').value;
+        if (UserEmail.trim() === "") {
+            alert("이메일을 입력해주세요");
+            return false;
+        }
+        return true;
+    }
+	</script>
+</body>
+</html>
