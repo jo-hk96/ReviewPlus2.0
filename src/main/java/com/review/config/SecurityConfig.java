@@ -15,6 +15,7 @@ import com.review.entity.userEntity;
 import com.review.service.CustomOAuth2UserService;
 import com.review.service.UserService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 
@@ -99,8 +100,16 @@ public class SecurityConfig {
 		    //로그아웃 처리
 		    http
 	            .logout(logout -> logout
-	                    .logoutUrl("/logout") //로그아웃 경로
-	                    .logoutSuccessUrl("/") //로그아웃 후 이동할 페이지
+	                    .logoutUrl("/api/user/logout") //로그아웃 경로
+	                    //.logoutSuccessUrl("/") //로그아웃 후 이동할 페이지
+	                    
+	                    .logoutSuccessHandler((request, response, authentication) -> {
+	                        response.setStatus(HttpServletResponse.SC_OK); // 200 OK
+	                        response.setContentType("application/json");
+	                        response.setCharacterEncoding("UTF-8");
+	                        // JavaScript가 확인할 JSON 응답 전송
+	                        response.getWriter().write("{\"success\": true, \"message\": \"Logout successful\"}"); 
+	                    })
 	                    .invalidateHttpSession(true)
 	                    .deleteCookies("JSESSIONID")
 	              );

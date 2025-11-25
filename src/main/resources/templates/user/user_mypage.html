@@ -145,10 +145,10 @@
 	    </span>
 		
 		<br>
-		<div class ="Logout" id = "Logout" sec:authorize="isAuthenticated()">
-			<a href = "/logout"  onclick = "return confirm('로그아웃 하시겠습니까?')">로그아웃</a>
-		</div>
-	
+		<div class="Logout" id="Logout" sec:authorize="isAuthenticated()">
+		    <a href="javascript:void(0);" onclick="requestLogout()">로그아웃</a>
+		    
+		    </div>
 	
 		
 		</div>
@@ -162,6 +162,33 @@
     if (LOGGED_IN_USER_ID) {
         loadProfileImage(LOGGED_IN_USER_ID); 
     }
+</script>
+<script>
+function requestLogout() {
+    // ⭐️ Spring Security가 처리하도록 설정한 경로로 POST 요청
+    fetch('/api/user/logout', { 
+        method: 'POST' 
+    })
+    .then(response => response.json())
+    .then(data => {
+        // ⭐️ 서버가 {"success": true}를 반환했는지 확인
+        if (data && data.success === true) {
+            // 1. Flutter 앱에 로그아웃 성공 알림 (JavaScript Channel 사용)
+            if (typeof ProfileChannel !== 'undefined') {
+                ProfileChannel.postMessage('logout_success'); // 👈 이 메시지가 Flutter의 _handleLogout() 실행
+            }
+            
+            // 2. 웹뷰 자체를 로그인 페이지나 홈으로 리디렉션
+            window.location.href = '/login'; 
+        } else {
+            console.error('서버 로그아웃 처리 실패:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('로그아웃 중 통신 오류 발생:', error);
+    });
+}
+
 </script>
 <script src="js/upload.js"></script>
 		

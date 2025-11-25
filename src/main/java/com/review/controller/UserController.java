@@ -1,7 +1,6 @@
 package com.review.controller;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -132,7 +131,15 @@ public class UserController {
 	 @ResponseBody
 	 public String getProfileImageUrl(@PathVariable Long userId) {
 		 String storedFileName = userService.getProfileImageUrl(userId);
-		 return storedFileName;
+		    
+		    // ⭐️ 파일 이름 대신 전체 URL을 반환하도록 조합
+		    if (storedFileName == null || storedFileName.isEmpty()) {
+		        // 기본 이미지 URL 반환 또는 빈 문자열 반환 (클라이언트 처리)
+		        return "default.png"; // 예시: DB에 파일명이 없으면 기본 이미지 파일명 반환
+		    }
+		    
+		    // 클라이언트가 직접 접근할 수 있는 정적 리소스 경로를 포함하여 반환
+		    return profileImageBaseUrl + storedFileName;
 	 }
 	 
 	//로그인 메인
