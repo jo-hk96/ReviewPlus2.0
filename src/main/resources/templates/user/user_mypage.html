@@ -26,12 +26,8 @@
 	#Logout:hover {
 	background-color: #0056b3;
 	}
-
 </style>
-
-
 <body>
-
 <script>
 	function toggleMenu() {
 	  const menu = document.getElementById("menu-list");
@@ -80,7 +76,6 @@
 			    </div>
 			</form>
 			<table>
-			
 				<tr>
 					<td>이메일: <span sec:authentication="principal.username"></span></td>
 				</tr>
@@ -95,9 +90,7 @@
 				</tr>
 				<tr>
 				</tr>
-
 			</table>
-				
 	<!-- 사용자 좋아요 목록 MODAL -->
 	<button id="showLikedMoviesBtn" onclick="openLikeModal()">
 	    좋아요 목록 보기
@@ -147,10 +140,7 @@
 		<br>
 		<div class="Logout" id="Logout" sec:authorize="isAuthenticated()">
 		    <a href="javascript:void(0);" onclick="requestLogout()">로그아웃</a>
-		    
 		    </div>
-	
-		
 		</div>
 	</div>
 
@@ -175,7 +165,7 @@ function requestLogout() {
         if (data && data.success === true) {
             // 1. Flutter 앱에 로그아웃 성공 알림 (JavaScript Channel 사용)
             if (typeof ProfileChannel !== 'undefined') {
-                ProfileChannel.postMessage('logout_success'); // 👈 이 메시지가 Flutter의 _handleLogout() 실행
+                ProfileChannel.postMessage('logout_success'); 
             }
             
             // 2. 웹뷰 자체를 로그인 페이지나 홈으로 리디렉션

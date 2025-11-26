@@ -65,17 +65,20 @@ public class SecurityConfig {
 		       );
 		 
 		    
-		    
-		    //로그인 페이지 처리
 		    http
-		        .formLogin(login -> login
-		          .loginPage("/UserLoginForm") // 로그인 페이지
-		          .loginProcessingUrl("/UserLogin") //로그인 데이터 처리할 경로
-		          .usernameParameter("email")
-		          .passwordParameter("password")
-		          .failureUrl("/UserLoginForm?error=true") // 로그인 실패시
-		          .permitAll()
-		        );
+		    .formLogin(login -> login
+		    	    .loginPage("/UserLoginForm") // 로그인 폼 페이지
+		    	    .loginProcessingUrl("/UserLogin") // 로그인 데이터 처리 경로
+		    	    .usernameParameter("email")
+		    	    .passwordParameter("password")
+		    	    
+		    	    .successHandler(successHandler) 
+		    	    
+		    	    .failureUrl("/UserLoginForm?error=true") 
+		    	    
+		    	    // 🚫 이전에 추가했던 .successHandler(lambda...) 와 .failureHandler(lambda...) 블록은 모두 제거해야 함.
+		    	    .permitAll()
+		    	);
 		    
 		    
 		    //사용자 쿠키 등록

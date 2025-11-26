@@ -6,16 +6,21 @@
   h2{
   color:white;
   }
-
+  
+  label{
+  color: white;
+  }
+  
        #loginForm {
            width: 100%;
-		   max-width: 300px; 
+		   max-width: 400px; 
 		   padding: 20px;
-		   border: 1px solid #ccc;
+		   border: none;
 		   border-radius: 8px;
 		   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-		   background-color: #fff; 
+		   background-color:#0d1117;;
 		   margin: 0 auto;
+		 
 		          
        }
        #allLoginform{
@@ -38,10 +43,10 @@
             padding: 8px;
             margin-bottom: 5px;
             margin-top:10px;
-            border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
-            
+            background-color:rgba(0,0,0,0.3);
+            color:white;     
         }
         #loginForm button[type="submit"] {
             width: 100%;
@@ -57,6 +62,11 @@
         }
         
         
+        #loginForm input[type="email"]::placeholder,
+        #loginForm input[type="password"]::placeholder {
+    color: white; /* 플레이스홀더 텍스트 색상을 흰색으로 설정 */
+    opacity: 1; 
+}
         #loginForm button[type="submit"]:hover{
         	background-color : #0062ce;
         
@@ -75,7 +85,7 @@
             justify-content:center;
             font-weight: bold;
             transition: background-color 0.2s;
-            width: 120px;
+            width: 100px;
         }
 
         .btn-join:hover {
