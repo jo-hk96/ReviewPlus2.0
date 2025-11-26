@@ -180,7 +180,20 @@ function requestLogout() {
 }
 
 </script>
-<script src="js/upload.js"></script>
+
+<script>
+	function updateProfileImage(url) {
+  		const img = document.getElementById("profile-img");
+    	if (img) img.src = url;
+	}
+	function handleUploadFailure(msg){
+	  alert(msg);
+	}
+	function requestUpload(){
+	  ProfileChannel.postMessage("upload_start");
+	}
+</script>
+<script src="/js/upload.js"></script>
 		
 <!-- 푸터 -->
 <div th:insert="index/index :: footer"></div>

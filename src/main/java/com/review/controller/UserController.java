@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.review.DTO.UserDTO;
 import com.review.DTO.UserEditDTO;
 import com.review.config.CustomUserDetails;
+import com.review.entity.userEntity;
 import com.review.repository.UserRepository;
 import com.review.service.FileStoreService;
 import com.review.service.UserService;
@@ -39,6 +42,35 @@ public class UserController {
 	private final UserService userService;
 	private final FileStoreService fileStoreService;
 	private final String profileImageBaseUrl = "/images/profile/";
+	
+	
+	
+		//플러터 상태확인용
+
+	    @GetMapping("/api/user/check-auth")
+	    @ResponseBody
+	    public Map<String, Object> checkAuth(Authentication authentication) {
+	        Map<String, Object> result = new HashMap<>();
+	        if (authentication == null || !authentication.isAuthenticated()) {
+	            result.put("isAuthenticated", false);
+	            return result;
+	        }
+
+	        Object principal = authentication.getPrincipal();
+	        String profileImageUrl = null;
+
+	        if (principal instanceof CustomUserDetails cud) {
+	            userEntity user = cud.getUserEntity();
+	            profileImageUrl = user.getProfileImageUrl(); // DB 필드에 맞게 수정
+	        }
+
+	        result.put("isAuthenticated", true);
+	        result.put("profileImageUrl", profileImageUrl);
+	        return result;
+	    }
+
+	
+	
 	
 	//휴면 계정 페이지 이동
 		@GetMapping("/UserDormant")
@@ -79,52 +111,51 @@ public class UserController {
 	    }
 		
     //프로필 사진 업로드
-    @PostMapping("/api/profile/upload")
-    @ResponseBody
-    public Map<String, Object> uploadProfileImage(
-        @AuthenticationPrincipal CustomUserDetails customUserDetails, 
-        @RequestParam("file") MultipartFile imageFile
-    ) throws IOException {
-        
-        Map<String, Object> response = new HashMap<>();
+	    @PostMapping("/api/profile/upload")
+	    @ResponseBody
+	    public ResponseEntity<Map<String, Object>> uploadProfileImage(
+	            @AuthenticationPrincipal CustomUserDetails user,
+	            @RequestParam("file") MultipartFile imageFile
+	    ) {
+	        Map<String, Object> response = new HashMap<>();
 
-        if (customUserDetails == null) {
-            // 로그인되지 않은 경우의 처리 (401 Unauthorized 대신, 예외 처리를 통해 HTTP 상태 코드를 반환하는 것이 더 좋음)
-            response.put("success", false);
-            response.put("message", "로그인이 필요합니다.");
-            return response; 
-        }
+	        // 1) 로그인 확인
+	        if (user == null) {
+	            response.put("success", false);
+	            response.put("message", "로그인이 필요합니다.");
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+	        }
 
-        try {
-            Long currentUserId = customUserDetails.getUserId(); 
-            
-            // 1. 파일 저장 처리 (Service 호출)
-            String storeFileName = fileStoreService.storeFile(imageFile);
-            
-            if (storeFileName != null) {
-                // 2. DB 업데이트
-                userService.updateProfilImage(currentUserId, storeFileName); 
-                
-                String newImageUrl = profileImageBaseUrl + storeFileName;
-                
-                response.put("success", true);
-                response.put("newImageUrl", newImageUrl); 
-                
-            } else {
-                response.put("success", false);
-                response.put("message", "파일 저장에 실패했습니다.");
-            }
-            
-        } catch (Exception e) {
-            // 파일 저장, DB 업데이트 등 예외 처리
-            response.put("success", false);
-            response.put("message", "처리 중 오류가 발생했습니다: " + e.getMessage());
-            e.printStackTrace();
-        }
+	        try {
+	            Long userId = user.getUserId();
 
-        return response;
-    }
-    
+	            // 2) 파일 저장
+	            String storeFileName = fileStoreService.storeFile(imageFile);
+
+	            if (storeFileName == null) {
+	                response.put("success", false);
+	                response.put("message", "파일 저장 실패");
+	                return ResponseEntity.badRequest().body(response);
+	            }
+
+	            // 3) DB 업데이트
+	            userService.updateProfilImage(userId, storeFileName);
+
+	            // 4) URL 반환
+	            String newImageUrl = profileImageBaseUrl + storeFileName;
+
+	            response.put("success", true);
+	            response.put("newImageUrl", newImageUrl);
+	            return ResponseEntity.ok(response);
+
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	            response.put("success", false);
+	            response.put("message", "서버 오류: " + ex.getMessage());
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	        }
+	    }
+
     
 	 //회원 프로필 사진 조회
 	 @GetMapping("/api/profile/image/{userId}")
