@@ -12,83 +12,83 @@
     <link rel="stylesheet" href="/css/scroll-to-top.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🎬</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
 <style>
-	#movie-categories-select{
-		margin: 0 auto;
-		max-width:1400px;
-		height:60px;
-		padding-left: 50px;
-	}
-	
-	#category-select{
-		width:100%;
-		height:100%;
-		max-width:200px;
-		height:30px;
-		font-size:20px;
-		text-align:center;
-		border: none;
-		border-radius: 10px;
-		background-color: #1a1a1a;
-		color: white;
-		transition:background-color 0.2s;
-	}
-	
-	#category-select > option{
-		width:100%;
-		height:100%;
-		max-width:200px;
-		height:30px;
-		font-size:20px;
-		text-align:center;
-	}
-	
-	#category-select:hover{
-		background-color: rgba(0, 0, 0, 0.3); 
-	}
-	
-	
-	#userProfilePicture{
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		border:1px solid white;
-		object-fit:cover;
-	}
+   #movie-categories-select{
+      margin: 0 auto;
+      max-width:1400px;
+      height:60px;
+      padding-left: 50px;
+   }
+   
+   #category-select{
+      width:100%;
+      height:100%;
+      max-width:200px;
+      height:40px;
+      font-size:20px;
+      text-align:center;
+      border: none;
+      border-radius: 10px;
+      background-color: #1a1a1a;
+      color: white;
+      transition:background-color 0.2s;
+   }
+   
+   #category-select > option{
+      width:100%;
+      height:100%;
+      max-width:200px;
+      height:30px;
+      font-size:20px;
+      text-align:center;
+   }
+   
+   #category-select:hover{
+      background-color: #1a1a1a;
+   }
+   
+   
+   #userProfilePicture{
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      border:1px solid white;
+      object-fit:cover;
+   }
 </style>
 
 <body>
 <div th:insert = "index/index :: header"></div>
 
-	<div id = "MovieList">
-			<!-- 영화 선택 카테고리  -->
-			<div id="movie-categories-select" style="margin-bottom: 20px;">
-			    <select id="category-select">
-			        <option value="now_playing">현재상영</option>
-			        <option value="popular">인기</option>
-			        <option value="top_rated">최고평점</option>
-			        <option value="upcoming">개봉예정</option>
-			    </select>
-			</div>
-			
-		 <div id="movie-list2" class = "movie-list-container" th:attr="data-search-query=${searchQuery}"></div>
-			<div id="loading-indicator2">
-			    영화 로드 중...
-			</div>
-	</div>
-	<input type="hidden" id="searchQueryInput" th:value="${searchQuery}">
-	
-	<!-- 푸터 -->
-	<div th:insert="index/index :: footer"></div>
-	<!-- 맨위로가기 -->
-	<button th:insert = "index/index :: scroll-to-top"></button>
-	<script src ="/js/movies_list.js"></script>
-	<script src ="/js/scroll-to-top.js"></script>
-	<script src ="/js/footer.js"></script>
-	<script src = "/js/upload.js"></script>
+   <div id = "MovieList">
+         <!-- 영화 선택 카테고리  -->
+         <div id="movie-categories-select" style="margin-bottom: 20px;">
+             <select id="category-select">
+                 <option value="now_playing">현재상영</option>
+                 <option value="popular">인기</option>
+                 <option value="top_rated">최고평점</option>
+                 <option value="upcoming">개봉예정</option>
+             </select>
+         </div>
+         
+       <div id="movie-list2" class = "movie-list-container" th:attr="data-search-query=${searchQuery}"></div>
+         <div id="loading-indicator2">
+             영화 로드 중...
+         </div>
+   </div>
+   <input type="hidden" id="searchQueryInput" th:value="${searchQuery}">
+   
+   <!-- 푸터 -->
+   <div th:insert="index/index :: footer"></div>
+   <!-- 맨위로가기 -->
+   <button th:insert = "index/index :: scroll-to-top"></button>
+   <script src ="/js/movies_list.js"></script>
+   <script src ="/js/scroll-to-top.js"></script>
+   <script src ="/js/footer.js"></script>
+   <script src = "/js/upload.js"></script>
 
 </body>
 </html>
