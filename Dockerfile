@@ -2,6 +2,10 @@
 FROM gradle:8.6-jdk17 AS builder
 WORKDIR /app
 
+#----실행 권한---
+RUN chmod +x gradlew
+
+
 # Gradle 캐싱 최적화
 COPY gradle gradle
 COPY gradlew .
