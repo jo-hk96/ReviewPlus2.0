@@ -1,5 +1,7 @@
 package com.review.config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import com.review.service.CustomOAuth2UserService;
@@ -32,7 +35,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, UserService userService) throws Exception {
 
-        http.csrf(csrf -> csrf.disable());
+    	http.cors(cors -> cors.configurationSource(request -> {
+    	    CorsConfiguration config = new CorsConfiguration();
+    	    config.setAllowedOrigins(List.of("*"));  // 일단 모든 origin 허용(테스트용)
+    	    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+    	    config.setAllowedHeaders(List.of("*"));
+    	    config.setAllowCredentials(true);
+    	    return config;
+    	}));
 
         http.authorizeHttpRequests(auth -> auth
                 // ✅ 로그인 폼 & 처리 URL 허용
