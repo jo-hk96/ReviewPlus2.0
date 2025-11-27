@@ -14,7 +14,6 @@ import lombok.Data;
 
 
 @Data
-@Builder
 public class OAuth2Attributes {
 	 	private final Map<String, Object> attributes; // 구글에서 받은 원본 정보
 	    private final String nameAttributeKey; // 사용자 이름 키 (google은 "sub")
@@ -26,19 +25,25 @@ public class OAuth2Attributes {
 	    private final String nickname;
 	    
 	    
-	    
-	    @Builder
-	    public OAuth2Attributes(Map<String, Object> attributes, String nameAttributeKey, 
-	                            String name, String email ,String birthdate ,String picture,String nickname,SocialType socialType) {
+	    public OAuth2Attributes(
+	            Map<String, Object> attributes,
+	            String nameAttributeKey,
+	            String name,
+	            String email,
+	            String birthdate,
+	            String picture,
+	            String nickname,
+	            SocialType socialType
+	    ) {
 	        this.attributes = attributes;
 	        this.nameAttributeKey = nameAttributeKey;
 	        this.name = name;
 	        this.email = email;
-	        this.picture = picture;
 	        this.birthdate = birthdate;
+	        this.picture = picture;
 	        this.nickname = nickname;
 	        this.socialType = socialType;
-}
+	    }
 	    
 	    // Google, Naver 등 서비스별로 다르게 넘어오는 정보를 처리하는 팩토리 메서드
 	    public static OAuth2Attributes of(String registrationId, Map<String, Object> attributes) {
