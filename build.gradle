@@ -25,7 +25,9 @@ repositories {
 }
 
 dependencies {
-
+	//postgresql
+	implementation 'org.postgresql:postgresql:42.7.2'
+	
 	//스타터 이메일
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	
