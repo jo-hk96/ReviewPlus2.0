@@ -142,7 +142,7 @@
 		<br>
 		
 		<div class="Logout" id="Logout" sec:authorize="isAuthenticated()">
-		    <a href="javascript:void(0);" onclick="requestLogout()">로그아웃</a>
+		    <a href="/api/user/logout" onclick="requestLogout()">로그아웃</a>
 		</div>
 		<br>
 		<span sec:authorize="hasRole('ROLE_ADMIN')">
