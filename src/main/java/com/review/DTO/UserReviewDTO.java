@@ -45,6 +45,7 @@ public class UserReviewDTO {
 	                .comment(entity.getComment())
 	                .rating(entity.getRating())
 	                .title(entity.getTitle())
+	                .likeCount(entity.getLikeCount())
 	                .userId(userId)
 	                .regDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(entity.getRegDate()))
 	                .build();

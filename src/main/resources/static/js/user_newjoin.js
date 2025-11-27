@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!email) {
             result.textContent = "이메일을 입력해주세요.";
-            result.style.color = "red";
+            result.style.color = "white";
             checkEmail = true;
             return;
         }

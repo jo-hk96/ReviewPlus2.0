@@ -42,8 +42,8 @@
 /* 모달 내용(폼) 스타일 */
 #MailForm {
     background-color: rgba(0,0,0,0.7); 
-    padding: 30px;
-    border-radius: 10px;
+    padding: 50px;
+    border-radius: 15px;
     font-size: 9px;
     width: 80%; /* 모바일 대응 */
     max-width: 350px; /* 최대 너비 제한 */
@@ -69,11 +69,11 @@
 
 /* 닫기 버튼 스타일 */
 .MailCloseBtn {
-    color: #aaa;
+    color: white;
     float: right;
     font-weight: bold;
     position: absolute; /* 폼의 오른쪽 상단에 배치 */
-    top: 10px;
+    top: 20px;
     right: 20px;
     cursor: pointer;
     transition: color 0.2s;
@@ -82,7 +82,7 @@
 
 .MailCloseBtn:hover,
 .MailCloseBtn:focus {
-    color: #333;
+    color: grey;
     text-decoration: none;
 }
 

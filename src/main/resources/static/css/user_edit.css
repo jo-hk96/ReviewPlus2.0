@@ -53,18 +53,6 @@ body {
     transition: background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-    /* 아이콘을 보이게 설정 (간혹 기본적으로 숨겨진 경우 대비) */
-    opacity: 1;
-    
-    /* 아이콘 색상을 흰색으로 반전시키는 핵심 속성 */
-    filter: invert(1); 
-
-    /* 포인터 모양 변경 (선택 사항) */
-    cursor: pointer;
-}
-
 .menu-btn:hover {
     background-color: #2d3a4b;
     box-shadow: 0 6px 18px rgba(53, 122, 184, 0.4);
@@ -207,6 +195,14 @@ button[type="submit"]:hover {
     background: #2980b9;
     transform: translateY(0);
 }
+
+/* 내 정보 수정 달력 아이콘 색상 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 1;
+    filter: invert(1); 
+    cursor: pointer;
+}
+
 
 @media (max-width: 560px) {
     .user-edit-container {

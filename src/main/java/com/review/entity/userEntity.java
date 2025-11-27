@@ -91,13 +91,24 @@ public class userEntity implements Serializable{
 		@Column(name = "CREATED_AT", nullable = false, updatable = false) //updatable = false 설정
 		private LocalDateTime createdAt; // 가입 날짜 및 시간
 		
-		//회원이 하나면 리뷰는 여러개 [일대다]
+		// 1) 회원이 작성한 리뷰
 		@Builder.Default
-		@OneToMany(mappedBy = "userEntity", // ReviewEntity에서 UserEntity를 참조하는 필드 이름
-		           cascade = CascadeType.REMOVE, //회원 삭제 시, 이 회원의 리뷰도 함께 삭제
-		           orphanRemoval = true)
-		private List<userReviewEntity> reviews = new ArrayList<>(); 
+		@OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+		private List<userReviewEntity> reviews = new ArrayList<>();
+
+		// 2) 회원이 작성한 댓글
+		@Builder.Default
+		@OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+		private List<userReviewReplyEntity> replies = new ArrayList<>();
+
+		// 3) 회원이 누른 좋아요
+		@Builder.Default
+		@OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+		private List<userReviewLikeEntity> likes = new ArrayList<>();
 		
+		@Builder.Default
+		@OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+		private List<MovieLike> moviLike = new ArrayList<>();
 		
 		//소셜 로그인시 성함 , 생일이  DB업데이트
 		 public userEntity update(String name) {

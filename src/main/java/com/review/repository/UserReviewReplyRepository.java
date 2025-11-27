@@ -5,10 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.review.entity.userEntity;
 import com.review.entity.userReviewReplyEntity;
+
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface UserReviewReplyRepository extends JpaRepository<userReviewReplyEntity, Long> {
@@ -21,5 +25,6 @@ public interface UserReviewReplyRepository extends JpaRepository<userReviewReply
 	// Entity(userReviewReplyEntity) -> reviewEntity -> reviewId
 	List<userReviewReplyEntity> findAllByReviewEntity_ReviewIdOrderByRegDateDesc(Long reviewId);	
 	
-	Optional<userReviewReplyEntity> findByReplyIdAndUserEntity_UserId(Long replyId, Long userId);	
+	Optional<userReviewReplyEntity> findByReplyIdAndUserEntity_UserId(Long replyId, Long userId);
+
 }

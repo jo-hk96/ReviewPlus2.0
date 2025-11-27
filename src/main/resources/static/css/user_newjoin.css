@@ -54,7 +54,8 @@ h1{
     opacity: 1;  
 }
 
-/* 달력 색깔 */
+
+
 input[type="date"]::-webkit-calendar-picker-indicator {
     /* 아이콘을 보이게 설정 (간혹 기본적으로 숨겨진 경우 대비) */
     opacity: 1;

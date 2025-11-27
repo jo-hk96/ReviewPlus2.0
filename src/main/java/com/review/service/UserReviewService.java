@@ -107,6 +107,8 @@ public class UserReviewService{
     }
     
     
+    
+    //마이페이지 리뷰 작성 목록 불러오기
     public List<UserReviewDTO> getReviewsByUserId(Long userId){
     	//Repository를 사용해 DB에서 userId로 리뷰 Entity목록을 조회
     	List<userReviewEntity> reviewsEntities = userReviewRepository.findByUserEntity_UserId(userId);

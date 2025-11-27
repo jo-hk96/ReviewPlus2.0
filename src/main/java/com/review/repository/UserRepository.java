@@ -53,5 +53,6 @@ public interface UserRepository extends JpaRepository<userEntity, Long> {
 
     @Query("SELECT u.profileImageUrl FROM userEntity u WHERE u.userId = :userId")
     Optional<String> findProfileImageUrlByUserId(@Param("userId") Long userId);
+
 	
 }

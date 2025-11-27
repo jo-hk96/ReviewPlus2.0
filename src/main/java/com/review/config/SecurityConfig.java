@@ -89,15 +89,15 @@ public class SecurityConfig {
         http.logout(logout -> logout
                 .logoutUrl("/api/user/logout")
                 .logoutSuccessHandler((request, response, authentication) -> {
+
+                    // 🟦 Flutter WebView에서 홈으로 리다이렉트
                     response.setStatus(HttpServletResponse.SC_OK);
-                    response.setContentType("application/json; charset=UTF-8");
-                    response.getWriter()
-                            .write("{\"success\": true, \"message\": \"Logout successful\"}");
+                    response.sendRedirect("/");   // ★ 홈(또는 원하는 URL)로 이동
+
                 })
                 .deleteCookies("JSESSIONID", "SESSION")
                 .invalidateHttpSession(true)
         );
-
         http.addFilterAfter(lastActivityUpdateFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

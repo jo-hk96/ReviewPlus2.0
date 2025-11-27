@@ -87,7 +87,7 @@ a{
 	color:white;
 }
 .userIndex > a:hover{
-	color:black;
+	color:#e84545;
 }
 
 
@@ -98,7 +98,7 @@ a{
 	}
 	
 .headerLeft > span > a:hover{
-		color:black;
+		color:#e84545;
 	}
 
 

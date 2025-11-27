@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.review.entity.userEntity;
 import com.review.entity.userReviewEntity;
 
 @Repository
@@ -47,5 +48,6 @@ public interface UserReviewRepository extends JpaRepository<userReviewEntity, Lo
 		
 		//유저Entity에 있는 닉네임을 %문자열% 로 찾음
 		List<userReviewEntity> findByUserEntity_NicknameContaining(String RUS);
+
 		
 }

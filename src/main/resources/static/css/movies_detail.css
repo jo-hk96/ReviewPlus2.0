@@ -134,6 +134,60 @@
 	cursor: pointer;
 	
 }
+
+/* 대댓글 등록 버튼 스타일 */
+.registerReply-btn {
+    background-color: #28a745; /* 녹색 계열 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 3px 8px;
+    cursor: pointer;
+    font-weight: bold;
+	font-size: 0.8em;
+    margin-left: 13px; /* textarea와 간격 */
+    transition: background-color 0.3s ease;
+}
+
+.registerReply-btn:hover {
+    background-color: #218838;
+}
+
+/* 대댓글 삭제 버튼 스타일 */
+.deleteReply-btn {
+    background-color: #dc3545; /* 빨간색 계열 */
+    color: white;
+	font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 3px 8px;
+    cursor: pointer;
+    font-size: 0.8em; /* 작은 크기 */
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.deleteReply-btn:hover {
+    background-color: #c82333;
+}
+
+/* ⚠️ 참고: 대댓글 컨테이너 내부의 요소 정리 (삭제 버튼 float right 처리 시 필요) */
+.reply-item {
+    overflow: auto; /* 자식 요소의 float을 포함하도록 */
+    padding: 10px 0;
+    border-bottom: 1px solid gray; /* 구분선 */
+}
+.reply-item:last-child {
+    border-bottom: none;
+}
+
+.reply-header {
+    line-height: 1.5;
+}
+.reply-comment p {
+    margin-top: 5px;
+    padding-right: 70px; /* 삭제 버튼 영역만큼 여백 확보 */
+}
 .reply-toggleButton:hover{
 	
 	background-color:#061123;
@@ -296,12 +350,14 @@ h2 {
     width: 100%;
     max-width: 100%;
     min-height: 100px;
+	height: 180px;
     padding: 12px;
     border-radius: 6px;
     box-sizing: border-box;
     background-color: #333;
     color:white;
     font-size: 15px;
+	resize: none;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -437,23 +493,26 @@ h2 {
     border-radius: 6px;
     font-size: 14px;
     cursor: pointer;
+	float: right;
     transition: all 0.2s ease-in-out;
 }
 
 /* 수정 버튼 */
 .review-actions .edit-btn {
-    background-color: #F0F0F0; 
-    color: black;
+    background-color: #191932;
+    color: white;	
+	
 }
 
 .review-actions .edit-btn:hover {
     background-color: #45a049;
+	
 }
 
 /* 삭제 버튼 */
 .review-actions .delete-btn {
-    background-color: #F0F0F0; 
-    color: black;
+    background-color: #191932;
+    color: white;
 }
 
 .review-actions .delete-btn:hover {
@@ -524,7 +583,7 @@ h2 {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    resize: vertical; 
+    resize: none;
     color:white;
     box-sizing: border-box;
     font-size: 0.95rem;

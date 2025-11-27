@@ -63,11 +63,7 @@
 				<h2 style = "color:white;">리뷰쓰기</h2>
 				<form id="review-form">
 					<p>
-					<img
-				    id = "userProfilePicture" th:src="@{'/images/profile/' + ${profileFileName}}" 
-				    alt="프로필 사진" style = "width:30px; height:30px;">
-				    
-				    <span sec:authentication="principal.nickname" id="nickname"></span>
+						<b>닉네임:</b> <span sec:authentication="principal.nickname" id="nickname"></span>
 					</p>
 					
 					<div class="form-group">
@@ -108,8 +104,8 @@
 
 <!-- 수정 모달 -->		
 <div id="editReviewModal">
-    <div style=" width: 50%; min-width: 300px; margin: 100px auto; padding: 20px; border-radius: 8px;">
-        <h3 style ="color:white;">리뷰 수정하기</h3>
+    <div style="background-color: white; width: 80%; max-width: 500px; margin: 100px auto; padding: 20px; border-radius: 8px;">
+        <h3>리뷰 수정하기</h3>
         <div class="form-group">
             <label for="editComment">댓글 수정:</label>
             <textarea id="editComment" rows="4" cols="50"></textarea>
@@ -133,7 +129,7 @@
     </div>
 </div>
 	
-    <!-- 프로필 사진 -->
+	<!-- 프로필 사진 -->
 	<script src="/js/upload.js"></script>
 	<!-- 푸터 -->
 	<footer th:insert="index/index :: footer"></footer>
@@ -142,7 +138,6 @@
 	
 	<!-- 맨위로 가기 -->
 	<div th:insert ="index/index :: scroll-to-top"></div>
-			
 	<!-- 영화 리뷰 목록 -->
 	<script src="/js/movies_review.js"></script>
 	<!-- 영화 상세 정보 -->
@@ -151,8 +146,6 @@
 	<script src="/js/movie_LikeBtn.js"></script>
 	<!-- scroll-to-top -->
 	<script src="/js/scroll-to-top.js"></script>
-	
-	
 </body>
 </html>
 

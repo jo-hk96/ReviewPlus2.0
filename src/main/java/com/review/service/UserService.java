@@ -8,14 +8,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 import com.review.DTO.UserDTO;
 import com.review.DTO.UserEditDTO;
 import com.review.config.CustomUserDetails;
 import com.review.entity.userEntity;
 import com.review.repository.UserRepository;
+import com.review.repository.UserReviewLikeRepository;
+import com.review.repository.UserReviewReplyRepository;
+import com.review.repository.UserReviewRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,7 +27,10 @@ import lombok.RequiredArgsConstructor;
 public class UserService implements UserDetailsService {
 	private final PasswordEncoder passwordEncoder;
 	private final UserRepository userRepository;
-	
+    private final UserReviewRepository userReviewRepository;
+    private final UserReviewLikeRepository userReviewLikeRepository;
+    private final UserReviewReplyRepository userReviewReplyRepository;
+    private final EntityManager entityManager;
 	//전체 가입자 수
 	public long getTotalJoinCount() {
 		return userRepository.count();
@@ -215,8 +221,12 @@ public class UserService implements UserDetailsService {
 	        userRepository.save(user); 
 	    }
 	
-	
-	
+	   
 	    
+	   @Transactional
+	   public void withdrawMember(Long userId) {
+	       userRepository.deleteById(userId);
+	   }
+	   
 }
 	

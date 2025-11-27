@@ -81,20 +81,26 @@ public class userReviewEntity {
 				   this.likeCount--;
 				}
 			}
-		
-		//리뷰는 여러개 회원은 하나 [다대일]
-	    @ManyToOne(fetch = FetchType.LAZY)
-	    @JoinColumn(name = "USER_ID") // 실제 DB 컬럼명
-	    private userEntity userEntity; // user 엔티티와 연결
-	    
-	    
-	    @Builder.Default
-	    @OneToMany(mappedBy = "reviewEntity" , cascade = CascadeType.ALL, orphanRemoval = true)
-	    private List<userReviewReplyEntity> replies = new ArrayList<>();
-	    
-	    
-	    @Builder.Default
-	    @Column(name = "REGDATE" ,updatable = false) // 최초 생성 후 업데이트 방지
-	    private LocalDateTime regDate = LocalDateTime.now();
+			
+			// 1. 좋아요 기록 [일대다]
+			@Builder.Default
+		    @OneToMany(mappedBy = "reviewEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+		    private List<userReviewLikeEntity> likes = new ArrayList<>();	
+			
+			//리뷰는 여러개 회원은 하나 [다대일]
+		    @ManyToOne(fetch = FetchType.LAZY)
+		    @JoinColumn(name = "USER_ID") // 실제 DB 컬럼명
+		    private userEntity userEntity; // user 엔티티와 연결
+		    
+		    
+		    // 2. 댓글 기록 [일대다]
+		    @Builder.Default
+		    @OneToMany(mappedBy = "reviewEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true)
+		    private List<userReviewReplyEntity> replies = new ArrayList<>();
+		    
+		    @Builder.Default
+		    @Column(name = "REGDATE" ,updatable = false) // 최초 생성 후 업데이트 방지
+		    private LocalDateTime regDate = LocalDateTime.now();
+		   
 	   
 }

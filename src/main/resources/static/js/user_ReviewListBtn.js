@@ -65,6 +65,7 @@
                         <div class="review-header">
                             <strong class="movie-title">${review.title}</strong> 
                             <span class="review-rating">${stars}</span>
+                            <span>👍${review.likeCount}</span>
                         </div>
                         <p class="review-comment">${review.comment}</p>
                         <small class="review-date">작성일: ${review.regDate ? new Date(review.regDate).toLocaleDateString() : '날짜정보 없음'}</small>

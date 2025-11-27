@@ -222,16 +222,14 @@ public class UserController {
 	}
 		
 		
-	//회원정보 삭제
 	@PostMapping("/UserDelete")
-	//@AuthenticationPrincipal 통해 CustomUserDetails에 잇는 세션정보를 불러옴
+	//@AuthenticationPrincipal 통해 CustomUserDetails에 있는 세션정보를 불러옴
 	public String userDelete(@AuthenticationPrincipal CustomUserDetails cud) {
 		Long userId = cud.getUserId();
-		userRepository.deleteById(userId);
-		return "redirect:/logout";
+		userService.withdrawMember(userId);
+		return "redirect:/api/user/logout";
 		
 	}
-	
 	
 	//소셜가입 유저 회원수정 페이지
 	@GetMapping("/SocialUserEditForm")

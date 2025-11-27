@@ -181,9 +181,12 @@ function createReviewHtml(review) {
                           : null;
     const reviewAuthorId = Number(review.userId);
     if (currentUserId && currentUserId === reviewAuthorId) {
+        // 🌟 수정 1: 버튼 스타일 조정 (가로 배열을 위해 세로 버튼 스타일 제거)
         restrictedButtonsHtml = `
-                <button type="button" class="edit-btn" onclick="openEditModal(${review.reviewId})">수정</button>
-                <button type="button" class="delete-btn" onclick="deleteReview(${review.reviewId})">삭제</button>
+                <button type="button" class="edit-btn" onclick="openEditModal(${review.reviewId})"
+                    style="width: 50px; text-align: center; padding: 5px; border-radius: 5px;">수정</button>
+                <button type="button" class="delete-btn" onclick="deleteReview(${review.reviewId})"
+                    style="width: 50px; text-align: center; padding: 5px; border-radius: 5px;">삭제</button>
         `;
     }
     
@@ -215,8 +218,9 @@ function createReviewHtml(review) {
     `;
     
     
+    // 🌟 수정 2: review-actions에 display: flex와 gap 추가하여 버튼 가로 배열 및 간격 조정
     actionButtonsHtml = `
-       <div class="review-actions">
+       <div class="review-actions" style="display: flex; gap: 10px;">
           ${restrictedButtonsHtml}
        </div>
     `;
@@ -226,31 +230,16 @@ function createReviewHtml(review) {
               style = "color:white">
         </div>
     `;
-
+   
      return `
          <div class = "review-box" id="review-${review.reviewId}" data-review-id="${review.reviewId}" 
                         style=" box-shadow:0 5px 8px rgba(0,0,0,0.2);  margin-bottom: 10px; padding: 10px;
-                        color: white; border-radius: 15px; ">
-
+                        color: white; border-radius: 15px; border-bottom: 1px solid grey; ">
+                    
                         
-               <div class="review-profile-area" style="margin-right: 15px;">
-                <span onclick="toggleActionButtons(this)" 
-                style = "cursor:pointer; margin-left: 10px; margin-right:10px; font-size: 25px; color:gray;
-                   border: 1px; width:20px;">
-                   ⁝
-                </span>
+                <div class="review-header-container" style="display: flex; justify-content: space-between; align-items: flex-start;">
                 
-                    <div id="actionButtonsContainer" 
-                 style="display: none; 
-                        top: 100%; 
-                        left: 0;
-                        padding: 15px; 
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-                        z-index: 100;">
-                ${actionButtonsHtml}
-            </div>
-                
-                
+                    <div class="review-profile-area" style="display: flex; align-items: flex-start; margin-right: 15px;">
                    <img id = "reviewUserProfile" class="profile-image" src="${profileSrc}" alt="${review.nickname}님의 프로필">
                    <div class="profile-info-text">
                        <table>
@@ -262,6 +251,28 @@ function createReviewHtml(review) {
                       </table>
                    </div>
              </div>
+                    
+                    <div class="review-actions-area" style="position: relative;">
+                        <span onclick="toggleActionButtons(this)" 
+                            style = "cursor:pointer; font-size: 25px; color:gray; padding: 0 5px;">
+                            ⁝
+                        </span>
+                        
+                        <div id="actionButtonsContainer" 
+                            style="display: none; 
+                                position: absolute; /* 절대 위치로 ⁝ 버튼 아래에 배치 */
+                                top: 100%; 
+                        text-align: right;
+                                right: -30px; /* 오른쪽 끝 정렬 */
+                                
+                        width: 130px; /* 버튼 2개 + 간격 + 여백을 수용할 수 있도록 너비 확장 */                        
+                                z-index: 100;">
+                            ${actionButtonsHtml}
+                        </div>
+                    </div>
+                
+                </div>
+               
                <table>
                    <tr><td><p 
                    style="overflow-wrap: break-word; 
@@ -276,7 +287,7 @@ function createReviewHtml(review) {
             <hr style="border:0.5px solid #565656;">
              <textarea class="ReplyComment" id="reply-comment-${review.reviewId}" placeholder="댓글을 작성해주세요.400자 제한"
                                                                    maxlength="400"></textarea>
-             <button onclick="registerReply(${review.reviewId},'${review.nickname}')">등록</button>
+             <button class="registerReply-btn" onclick="registerReply(${review.reviewId},'${review.nickname}')">등록</button>
          </div>
          ${replySectionHtml}
    `;
@@ -331,8 +342,9 @@ function ReviewtoggleLike(buttonEl){
 
 //==========================================================
 function toggleActionButtons(buttonElement) {
-        const reviewArea = buttonElement.closest('.review-profile-area');
-        const container = reviewArea.querySelector('#actionButtonsContainer');
+        // 🌟 수정: buttonElement.closest()를 사용하여 가장 가까운 액션 영역 컨테이너(review-actions-area)를 찾도록 수정
+        const actionArea = buttonElement.closest('.review-actions-area');
+        const container = actionArea.querySelector('#actionButtonsContainer');
 
         if (!container) {
             console.error("액션 버튼 컨테이너를 찾을 수 없습니다.");
