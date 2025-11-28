@@ -76,9 +76,11 @@ public class SecurityConfig {
 
                 	        // ⭐ 리뷰 조회 허용
                 	        "/api/reviews/**",
-
+                	        
                 	        // ⭐ 뉴스 허용
-                	        "/api/news/**"
+                	        "/api/news/**",
+                	        
+                	        "/api/naver/**"
                 ).permitAll()
 
                 // ★ 소셜 사용자 정보 변경은 로그인 필요
